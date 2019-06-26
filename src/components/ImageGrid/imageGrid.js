@@ -1,17 +1,33 @@
 import React, { Component } from 'react';
-import STORE from '../../STORE/store';
+import PropTypes from 'prop-types';
+import PhotoGramContext from '../../PhotoGramContext';
+import Image from '../Image/image';
 import './imageGrid.css';
 
 class ImageGrid extends Component {
-	render() {
-		const images = STORE.map(img => {
-			console.log(img.imgUrl);
-			return (
-				<img src={img.imgUrl} alt={img.name} key={img.id} className='gridImg' />
-			);
-		});
+	static proptTypes = {
+		images: PropTypes.arrayOf(
+			PropTypes.shape({
+				id: PropTypes.string
+			})
+		)
+	};
+	static defaultProps = { images: [] };
 
-		return <div className='grid-container'>{images}</div>;
+	static contextType = PhotoGramContext;
+
+	render() {
+		const { images } = this.context;
+		console.log(images);
+		return (
+			<section>
+				<div className='grid-container'>
+					{images.map(image => (
+						<Image key={image.id.toString()} {...image} />
+					))}
+				</div>
+			</section>
+		);
 	}
 }
 
