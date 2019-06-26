@@ -1,0 +1,29 @@
+nav {
+	padding: 0;
+	margin: 0;
+	text-transform: uppercase;
+}
+
+.navBar {
+	position: fixed;
+	width: 100%;
+	height: 50px;
+	background-color: grey;
+	padding: 0;
+	margin: 0;
+	z-index: 1;
+}
+
+.navBar ul {
+	list-style: none;
+	color: white;
+	display: flex;
+	justify-content: space-between;
+	padding: 15px;
+	margin: 0;
+}
+
+.navBar ul li a {
+	text-decoration: none;
+	color: white;
+}
