@@ -14,28 +14,31 @@ class Login extends Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
+	handleEmailChange = e => {
+		this.setState({ email: e.target.value });
+	};
+
+	handlePasswordChange = e => {
+		this.setState({ password: e.target.value });
+	};
 	handleSubmit = e => {
 		e.preventDefault();
-		const { email, password } = e.target;
 		this.setState({
-			email: email.value,
-			password: password.value,
 			redirect: true,
 			error: null
 		});
-		this.props.history.push(`/homePage`);
-		console.log(this.state);
 	};
 
 	render() {
 		const redirectToHome = this.state.redirect;
 		if (redirectToHome) {
+			console.log(this.state);
 			return <Redirect to='/homePage' />;
 		}
 		return (
 			<div className='login-form-container'>
 				<h3>Login</h3>
-				<form className='login-form'>
+				<form className='login-form' onSubmit={this.handleSubmit}>
 					<label htmlFor='email'>
 						Email Address
 						<input
@@ -43,6 +46,7 @@ class Login extends Component {
 							className='loginFormInput'
 							name='email'
 							id='login-email'
+							onChange={this.handleEmailChange}
 							required
 						/>
 					</label>
@@ -53,10 +57,11 @@ class Login extends Component {
 							className='loginFormInput'
 							name='password'
 							id='login-password'
+							onChange={this.handlePasswordChange}
 							required
 						/>
 					</label>
-					<button type='submit' id='loginFormBtn' onSubmit={this.handleSubmit}>
+					<button type='submit' id='loginFormBtn'>
 						Let's Go!
 					</button>
 				</form>

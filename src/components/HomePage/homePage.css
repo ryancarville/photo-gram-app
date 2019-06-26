@@ -1,0 +1,15 @@
+.homePage {
+	width: 100%;
+	padding-top: 50px;
+	text-align: center;
+}
+
+.content-counter {
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+}
+
+.content-counter span {
+	font-size: 25px;
+}

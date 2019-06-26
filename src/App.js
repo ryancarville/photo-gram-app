@@ -6,7 +6,8 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			STORE: this.props.STORE
+			STORE: this.props.STORE,
+			loggedIn: false
 		};
 	}
 	render() {
