@@ -18,10 +18,35 @@
 	height: 70px;
 	border-radius: 50%;
 	background-color: grey;
-	text-align: center;
-	line-height: 70px;
 }
 .albums-bar ul li a {
 	text-decoration: none;
 	color: rgb(255, 255, 255);
+}
+
+#album1 {
+	background: url('http://beardystudios.com/ZURICH_SITE/images/photography/faces/portraits/03.jpg');
+	background-size: 150px;
+	background-position: -2em;
+	background-repeat: no-repeat;
+}
+
+#album2 {
+	background: url('http://beardystudios.com/ZURICH_SITE/images/photography/food/lunch/02.jpg');
+	background-size: 100px;
+	background-repeat: no-repeat;
+}
+
+#album3 {
+	background: url('http://beardystudios.com/ZURICH_SITE/images/photography/earth/sand/03.jpg');
+	background-size: 150px;
+	background-position: -2em;
+	background-repeat: no-repeat;
+}
+
+#album4 {
+	background: url('http://beardystudios.com/ZURICH_SITE/images/photography/earth/waterscapes/01.jpg');
+	background-size: 150px;
+	background-position: -2em;
+	background-repeat: no-repeat;
 }

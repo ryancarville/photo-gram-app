@@ -6,18 +6,10 @@ class Albums extends Component {
 		return (
 			<div className='albums-bar' id='albums'>
 				<ul>
-					<li>
-						<a href='#'>Album 1</a>
-					</li>
-					<li>
-						<a href='#'>Album 2</a>
-					</li>
-					<li>
-						<a href='#'>Album 3</a>
-					</li>
-					<li>
-						<a href='#'>Album 4</a>
-					</li>
+					<li id='album1' />
+					<li id='album2' />
+					<li id='album3' />
+					<li id='album4' />
 				</ul>
 			</div>
 		);
