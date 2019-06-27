@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import Albums from '../Albums/albums.js';
-import ImageGrid from '../ImageGrid/imageGrid';
 import './landingPage.css';
 
 class LandingPage extends Component {
@@ -16,8 +14,12 @@ class LandingPage extends Component {
 						organize your photo sets.{' '}
 					</p>
 				</div>
-				<Albums />
-				<ImageGrid />
+				<div className='landing-example'>
+					<img
+						src='http://beardystudios.com/photo-gram-app/images/account-example.png'
+						alt='account-example'
+					/>
+				</div>
 			</>
 		);
 	}

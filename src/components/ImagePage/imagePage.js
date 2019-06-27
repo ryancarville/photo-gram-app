@@ -2,30 +2,31 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import PhotoGramContext from '../../PhotoGramContext';
-
 import config from '../../config';
 import './imagePage.css';
 
-function deleteImageRequest(imageId, cd) {
-	fetch(config.API_ENDPOINT + `/${imageId}`, {
-		method: 'DELETE',
-		headers: {
-			'content-type': 'application/json'
-		}
-	})
-		.then(res => {
-			if (!res.ok) {
-				return res.json().then(error => Promise.reject(error));
-			}
-			return res.json();
-		})
-		.then(data => {
-			cd(imageId);
-		})
-		.catch(error => {
-			console.log(error);
-		});
-}
+// function deleteImageRequest(imageId, cd) {
+// 	cd(imageId);
+
+// fetch(config.API_ENDPOINT + `/${imageId}`, {
+// 	method: 'DELETE',
+// 	headers: {
+// 		'content-type': 'application/json'
+// 	}
+// })
+// 	.then(res => {
+// 		if (!res.ok) {
+// 			return res.json().then(error => Promise.reject(error));
+// 		}
+// 		return res.json();
+// 	})
+// 	.then(data => {
+// 		cd(imageId);
+// 	})
+// 	.catch(error => {
+// 		console.log(error);
+// 	});
+// }
 
 export default class ImagePage extends Component {
 	constructor(props) {
@@ -70,6 +71,12 @@ export default class ImagePage extends Component {
 	handleBack = e => {
 		this.props.history.goBack();
 	};
+
+	deleteImageRequest = (imageId, cd) => {
+		cd(imageId);
+		this.handleBack();
+	};
+
 	render() {
 		return (
 			<PhotoGramContext.Consumer>
@@ -94,7 +101,7 @@ export default class ImagePage extends Component {
 							<button
 								type='button'
 								onClick={() =>
-									deleteImageRequest(this.state.id, context.deleteImage)
+									this.deleteImageRequest(this.state.id, context.deleteImage)
 								}>
 								Delete
 							</button>
@@ -105,3 +112,15 @@ export default class ImagePage extends Component {
 		);
 	}
 }
+
+ImagePage.defaultProps = {
+	onClickDelete: () => {}
+};
+
+ImagePage.propTypes = {
+	id: PropTypes.number.isRequired,
+	imgUrl: PropTypes.string.isRequired,
+	caption: PropTypes.string,
+	date: PropTypes.string,
+	onClickDelete: PropTypes.func
+};

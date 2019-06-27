@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import PhotoGramContext from '../../PhotoGramContext';
 import './login.css';
 
 class Login extends Component {
@@ -36,36 +37,40 @@ class Login extends Component {
 			return <Redirect to='/homePage' />;
 		}
 		return (
-			<div className='login-form-container'>
-				<h3>Login</h3>
-				<form className='login-form' onSubmit={this.handleSubmit}>
-					<label htmlFor='email'>
-						Email Address
-						<input
-							type='text'
-							className='loginFormInput'
-							name='email'
-							id='login-email'
-							onChange={this.handleEmailChange}
-							required
-						/>
-					</label>
-					<label htmlFor='password'>
-						Password
-						<input
-							type='text'
-							className='loginFormInput'
-							name='password'
-							id='login-password'
-							onChange={this.handlePasswordChange}
-							required
-						/>
-					</label>
-					<button type='submit' id='loginFormBtn'>
-						Let's Go!
-					</button>
-				</form>
-			</div>
+			<PhotoGramContext.Consumer>
+				{context => (
+					<div className='login-form-container'>
+						<h3>Login</h3>
+						<form className='login-form' onSubmit={this.handleSubmit}>
+							<label htmlFor='email'>
+								Email Address
+								<input
+									type='text'
+									className='loginFormInput'
+									name='email'
+									id='login-email'
+									onChange={this.handleEmailChange}
+									required
+								/>
+							</label>
+							<label htmlFor='password'>
+								Password
+								<input
+									type='text'
+									className='loginFormInput'
+									name='password'
+									id='login-password'
+									onChange={this.handlePasswordChange}
+									required
+								/>
+							</label>
+							<button type='submit' id='loginFormBtn' onClick={context.login}>
+								Let's Go!
+							</button>
+						</form>
+					</div>
+				)}
+			</PhotoGramContext.Consumer>
 		);
 	}
 }

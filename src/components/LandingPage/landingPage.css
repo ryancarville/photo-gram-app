@@ -19,5 +19,9 @@
 }
 
 .landing-example {
-	text-align: center;
+	width: 100%;
+}
+
+.landing-example img {
+	width: 100%;
 }

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import Nav from './components/Nav/nav';
 import Routes from './Routes/routes.js';
-import PhotGramContext from './PhotoGramContext';
-import STORE from './STORE/store.js';
+import PhotoGramContext from './PhotoGramContext';
 //import config from './config';
 
 class App extends Component {
@@ -10,13 +9,19 @@ class App extends Component {
 		super(props);
 		this.state = {
 			images: [],
+			validLogin: false,
 			error: null
 		};
 	}
 
 	signUp = e => {};
 
-	login = e => {};
+	login = e => {
+		this.setState({
+			validLogin: true
+		});
+		console.log(this.state);
+	};
 
 	setImages = images => {
 		this.setState({
@@ -36,6 +41,7 @@ class App extends Component {
 		this.setState({
 			images: newImages
 		});
+		console.log(this.state.images);
 	};
 
 	updateImage = updatedImage => {
@@ -45,10 +51,10 @@ class App extends Component {
 			)
 		});
 	};
-
+	static contextType = PhotoGramContext;
 	componentDidMount() {
 		this.setState({
-			images: STORE
+			images: this.context.images
 		});
 		// fetch(config.API_ENDPOINT, {
 		// 	method: 'GET',
@@ -75,15 +81,16 @@ class App extends Component {
 			deleteImage: this.deleteImage,
 			updateImage: this.updateImage,
 			login: this.login,
-			signUp: this.signUp
+			signUp: this.signUp,
+			state: this.state
 		};
 
 		return (
 			<main className='App'>
-				<PhotGramContext.Provider value={contextValue}>
+				<PhotoGramContext.Provider value={contextValue}>
 					<Nav />
 					<Routes />
-				</PhotGramContext.Provider>
+				</PhotoGramContext.Provider>
 			</main>
 		);
 	}

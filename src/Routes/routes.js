@@ -17,6 +17,7 @@ class Router extends Component {
 				<Route path='/homePage' component={HomePage} />
 				<Route path='/user/albums/:album_id' component={AlbumPage} />
 				<Route path={'/images/:image_id'} component={ImagePage} />
+
 				<Redirect from='*' to='/' />
 			</Switch>
 		);

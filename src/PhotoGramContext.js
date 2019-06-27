@@ -78,6 +78,22 @@ const PhotGramContext = React.createContext({
 			alt: 'desert,sand,nature',
 			caption: 'Test caption one for breakfast',
 			date: '2019-30-05'
+		},
+		{
+			id: 10,
+			imgUrl:
+				'http://beardystudios.com/ZURICH_SITE/images/photography/earth/sand/04.jpg',
+			alt: 'desert,sand,nature',
+			caption: 'Test caption one for breakfast',
+			date: '2019-09-03'
+		},
+		{
+			id: 11,
+			imgUrl:
+				'http://beardystudios.com/ZURICH_SITE/images/photography/earth/sand/03.jpg',
+			alt: 'desert,sand,nature',
+			caption: 'Test caption one for breakfast',
+			date: '2019-09-03'
 		}
 	]
 });

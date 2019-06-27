@@ -23,10 +23,6 @@ export default function Image(props) {
 	);
 }
 
-Image.defaultProps = {
-	onClickDelete: () => {}
-};
-
 Image.propTypes = {
 	id: PropTypes.number.isRequired,
 	imgUrl: PropTypes.string.isRequired,
