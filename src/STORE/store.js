@@ -1,4 +1,4 @@
-const seedImages = [
+const Images = [
 	{
 		id: 1,
 		imgUrl:
@@ -64,4 +64,4 @@ const seedImages = [
 	}
 ];
 
-export default seedImages;
+export default Images;

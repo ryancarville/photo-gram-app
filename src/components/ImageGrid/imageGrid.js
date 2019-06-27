@@ -22,8 +22,8 @@ class ImageGrid extends Component {
 		return (
 			<section>
 				<div className='grid-container'>
-					{images.map(image => (
-						<Image key={image.id.toString()} {...image} />
+					{images.map(img => (
+						<Image key={img.id.toString()} {...img} />
 					))}
 				</div>
 			</section>
