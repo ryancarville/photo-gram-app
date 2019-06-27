@@ -33,6 +33,7 @@ export default class ImagePage extends Component {
 		this.state = {
 			id: '',
 			imgUrl: '',
+			alt: '',
 			caption: '',
 			date: '',
 			error: null
@@ -49,31 +50,42 @@ export default class ImagePage extends Component {
 	static contextType = PhotoGramContext;
 
 	componentDidMount() {
-		const { images } = this.props.context;
+		const { images } = this.context;
 		const imageId = this.props.match.params.image_id;
 		const image = images.filter(img => img.id.toString() === imageId);
 		console.log(images);
 		console.log(imageId);
 		console.log(image[0]);
 		this.setState({
-			id: image.id,
-			imgUrl: image.imgUrl,
-			caption: image.caption,
-			date: image.date,
+			id: image[0].id,
+			imgUrl: image[0].imgUrl,
+			alt: image[0].alt,
+			caption: image[0].caption,
+			date: image[0].date,
 			error: null
 		});
 		console.log(this.state);
 	}
+
+	handleBack = e => {
+		this.props.history.goBack();
+	};
 	render() {
 		return (
 			<PhotoGramContext.Consumer>
 				{context => (
-					<div className='image-container'>
+					<div className='image-page-container'>
+						<button
+							type='button'
+							id='imagePageBackBtn'
+							onClick={this.handleBack}>
+							&#171;{' '}
+						</button>
 						<img
 							key={this.state.id}
 							src={this.state.imgUrl}
 							alt={this.state.alt}
-							className='gridImg'
+							className='singleImg'
 						/>
 						<p>{this.state.caption}</p>
 						<span>Date:{this.state.date}</span>

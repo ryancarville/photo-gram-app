@@ -28,7 +28,7 @@ Image.defaultProps = {
 };
 
 Image.propTypes = {
-	id: PropTypes.string.isRequired,
+	id: PropTypes.number.isRequired,
 	imgUrl: PropTypes.string.isRequired,
 	caption: PropTypes.string,
 	date: PropTypes.string,

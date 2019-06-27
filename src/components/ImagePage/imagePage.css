@@ -1,0 +1,26 @@
+.image-page-container {
+	width: 100%;
+	padding-top: 50px;
+	text-align: center;
+}
+
+.singleImg {
+	width: 100%;
+}
+
+#imagePageBackBtn {
+	position: relative;
+	width: 50px;
+	height: 30px;
+	float: left;
+	font-size: 45px;
+	cursor: pointer;
+	margin-bottom: 25px;
+}
+
+.imageButtons {
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	margin-top: 35px;
+}

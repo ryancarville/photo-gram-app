@@ -3,7 +3,7 @@ import Nav from './components/Nav/nav';
 import Routes from './Routes/routes.js';
 import PhotGramContext from './PhotoGramContext';
 import STORE from './STORE/store.js';
-import config from './config';
+//import config from './config';
 
 class App extends Component {
 	constructor(props) {
