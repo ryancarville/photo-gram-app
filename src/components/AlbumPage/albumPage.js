@@ -9,6 +9,7 @@ export default class AlbumPage extends Component {
 		super(props);
 		this.state = {
 			albumImages: [],
+			albumName: '',
 			error: null
 		};
 	}
@@ -19,24 +20,25 @@ export default class AlbumPage extends Component {
 			})
 		)
 	};
-	static defaultProps = { images: [] };
+	static defaultProps = { images: [], albums: [] };
 	static contextType = PhotoGramContext;
 
-	componentDidMount() {
+	componentWillMount() {
 		const { images } = this.context;
+		const { albums } = this.context;
 		const albumId = this.props.match.params.album_id;
 		const albumImgs = images.filter(img => img.albumId === albumId);
+		const album = albums.filter(album => album.id === albumId);
+		const albumName = album[0].name;
 		this.setState({
-			albumImages: albumImgs
+			albumImages: albumImgs,
+			albumName: albumName
 		});
 		console.log(images);
 		console.log(albumId);
+		console.log(albumName);
 	}
 
-	getImages = e => {
-		const { albumImages } = this.state.albumImages;
-		albumImages.map(img => <Image key={img.id.toString()} {...img} />);
-	};
 	handleBack = e => {
 		this.props.history.goBack();
 	};
@@ -49,7 +51,17 @@ export default class AlbumPage extends Component {
 	render() {
 		return (
 			<section>
-				<div className='grid-container'>{this.getImages}</div>
+				<div className='albumPage-container'>
+					<button type='button' id='imagePageBackBtn' onClick={this.handleBack}>
+						&#171;{' '}
+					</button>
+					<p>{this.state.albumName}</p>
+					<div className='grid-container'>
+						{this.state.albumImages.map(img => (
+							<Image key={img.id.toString()} {...img} />
+						))}
+					</div>
+				</div>
 			</section>
 		);
 	}

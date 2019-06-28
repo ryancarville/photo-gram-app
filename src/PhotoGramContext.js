@@ -10,42 +10,47 @@ const PhotGramContext = React.createContext({
 		{
 			id: 1,
 			imgUrl:
-				'http://beardystudios.com/ZURICH_SITE/images/photography/earth/sand/06.jpg',
-			alt: 'desert,sand,nature',
-			caption: 'Test caption one for breakfast',
-			date: '2019-09-03'
+				'http://beardystudios.com/ZURICH_SITE/images/photography/food/Breakfast/05.jpg',
+			alt: 'food,breakfast',
+			caption: 'Test caption for food',
+			date: '2019-09-03',
+			albumId: 'album2'
 		},
 		{
 			id: 2,
 			imgUrl:
-				'http://beardystudios.com/ZURICH_SITE/images/photography/earth/sand/05.jpg',
-			alt: 'desert,sand,nature',
-			caption: 'Test caption two for breakfast',
-			date: '2019-25-03'
+				'http://beardystudios.com/ZURICH_SITE/images/photography/food/Breakfast/07.jpg',
+			alt: 'food,breakfast',
+			caption: 'Test caption for food',
+			date: '2019-09-03',
+			albumId: 'album2'
 		},
 		{
 			id: 3,
 			imgUrl:
-				'http://beardystudios.com/ZURICH_SITE/images/photography/earth/sand/03.jpg',
-			alt: 'desert,sand,nature',
-			caption: 'Test caption one for breakfast',
-			date: '2019-15-04'
+				'http://beardystudios.com/ZURICH_SITE/images/photography/food/Breakfast/11.jpg',
+			alt: 'food,breakfast',
+			caption: 'Test caption for food',
+			date: '2019-09-03',
+			albumId: 'album2'
 		},
 		{
 			id: 4,
 			imgUrl:
-				'http://beardystudios.com/ZURICH_SITE/images/photography/earth/sand/01.jpg',
-			alt: 'desert,sand,nature',
-			caption: 'Test caption one for breakfast',
-			date: '2019-30-05'
+				'http://beardystudios.com/ZURICH_SITE/images/photography/faces/editorial/05.jpg',
+			alt: 'portrait,people',
+			caption: 'Test caption for food',
+			date: '2019-09-03',
+			albumId: 'album1'
 		},
 		{
 			id: 5,
 			imgUrl:
-				'http://beardystudios.com/ZURICH_SITE/images/photography/earth/sand/09.jpg',
-			alt: 'desert,sand,nature',
-			caption: 'Test caption one for breakfast',
-			date: '2019-10-10'
+				'http://beardystudios.com/ZURICH_SITE/images/photography/faces/editorial/01.jpg',
+			alt: 'portrait,people',
+			caption: 'Test caption for food',
+			date: '2019-09-03',
+			albumId: 'album1'
 		},
 		{
 			id: 6,
@@ -85,20 +90,20 @@ const PhotGramContext = React.createContext({
 		{
 			id: 10,
 			imgUrl:
-				'http://beardystudios.com/ZURICH_SITE/images/photography/earth/sand/04.jpg',
+				'http://beardystudios.com/ZURICH_SITE/images/photography/earth/waterscapes/01.jpg',
 			alt: 'desert,sand,nature',
 			caption: 'Test caption one for breakfast',
 			date: '2019-09-03',
-			albumId: 'album3'
+			albumId: 'album4'
 		},
 		{
 			id: 11,
 			imgUrl:
-				'http://beardystudios.com/ZURICH_SITE/images/photography/earth/sand/03.jpg',
+				'http://beardystudios.com/ZURICH_SITE/images/photography/earth/waterscapes/03.jpg',
 			alt: 'desert,sand,nature',
 			caption: 'Test caption one for breakfast',
 			date: '2019-09-03',
-			albumId: 'album3'
+			albumId: 'album4'
 		}
 	],
 	albums: [
