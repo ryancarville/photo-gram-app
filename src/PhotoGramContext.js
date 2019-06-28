@@ -61,7 +61,8 @@ const PhotGramContext = React.createContext({
 				'http://beardystudios.com/ZURICH_SITE/images/photography/earth/sand/04.jpg',
 			alt: 'desert,sand,nature',
 			caption: 'Test caption one for breakfast',
-			date: '2019-14-03'
+			date: '2019-14-03',
+			albumId: 'album3'
 		},
 		{
 			id: 8,
@@ -69,7 +70,8 @@ const PhotGramContext = React.createContext({
 				'http://beardystudios.com/ZURICH_SITE/images/photography/earth/sand/10.jpg',
 			alt: 'desert,sand,nature',
 			caption: 'Test caption one for breakfast',
-			date: '2019-31-07'
+			date: '2019-31-07',
+			albumId: 'album3'
 		},
 		{
 			id: 9,
@@ -77,7 +79,8 @@ const PhotGramContext = React.createContext({
 				'http://beardystudios.com/ZURICH_SITE/images/photography/earth/sand/11.jpg',
 			alt: 'desert,sand,nature',
 			caption: 'Test caption one for breakfast',
-			date: '2019-30-05'
+			date: '2019-30-05',
+			albumId: 'album3'
 		},
 		{
 			id: 10,
@@ -85,7 +88,8 @@ const PhotGramContext = React.createContext({
 				'http://beardystudios.com/ZURICH_SITE/images/photography/earth/sand/04.jpg',
 			alt: 'desert,sand,nature',
 			caption: 'Test caption one for breakfast',
-			date: '2019-09-03'
+			date: '2019-09-03',
+			albumId: 'album3'
 		},
 		{
 			id: 11,
@@ -93,7 +97,34 @@ const PhotGramContext = React.createContext({
 				'http://beardystudios.com/ZURICH_SITE/images/photography/earth/sand/03.jpg',
 			alt: 'desert,sand,nature',
 			caption: 'Test caption one for breakfast',
-			date: '2019-09-03'
+			date: '2019-09-03',
+			albumId: 'album3'
+		}
+	],
+	albums: [
+		{
+			id: 'album1',
+			name: 'people',
+			imgUrl:
+				'http://beardystudios.com/ZURICH_SITE/images/photography/faces/portraits/03.jpg'
+		},
+		{
+			id: 'album2',
+			name: 'food',
+			imgUrl:
+				'http://beardystudios.com/ZURICH_SITE/images/photography/food/lunch/02.jpg'
+		},
+		{
+			id: 'album3',
+			name: 'earth',
+			imgUrl:
+				'http://beardystudios.com/ZURICH_SITE/images/photography/earth/sand/03.jpg'
+		},
+		{
+			id: 'album4',
+			name: 'water',
+			imgUrl:
+				'http://beardystudios.com/ZURICH_SITE/images/photography/earth/waterscapes/01.jpg'
 		}
 	]
 });

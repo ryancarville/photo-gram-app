@@ -9,6 +9,7 @@ class App extends Component {
 		super(props);
 		this.state = {
 			images: [],
+			albums: [],
 			validLogin: false,
 			error: null
 		};
@@ -54,8 +55,10 @@ class App extends Component {
 	static contextType = PhotoGramContext;
 	componentDidMount() {
 		this.setState({
-			images: this.context.images
+			images: this.context.images,
+			albums: this.context.albums
 		});
+
 		// fetch(config.API_ENDPOINT, {
 		// 	method: 'GET',
 		// 	header: {
@@ -77,6 +80,7 @@ class App extends Component {
 	render() {
 		const contextValue = {
 			images: this.state.images,
+			albums: this.state.albums,
 			uploadImage: this.uploadImage,
 			deleteImage: this.deleteImage,
 			updateImage: this.updateImage,

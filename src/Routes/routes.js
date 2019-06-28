@@ -6,6 +6,7 @@ import Login from '../components/Login/login.js';
 import HomePage from '../components/HomePage/homePage.js';
 import AlbumPage from '../components/AlbumPage/albumPage.js';
 import ImagePage from '../components/ImagePage/imagePage.js';
+import Upload from '../components/Upload/upload';
 
 class Router extends Component {
 	render() {
@@ -15,9 +16,9 @@ class Router extends Component {
 				<Route path='/signUp' component={SignUp} />
 				<Route path='/login' component={Login} />
 				<Route path='/homePage' component={HomePage} />
-				<Route path='/user/albums/:album_id' component={AlbumPage} />
+				<Route path='/albums/:album_id' component={AlbumPage} />
 				<Route path={'/images/:image_id'} component={ImagePage} />
-
+				<Route path='/upload' component={Upload} />
 				<Redirect from='*' to='/' />
 			</Switch>
 		);

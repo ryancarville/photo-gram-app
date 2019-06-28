@@ -54,9 +54,7 @@ export default class ImagePage extends Component {
 		const { images } = this.context;
 		const imageId = this.props.match.params.image_id;
 		const image = images.filter(img => img.id.toString() === imageId);
-		console.log(images);
-		console.log(imageId);
-		console.log(image[0]);
+
 		this.setState({
 			id: image[0].id,
 			imgUrl: image[0].imgUrl,
@@ -65,7 +63,6 @@ export default class ImagePage extends Component {
 			date: image[0].date,
 			error: null
 		});
-		console.log(this.state);
 	}
 
 	handleBack = e => {

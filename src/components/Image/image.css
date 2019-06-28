@@ -4,3 +4,7 @@
 	overflow: hidden;
 	border: 1px solid white;
 }
+
+.image-container {
+	height: 125px;
+}
