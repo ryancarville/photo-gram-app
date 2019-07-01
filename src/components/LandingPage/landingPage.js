@@ -16,7 +16,7 @@ class LandingPage extends Component {
 				</div>
 				<div className='landing-example'>
 					<img
-						src='http://beardystudios.com/photo-gram-app/images/account-example.png'
+						src='http://beardystudios.com/Bloc_Capstone/photoGram/images/landingPage-example.png'
 						alt='account-example'
 					/>
 				</div>
