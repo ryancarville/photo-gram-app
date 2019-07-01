@@ -1,11 +1,13 @@
 .image-page-container {
 	width: 100%;
 	padding-top: 50px;
+	margin-bottom: 25px;
 	text-align: center;
 }
 
 .singleImg {
 	width: 100%;
+	margin-top: 20px;
 }
 
 #imagePageBackBtn {
@@ -21,7 +23,15 @@
 
 .imageButtons {
 	width: 100%;
-	display: flex;
-	justify-content: space-around;
+	display: block;
+}
+
+.imageButtons button {
+	cursor: pointer;
+	width: 90%;
+	height: 50px;
+	border: 1px solid black;
+	background-color: transparent;
+	font-size: 30px;
 	margin-top: 35px;
 }

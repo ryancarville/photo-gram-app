@@ -2,12 +2,20 @@
 	width: 100%;
 	padding-top: 50px;
 	font-size: 30px;
-	vertical-align: middle;
 }
 
 .albumPage-container p {
-	margin: 15px;
-
 	font-size: 30px;
-	vertical-align: middle;
+	height: 5px;
+	width: 100%;
+}
+
+.albumPageBtnContainer {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+}
+
+#removeAlbumBtn {
+	font-size: 20px;
 }

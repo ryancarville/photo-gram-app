@@ -20,7 +20,7 @@ class HomePage extends Component {
 					</div>
 				</div>
 				<h2>Albums</h2>
-				<Albums />
+				<Albums state={this.props} />
 				<ImageGrid />
 			</div>
 		);

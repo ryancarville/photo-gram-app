@@ -43,26 +43,44 @@ export default class AlbumPage extends Component {
 		this.props.history.goBack();
 	};
 
-	deleteImageRequest = (imageId, cd) => {
-		cd(imageId);
+	deleteAlbumRequest = (albumId, cd) => {
+		cd(albumId);
 		this.handleBack();
 	};
 
 	render() {
+		const albumId = this.props.match.params.album_id;
 		return (
-			<section>
-				<div className='albumPage-container'>
-					<button type='button' id='imagePageBackBtn' onClick={this.handleBack}>
-						&#171;{' '}
-					</button>
-					<p>{this.state.albumName}</p>
-					<div className='grid-container'>
-						{this.state.albumImages.map(img => (
-							<Image key={img.id.toString()} {...img} />
-						))}
-					</div>
-				</div>
-			</section>
+			<PhotoGramContext.Consumer>
+				{context => (
+					<section>
+						<div className='albumPage-container'>
+							<div className='albumPageBtnContainer'>
+								<button
+									type='button'
+									id='imagePageBackBtn'
+									onClick={this.handleBack}>
+									&#171;{' '}
+								</button>
+								<p>{this.state.albumName}</p>
+								<button
+									id='removeAlbumBtn'
+									type='button'
+									onClick={() =>
+										this.deleteAlbumRequest(albumId, context.deleteAlbum)
+									}>
+									Remove Album
+								</button>
+							</div>
+							<div className='grid-container'>
+								{this.state.albumImages.map(img => (
+									<Image key={img.id.toString()} {...img} />
+								))}
+							</div>
+						</div>
+					</section>
+				)}
+			</PhotoGramContext.Consumer>
 		);
 	}
 }

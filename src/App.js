@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+
 import Nav from './components/Nav/nav';
 import Routes from './Routes/routes.js';
 import PhotoGramContext from './PhotoGramContext';
-//import config from './config';
 
 class App extends Component {
 	constructor(props) {
@@ -10,18 +10,27 @@ class App extends Component {
 		this.state = {
 			images: [],
 			albums: [],
+			signUp: false,
 			validLogin: false,
 			error: null
 		};
 	}
+	static contextType = PhotoGramContext;
 
-	signUp = e => {};
+	signUp = e => {
+		this.setState({ signUp: true });
+		alert('New User account created!  Please login.');
+	};
 
 	login = e => {
 		this.setState({
 			validLogin: true
 		});
 		console.log(this.state);
+	};
+
+	goBack = e => {
+		this.props.history.goBack();
 	};
 
 	setImages = images => {
@@ -52,7 +61,20 @@ class App extends Component {
 			)
 		});
 	};
-	static contextType = PhotoGramContext;
+
+	addAlbum = album => {
+		this.setState({
+			albums: [...this.state.albums, album]
+		});
+	};
+
+	deleteAlbum = albumId => {
+		const newAlbums = this.state.albums.filter(alb => alb.id !== albumId);
+		this.setState({
+			albums: newAlbums
+		});
+	};
+
 	componentDidMount() {
 		this.setState({
 			images: this.context.images,
@@ -81,11 +103,14 @@ class App extends Component {
 		const contextValue = {
 			images: this.state.images,
 			albums: this.state.albums,
+			addAlbum: this.addAlbum,
+			deleteAlbum: this.deleteAlbum,
 			uploadImage: this.uploadImage,
 			deleteImage: this.deleteImage,
 			updateImage: this.updateImage,
 			login: this.login,
 			signUp: this.signUp,
+			goBack: this.goBack,
 			state: this.state
 		};
 

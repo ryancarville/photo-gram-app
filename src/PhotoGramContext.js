@@ -3,9 +3,12 @@ import React from 'react';
 const PhotGramContext = React.createContext({
 	signUp: () => {},
 	login: () => {},
+	goBack: () => {},
 	uploadImage: () => {},
 	deleteImage: () => {},
 	updateImage: () => {},
+	addAlbum: () => {},
+	deletAlbum: () => {},
 	images: [
 		{
 			id: 1,

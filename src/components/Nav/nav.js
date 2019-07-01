@@ -15,6 +15,7 @@ class Nav extends Component {
 	}
 	handleLogout = e => {
 		this.context.state.validLogin = false;
+		this.context.state.signUp = false;
 	};
 	render() {
 		const state = this.context.state.validLogin;
@@ -40,7 +41,7 @@ class Nav extends Component {
 						<Link to='/upload'>Upload</Link>
 					</li>
 					<li>
-						<Link to='/'>PhotoGram</Link>
+						<Link to='/homePage'>PhotoGram</Link>
 					</li>
 					<li>
 						<Link to='/logout'>

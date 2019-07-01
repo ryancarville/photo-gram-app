@@ -74,6 +74,15 @@ export default class Upload extends Component {
 									id='commentsForImage'
 								/>
 							</label>
+							<label htmlFor='tags'>
+								Tags{' '}
+								<input
+									className='uploadFormInput'
+									type='text'
+									name='tags'
+									id='tagsForImage'
+								/>
+							</label>
 							<label htmlFor='album'>
 								Album{' '}
 								<select className='uploadFormInput'>
@@ -97,7 +106,7 @@ export default class Upload extends Component {
 							/>
 							<input
 								type='button'
-								value='Return Home'
+								value='Cancel'
 								name='returnHome'
 								id='returnHomeBtn'
 								onClick={this.handleBack}

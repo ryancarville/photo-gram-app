@@ -94,7 +94,9 @@ export default class ImagePage extends Component {
 						<p>{this.state.caption}</p>
 						<span>Date:{this.state.date}</span>
 						<div className='imageButtons'>
-							<Link to={`/edit/${this.state.id}`}>Edit Post</Link>
+							<Link to={`/edit/${this.state.id}`}>
+								<button type='button'>Edit Post</button>
+							</Link>
 							<button
 								type='button'
 								onClick={() =>
