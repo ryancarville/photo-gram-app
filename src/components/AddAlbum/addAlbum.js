@@ -9,16 +9,17 @@ export default class AddAlbum extends Component {
 			id: '',
 			name: '',
 			imgUrl: '',
-			imagePreveiw: null
+			imagePreview: null
 		};
-		this.handleImagePreveiw = this.handleImagePreveiw.bind(this);
+		this.handleImagePreview = this.handleImagePreview.bind(this);
 	}
-	static contextType = PhotoGramContext;
 
+	static contextType = PhotoGramContext;
+	//back button callback
 	handleBack = e => {
 		this.props.history.goBack();
 	};
-
+	//handle form submit event
 	handleSubmit = e => {
 		e.preventDefault();
 		alert(
@@ -28,19 +29,19 @@ export default class AddAlbum extends Component {
 		this.context.addAlbum(this.state);
 		this.props.history.goBack();
 	};
-
+	//set state on folder name change
 	handleFolderName = e => {
 		this.setState({
 			id: e.target.value,
 			name: e.target.value
 		});
 	};
-
-	handleImagePreveiw(e) {
+	//set state for image preview
+	handleImagePreview(e) {
 		this.setState({
 			imgUrl:
 				'http://beardystudios.com/Bloc_Capstone/photoGram/images/defaultFolderIcon.png',
-			imagePreveiw: URL.createObjectURL(e.target.files[0])
+			imagePreview: URL.createObjectURL(e.target.files[0])
 		});
 	}
 
@@ -66,14 +67,14 @@ export default class AddAlbum extends Component {
 							type='file'
 							name='folderImage'
 							id='folderImage'
-							onChange={this.handleImagePreveiw}
+							onChange={this.handleImagePreview}
 						/>
 					</label>
 					<div className='folderIconPreview'>
 						<img
-							src={this.state.imagePreveiw}
+							src={this.state.imagePreview}
 							alt={this.state.alt}
-							className='albumImgPreveiw'
+							className='albumImgPreview'
 						/>
 						<p>{this.state.name}</p>
 					</div>

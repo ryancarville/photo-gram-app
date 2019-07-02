@@ -5,7 +5,7 @@ import './albums.css';
 
 class Albums extends Component {
 	static contextType = PhotoGramContext;
-
+	//create all albums withing the context array
 	createAlbum = albums =>
 		this.context.state.albums.map(album => {
 			return (
@@ -19,7 +19,6 @@ class Albums extends Component {
 		});
 	render() {
 		const { albums } = this.context.state.albums;
-
 		return (
 			<PhotoGramContext.Consumer>
 				{context => (

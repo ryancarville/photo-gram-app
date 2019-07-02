@@ -6,6 +6,7 @@ import './nav.css';
 
 class Nav extends Component {
 	static contextType = PhotoGramContext;
+	//listens for all pathname changes
 	componentWillMount() {
 		// will trigger the callback function whenever a new Route renders a component(as long as this component stays mounted as routes change)
 		this.props.history.listen(() => {
@@ -13,6 +14,7 @@ class Nav extends Component {
 			console.log('New URL', this.props.history.location.pathname);
 		});
 	}
+	//handle logout
 	handleLogout = e => {
 		this.context.state.validLogin = false;
 		this.context.state.signUp = false;

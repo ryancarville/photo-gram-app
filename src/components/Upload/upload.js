@@ -14,17 +14,17 @@ export default class Upload extends Component {
 	}
 	static defaultProps = { albums: [] };
 	static contextType = PhotoGramContext;
-
+	//handle form submit
 	handleUpload = e => {
 		e.preventDefault();
 		alert('This is just a mock UX for Upload images');
 		this.handleBack();
 	};
-
+	//handle back event
 	handleBack = e => {
 		this.props.history.goBack();
 	};
-
+	//get all albums in context array
 	getAlbumNames(e) {
 		console.log(e);
 		const albums = e.map(album => (
@@ -34,7 +34,7 @@ export default class Upload extends Component {
 		));
 		return albums;
 	}
-
+	//handle image preview on adding image to upload form
 	handleImagePreveiw(e) {
 		this.setState({
 			imagePreveiw: URL.createObjectURL(e.target.files[0])

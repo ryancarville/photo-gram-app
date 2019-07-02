@@ -8,12 +8,11 @@ class ImageGrid extends Component {
 	static proptTypes = {
 		images: PropTypes.arrayOf(
 			PropTypes.shape({
-				id: PropTypes.string
+				id: PropTypes.number
 			})
 		)
 	};
 	static defaultProps = { images: [] };
-
 	static contextType = PhotoGramContext;
 
 	render() {
@@ -31,4 +30,7 @@ class ImageGrid extends Component {
 	}
 }
 
+ImageGrid.propTypes = {
+	id: PropTypes.number.isRequired
+};
 export default ImageGrid;

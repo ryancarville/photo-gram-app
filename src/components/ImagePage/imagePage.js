@@ -5,9 +5,7 @@ import PhotoGramContext from '../../PhotoGramContext';
 //import config from '../../config';
 import './imagePage.css';
 
-// function deleteImageRequest(imageId, cd) {
-// 	cd(imageId);
-
+//API fetch request (waiting for API server to be built)
 // fetch(config.API_ENDPOINT + `/${imageId}`, {
 // 	method: 'DELETE',
 // 	headers: {
@@ -54,7 +52,7 @@ export default class ImagePage extends Component {
 	};
 	static defaultProps = { images: [] };
 	static contextType = PhotoGramContext;
-
+	//on mount set state with current image attributes
 	componentDidMount() {
 		const { images } = this.context;
 		const imageId = this.props.match.params.image_id;
@@ -69,11 +67,11 @@ export default class ImagePage extends Component {
 			error: null
 		});
 	}
-
+	//handle back event
 	handleBack = e => {
 		this.props.history.goBack();
 	};
-
+	//delete request event handle sent to context
 	deleteImageRequest = (imageId, cd) => {
 		cd(imageId);
 		this.handleBack();

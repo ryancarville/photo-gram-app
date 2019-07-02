@@ -22,7 +22,7 @@ export default class AlbumPage extends Component {
 	};
 	static defaultProps = { images: [], albums: [] };
 	static contextType = PhotoGramContext;
-
+	//on mount set state with all images assigned to current album
 	componentWillMount() {
 		const { images } = this.context;
 		const { albums } = this.context;
@@ -34,15 +34,12 @@ export default class AlbumPage extends Component {
 			albumImages: albumImgs,
 			albumName: albumName
 		});
-		console.log(images);
-		console.log(albumId);
-		console.log(albumName);
 	}
-
+	//handle back event
 	handleBack = e => {
 		this.props.history.goBack();
 	};
-
+	//delete request of Album sent to context event handler
 	deleteAlbumRequest = (albumId, cd) => {
 		cd(albumId);
 		this.handleBack();

@@ -14,14 +14,15 @@ class Login extends Component {
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
-
+	//set state on change for email
 	handleEmailChange = e => {
 		this.setState({ email: e.target.value });
 	};
-
+	//set state on change for password
 	handlePasswordChange = e => {
 		this.setState({ password: e.target.value });
 	};
+	//handle form submit
 	handleSubmit = e => {
 		e.preventDefault();
 		this.setState({
@@ -31,6 +32,7 @@ class Login extends Component {
 	};
 
 	render() {
+		//redirect validation on succesful login
 		const redirectToHome = this.state.redirect;
 		if (redirectToHome) {
 			console.log(this.state);

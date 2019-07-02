@@ -22,9 +22,9 @@ export default class EditPage extends Component {
 			})
 		)
 	};
-
 	static defaultProps = { images: [] };
 	static contextType = PhotoGramContext;
+	//on mount set state with current image and attributes
 	componentDidMount() {
 		const { images } = this.context;
 		const imageId = this.props.match.params.image_id;
@@ -39,39 +39,41 @@ export default class EditPage extends Component {
 			date: image[0].date
 		});
 	}
-
+	//handle fomr submit event
 	handleSubmit = e => {
 		e.preventDefault();
 		this.context.updateImage(this.state);
 		this.goBack();
 	};
-
+	//set state on change for caption
 	handleCaptionChange = e => {
 		this.setState({
 			caption: e.target.value
 		});
 	};
+	//set state on change for album
 	handleAlbumChange = e => {
 		this.setState({
 			albumId: e.target.value
 		});
 	};
-
+	//set state on change for date
 	handleDateChange = e => {
 		this.setState({
 			date: e.target.value
 		});
 	};
+	//set state on change for tags
 	handleTagsChange = e => {
 		this.setState({
 			alt: e.target.value
 		});
 	};
-
+	//handle back event
 	goBack = e => {
 		this.props.history.goBack();
 	};
-
+	//get all albums for select menu
 	getAlbumNames(e) {
 		console.log(e);
 		const albums = e.map(album => (

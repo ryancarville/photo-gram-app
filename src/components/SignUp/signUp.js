@@ -13,26 +13,26 @@ class SignUp extends Component {
 			error: null
 		};
 	}
-
 	static contextType = PhotoGramContext;
+	//set state on change for name
 	handleNameChange = e => {
 		this.setState({
 			full_name: e.target.value
 		});
 	};
-
+	//set state on change for email
 	handleEmailChange = e => {
 		this.setState({
 			email: e.target.value
 		});
 	};
-
+	//set state on change for password
 	handlePasswordChange = e => {
 		this.setState({
 			password: e.target.value
 		});
 	};
-
+	//handle form submit
 	handleSubmit = (e, cd) => {
 		e.preventDefault();
 		cd(this.state);
