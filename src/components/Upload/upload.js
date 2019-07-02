@@ -6,7 +6,6 @@ export default class Upload extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			simulateClick: true,
 			fileSelected: false,
 			imagePreveiw: null,
 			albumNames: []
@@ -50,9 +49,7 @@ export default class Upload extends Component {
 	}
 
 	componentDidMount() {
-		if (this.state.simulateClick) {
-			document.getElementById('fileToUpload').click();
-		}
+		document.getElementById('fileToUpload').click();
 	}
 
 	render() {

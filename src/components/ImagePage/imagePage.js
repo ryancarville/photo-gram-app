@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import PhotoGramContext from '../../PhotoGramContext';
 //import config from '../../config';
@@ -30,7 +29,7 @@ export default class ImagePage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			id: null,
+			id: 0,
 			imgUrl: '',
 			alt: '',
 			caption: '',
@@ -38,19 +37,7 @@ export default class ImagePage extends Component {
 			error: null
 		};
 	}
-	static proptTypes = {
-		images: PropTypes.arrayOf(
-			PropTypes.shape({
-				id: PropTypes.number,
-				imgUrl: PropTypes.string,
-				caption: PropTypes.string,
-				albumId: PropTypes.string,
-				date: PropTypes.string,
-				onClickDelete: PropTypes.func
-			})
-		)
-	};
-	static defaultProps = { images: [] };
+
 	static contextType = PhotoGramContext;
 	//on mount set state with current image attributes
 	componentDidMount() {
@@ -114,16 +101,3 @@ export default class ImagePage extends Component {
 		);
 	}
 }
-
-ImagePage.defaultProps = {
-	onClickDelete: () => {}
-};
-
-ImagePage.propTypes = {
-	id: PropTypes.number.isRequired,
-	imgUrl: PropTypes.string.isRequired,
-	caption: PropTypes.string,
-	albumId: PropTypes.string,
-	date: PropTypes.string,
-	onClickDelete: PropTypes.func
-};
