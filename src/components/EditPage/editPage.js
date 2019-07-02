@@ -10,6 +10,7 @@ export default class EditPage extends Component {
 			id: '',
 			imgUrl: '',
 			caption: '',
+			albumId: '',
 			alt: '',
 			date: ''
 		};
@@ -33,6 +34,7 @@ export default class EditPage extends Component {
 			id: image[0].id,
 			imgUrl: image[0].imgUrl,
 			caption: image[0].caption,
+			albumId: image[0].albumId,
 			alt: image[0].alt,
 			date: image[0].date
 		});
@@ -47,6 +49,11 @@ export default class EditPage extends Component {
 	handleCaptionChange = e => {
 		this.setState({
 			caption: e.target.value
+		});
+	};
+	handleAlbumChange = e => {
+		this.setState({
+			albumId: e.target.value
 		});
 	};
 
@@ -65,6 +72,16 @@ export default class EditPage extends Component {
 		this.props.history.goBack();
 	};
 
+	getAlbumNames(e) {
+		console.log(e);
+		const albums = e.map(album => (
+			<option key={album.id} value={album.id}>
+				{album.name}
+			</option>
+		));
+		return albums;
+	}
+
 	render() {
 		return (
 			<PhotoGramContext.Consumer>
@@ -77,6 +94,7 @@ export default class EditPage extends Component {
 							key={this.state.id}
 							className='imgPreveiw'
 							src={this.state.imgUrl}
+							alt={this.state.alt}
 						/>
 						<form onSubmit={this.handleSubmit} className='imageEditForm'>
 							<label htmlFor='caption'>
@@ -88,6 +106,15 @@ export default class EditPage extends Component {
 									value={this.state.caption}
 									onChange={this.handleCaptionChange}
 								/>
+							</label>
+							<label htmlFor='album'>
+								Album{' '}
+								<select
+									className='uploadFormInput'
+									value={this.state.albumId}
+									onChange={this.handleAlbumChange}>
+									{this.getAlbumNames(context.albums)}
+								</select>
 							</label>
 							<label htmlFor='tags'>
 								Tags{' '}

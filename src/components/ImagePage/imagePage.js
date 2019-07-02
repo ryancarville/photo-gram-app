@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import PhotoGramContext from '../../PhotoGramContext';
-import config from '../../config';
+//import config from '../../config';
 import './imagePage.css';
 
 // function deleteImageRequest(imageId, cd) {
@@ -32,7 +32,7 @@ export default class ImagePage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			id: '',
+			id: null,
 			imgUrl: '',
 			alt: '',
 			caption: '',
@@ -43,7 +43,12 @@ export default class ImagePage extends Component {
 	static proptTypes = {
 		images: PropTypes.arrayOf(
 			PropTypes.shape({
-				id: PropTypes.string
+				id: PropTypes.number,
+				imgUrl: PropTypes.string,
+				caption: PropTypes.string,
+				albumId: PropTypes.string,
+				date: PropTypes.string,
+				onClickDelete: PropTypes.func
 			})
 		)
 	};
@@ -54,7 +59,7 @@ export default class ImagePage extends Component {
 		const { images } = this.context;
 		const imageId = this.props.match.params.image_id;
 		const image = images.filter(img => img.id.toString() === imageId);
-
+		console.log(image[0]);
 		this.setState({
 			id: image[0].id,
 			imgUrl: image[0].imgUrl,
@@ -120,6 +125,7 @@ ImagePage.propTypes = {
 	id: PropTypes.number.isRequired,
 	imgUrl: PropTypes.string.isRequired,
 	caption: PropTypes.string,
+	albumId: PropTypes.string,
 	date: PropTypes.string,
 	onClickDelete: PropTypes.func
 };
