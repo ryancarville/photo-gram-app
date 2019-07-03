@@ -4,14 +4,17 @@ export default class SelectFile extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			simulateClick: true
+			imagePreview: null
 		};
 	}
 	componentDidMount() {
-		if (this.state.simulateClick) {
-			document.getElementById('fileToUpload').click();
-		}
+		document.getElementById('fileToUpload').click();
 	}
+
+	handleOnChange = e => {
+		const image = URL.createObjectURL(e.target.files[0]);
+		this.props.handleImagePreview(image);
+	};
 	render() {
 		return (
 			<input
@@ -19,7 +22,7 @@ export default class SelectFile extends Component {
 				type='file'
 				name='fileToUpload'
 				id='fileToUpload'
-				onChange={this.props.handleImagePreveiw}
+				onChange={this.handleOnChange}
 			/>
 		);
 	}
