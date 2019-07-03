@@ -26,14 +26,29 @@
 	width: 100%;
 }
 
+#desktop-example {
+	display: none;
+}
+
 @media only screen and (min-width: 700px) {
 	.landing-content {
-		width: 100%;
 		margin-left: auto;
 		margin-right: auto;
 	}
 
-	.landing-example img {
-		width: 20%;
+	.landing-example {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	#mobile-example {
+		display: none;
+	}
+	#desktop-example {
+		display: block;
+		width: 70%;
+		margin-left: auto;
+		margin-right: auto;
 	}
 }

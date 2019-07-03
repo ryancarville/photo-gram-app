@@ -17,6 +17,12 @@ class LandingPage extends Component {
 						<img
 							src='http://beardystudios.com/Bloc_Capstone/photoGram/images/landingPage-example.png'
 							alt='account-example'
+							id='mobile-example'
+						/>
+						<img
+							src='http://beardystudios.com/Bloc_Capstone/photoGram/images/desktop-example.png'
+							alt='account-example'
+							id='desktop-example'
 						/>
 					</div>
 				</div>
