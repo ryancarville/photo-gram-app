@@ -43,6 +43,10 @@ class Login extends Component {
 				{context => (
 					<div className='login-form-container'>
 						<h3>Login</h3>
+						<p>
+							This is a dummy form. Entires are required but nothing will be
+							validated. Strickly for UI/UX and user flow feedback.
+						</p>
 						<form className='login-form' onSubmit={this.handleSubmit}>
 							<label htmlFor='email'>
 								Email Address

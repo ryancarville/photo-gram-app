@@ -25,3 +25,15 @@
 .landing-example img {
 	width: 100%;
 }
+
+@media only screen and (min-width: 700px) {
+	.landing-content {
+		width: 100%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.landing-example img {
+		width: 20%;
+	}
+}

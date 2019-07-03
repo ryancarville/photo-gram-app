@@ -68,34 +68,42 @@ export default class ImagePage extends Component {
 		return (
 			<PhotoGramContext.Consumer>
 				{context => (
-					<div className='image-page-container'>
+					<>
 						<button
 							type='button'
 							id='imagePageBackBtn'
 							onClick={this.handleBack}>
 							&#171;{' '}
 						</button>
-						<img
-							key={this.state.id}
-							src={this.state.imgUrl}
-							alt={this.state.alt}
-							className='singleImg'
-						/>
-						<p>{this.state.caption}</p>
-						<span>Date:{this.state.date}</span>
-						<div className='imageButtons'>
-							<Link to={`/edit/${this.state.id}`}>
-								<button type='button'>Edit Post</button>
-							</Link>
-							<button
-								type='button'
-								onClick={() =>
-									this.deleteImageRequest(this.state.id, context.deleteImage)
-								}>
-								Delete
-							</button>
+						<div className='image-page-container'>
+							<img
+								key={this.state.id}
+								src={this.state.imgUrl}
+								alt={this.state.alt}
+								className='singleImg'
+							/>
+							<div className='image-info'>
+								<p>{this.state.caption}</p>
+								<span>Date:{this.state.date}</span>
+
+								<div className='imageButtons'>
+									<Link to={`/edit/${this.state.id}`}>
+										<button type='button'>Edit Post</button>
+									</Link>
+									<button
+										type='button'
+										onClick={() =>
+											this.deleteImageRequest(
+												this.state.id,
+												context.deleteImage
+											)
+										}>
+										Delete
+									</button>
+								</div>
+							</div>
 						</div>
-					</div>
+					</>
 				)}
 			</PhotoGramContext.Consumer>
 		);

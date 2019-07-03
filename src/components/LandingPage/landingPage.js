@@ -13,12 +13,12 @@ class LandingPage extends Component {
 						trolls or unauthorized usage. Easy to use and offers many options to
 						organize your photo sets.{' '}
 					</p>
-				</div>
-				<div className='landing-example'>
-					<img
-						src='http://beardystudios.com/Bloc_Capstone/photoGram/images/landingPage-example.png'
-						alt='account-example'
-					/>
+					<div className='landing-example'>
+						<img
+							src='http://beardystudios.com/Bloc_Capstone/photoGram/images/landingPage-example.png'
+							alt='account-example'
+						/>
+					</div>
 				</div>
 			</>
 		);

@@ -46,6 +46,10 @@ class SignUp extends Component {
 				{context => (
 					<div className='reg-form' id='newUserForm'>
 						<h3>SignUp Today!</h3>
+						<p>
+							This is a dummy form. Entires are required but nothing will be
+							saved. Strickly for UI/UX and user flow feedback.
+						</p>
 						<form
 							onSubmit={e => this.handleSubmit(e, context.signUp)}
 							className='signupForm'>

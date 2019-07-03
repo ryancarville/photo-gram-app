@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PhotoGramContext from '../../PhotoGramContext';
 import SelectFile from '../SelectFile/selectFile';
 import FileSelected from '../FileSelected/fileSelected.js';
 import './upload.css';

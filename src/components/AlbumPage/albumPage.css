@@ -1,6 +1,6 @@
 .albumPage-container {
 	width: 100%;
-	padding-top: 50px;
+	padding-top: 0px;
 	font-size: 30px;
 }
 
@@ -18,4 +18,15 @@
 
 #removeAlbumBtn {
 	font-size: 20px;
+}
+
+@media only screen and (min-width: 700px) {
+	.albumPageBtnContainer {
+		margin-bottom: 20px;
+	}
+
+	#removeAlbumBtn {
+		border: none;
+		background-color: transparent;
+	}
 }

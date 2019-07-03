@@ -45,3 +45,19 @@
 	background-color: transparent;
 	margin-top: 15px;
 }
+
+@media only screen and (min-width: 700px) {
+	.add-album-container {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+	.addFolderForm {
+		width: 30%;
+	}
+	.addFolderForm input {
+		height: 40px;
+		font-size: 20px;
+	}
+}

@@ -11,14 +11,13 @@
 }
 
 #imagePageBackBtn {
-	position: relative;
 	width: 50px;
 	height: 50px;
 	float: left;
 	font-size: 45px;
 	cursor: pointer;
 	padding: 0;
-	margin: 0;
+	margin-top: 50px;
 }
 
 .imageButtons {
@@ -34,4 +33,27 @@
 	background-color: transparent;
 	font-size: 30px;
 	margin-top: 35px;
+}
+
+@media only screen and (min-width: 700px) {
+	.image-page-container {
+		display: flex;
+		align-items: center;
+		padding-top: 5px;
+	}
+	.singleImg {
+		width: 1000px;
+		margin-top: 1%;
+		margin-left: 2%;
+	}
+	.image-info {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+	}
+	#imagePageBackBtn {
+		margin-top: 50px;
+		background-color: transparent;
+		border: none;
+	}
 }

@@ -44,3 +44,20 @@
 	color: white;
 	position: relative;
 }
+
+@media only screen and (min-width: 700px) {
+	.albums-bar {
+		margin-top: 5%;
+		width: 100%;
+		height: auto;
+	}
+	.albums-bar ul {
+		box-sizing: border-box;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+}

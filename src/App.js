@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-
 import Nav from './components/Nav/nav';
 import Routes from './Routes/routes.js';
 import PhotoGramContext from './PhotoGramContext';
+import './App.css';
 
 class App extends Component {
 	constructor(props) {

@@ -13,3 +13,31 @@
 .content-counter span {
 	font-size: 25px;
 }
+
+@media only screen and (min-width: 700px) {
+	.homePage {
+		width: 100%;
+		display: flex;
+		justify-content: space-around;
+	}
+	.sideBar {
+		width: 10%;
+		margin-left: 2%;
+		display: block;
+		text-align: center;
+	}
+	.content-counter {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+	}
+	.albums-container {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+	}
+	.images-container {
+		width: 100%;
+		margin: 100px;
+	}
+}

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './selectFile.css';
 
 export default class SelectFile extends Component {
 	constructor(props) {

@@ -6,7 +6,7 @@
 	text-align: center;
 }
 
-.imgPreveiw {
+.imgPreview {
 	width: 100%;
 	margin-top: 20px;
 }
@@ -59,4 +59,46 @@
 	font-size: 20px;
 	padding: 10px;
 	box-sizing: border-box;
+}
+
+@media only screen and (min-width: 700px) {
+	.edit-page-container {
+		display: flex;
+		align-items: center;
+		padding-top: 5px;
+	}
+	.imgPreview {
+		width: 1000px;
+		margin-top: 1%;
+		margin-left: 2%;
+		padding-top: 0;
+	}
+	.imageEditForm {
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+		padding-top: 0;
+		margin-top: 0;
+	}
+	.imageEditForm input {
+		width: 50%;
+		height: 25px;
+		font-size: 20px;
+		padding: 15px;
+		box-sizing: border-box;
+	}
+
+	.imageEditForm select {
+		width: 50%;
+		height: 35px;
+		font-size: 20px;
+	}
+
+	.imageEditFormBtnContainer {
+		display: flex;
+		width: 100%;
+	}
+	.imageEditFormBtnContainer button {
+		width: 30%;
+	}
 }

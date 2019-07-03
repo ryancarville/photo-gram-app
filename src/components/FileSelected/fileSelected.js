@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PhotoGramContext from '../../PhotoGramContext';
+import './fileSelected.css';
 
 export default class FileSelected extends Component {
 	static contextType = PhotoGramContext;
@@ -18,68 +19,66 @@ export default class FileSelected extends Component {
 		return (
 			<PhotoGramContext.Consumer>
 				{context => (
-					<form
-						className='imageUploadForm'
-						encType='multipart/form-data'
-						onSubmit={this.props.handleUpload}>
-						<button
-							type='button'
-							id='imagePageBackBtn'
-							onClick={this.props.handleBack}>
-							&#171;{' '}
-						</button>
-						<img
-							src={this.props.state.imagePreview}
-							className='imgPreveiw'
-							alt=''
-						/>
-						<label htmlFor='comments'>
-							{' '}
-							Comments
-							<textarea
-								className='uploadFormInput'
-								name='comments'
-								id='commentsForImage'
+					<>
+						<div className='uploadFormContainer'>
+							<img
+								src={this.props.state.imagePreview}
+								className='uploadImgPreview'
+								alt=''
 							/>
-						</label>
-						<label htmlFor='tags'>
-							Tags{' '}
-							<input
-								className='uploadFormInput'
-								type='text'
-								name='tags'
-								id='tagsForImage'
-							/>
-						</label>
-						<label htmlFor='album'>
-							Album{' '}
-							<select className='uploadFormInput'>
-								{this.getAlbumNames(context.albums)}
-							</select>
-						</label>
-						<label htmlFor='date'>
-							Date Taken{' '}
-							<input
-								className='uploadFormInput'
-								type='date'
-								name='date'
-								id='dateForImage'
-							/>
-						</label>
-						<input
-							type='submit'
-							value='Upload Image'
-							name='submit'
-							id='uploadFormBtn'
-						/>
-						<input
-							type='button'
-							value='Cancel'
-							name='returnHome'
-							id='returnHomeBtn'
-							onClick={this.props.handleGoHome}
-						/>
-					</form>
+							<form
+								className='imageUploadForm'
+								encType='multipart/form-data'
+								onSubmit={this.props.handleUpload}>
+								<label htmlFor='comments'>
+									{' '}
+									Caption
+									<textarea
+										className='uploadFormInput'
+										name='comments'
+										id='commentsForImage'
+									/>
+								</label>
+								<label htmlFor='tags'>
+									Tags{' '}
+									<input
+										className='uploadFormInput'
+										type='text'
+										name='tags'
+										id='tagsForImage'
+									/>
+								</label>
+								<label htmlFor='album'>
+									Album{' '}
+									<select className='uploadFormInput'>
+										{this.getAlbumNames(context.albums)}
+									</select>
+								</label>
+								<label htmlFor='date'>
+									Date Taken{' '}
+									<input
+										className='uploadFormInput'
+										type='date'
+										name='date'
+										id='dateForImage'
+									/>
+								</label>
+								<input
+									type='submit'
+									value='Upload Image'
+									name='submit'
+									id='uploadFormBtn'
+								/>
+								<input
+									type='button'
+									value='Cancel'
+									name='returnHome'
+									id='returnHomeBtn'
+									onClick={this.props.handleGoHome}
+								/>
+							</form>
+						</div>
+					</>
 				)}
 			</PhotoGramContext.Consumer>
 		);

@@ -88,62 +88,65 @@ export default class EditPage extends Component {
 		return (
 			<PhotoGramContext.Consumer>
 				{context => (
-					<div className='edit-page-container'>
+					<>
 						<button type='button' id='imagePageBackBtn' onClick={this.goBack}>
 							&#171;{' '}
 						</button>
-						<img
-							key={this.state.id}
-							className='imgPreveiw'
-							src={this.state.imgUrl}
-							alt={this.state.alt}
-						/>
-						<form onSubmit={this.handleSubmit} className='imageEditForm'>
-							<label htmlFor='caption'>
-								Caption
-								<textarea
-									type='text'
-									name='caption'
-									id='captionTextarea'
-									value={this.state.caption}
-									onChange={this.handleCaptionChange}
-								/>
-							</label>
-							<label htmlFor='album'>
-								Album{' '}
-								<select
-									className='uploadFormInput'
-									value={this.state.albumId}
-									onChange={this.handleAlbumChange}>
-									{this.getAlbumNames(context.albums)}
-								</select>
-							</label>
-							<label htmlFor='tags'>
-								Tags{' '}
-								<input
-									type='text'
-									name='tags'
-									value={this.state.alt}
-									onChange={this.handleTagsChange}
-								/>
-							</label>
-							<label htmlFor='date'>
-								Date{' '}
-								<input
-									type='date'
-									name='date'
-									value={this.state.date}
-									onChange={this.handleDateChange}
-								/>
-							</label>
-							<button type='submit' value='save'>
-								Save
-							</button>
-							<button type='button' onClick={this.goBack}>
-								Cancel
-							</button>
-						</form>
-					</div>
+						<div className='edit-page-container'>
+							<img
+								key={this.state.id}
+								className='imgPreview'
+								src={this.state.imgUrl}
+								alt={this.state.alt}
+							/>
+							<form onSubmit={this.handleSubmit} className='imageEditForm'>
+								<label htmlFor='caption'>
+									Caption
+									<textarea
+										type='text'
+										name='caption'
+										id='captionTextarea'
+										value={this.state.caption}
+										onChange={this.handleCaptionChange}
+									/>
+								</label>
+								<label htmlFor='album'>
+									Album{' '}
+									<select
+										value={this.state.albumId}
+										onChange={this.handleAlbumChange}>
+										{this.getAlbumNames(context.albums)}
+									</select>
+								</label>
+								<label htmlFor='tags'>
+									Tags{' '}
+									<input
+										type='text'
+										name='tags'
+										value={this.state.alt}
+										onChange={this.handleTagsChange}
+									/>
+								</label>
+								<label htmlFor='date'>
+									Date{' '}
+									<input
+										type='date'
+										name='date'
+										value={this.state.date}
+										onChange={this.handleDateChange}
+									/>
+								</label>
+								<div className='imageEditFormBtnContainer'>
+									<button type='submit' value='save'>
+										Save
+									</button>
+									<button type='button' onClick={this.goBack}>
+										Cancel
+									</button>
+								</div>
+							</form>
+						</div>
+					</>
 				)}
 			</PhotoGramContext.Consumer>
 		);

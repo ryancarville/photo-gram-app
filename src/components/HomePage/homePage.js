@@ -9,19 +9,26 @@ class HomePage extends Component {
 	render() {
 		return (
 			<div className='homePage'>
-				<div className='content-counter'>
-					<div>
-						<h4>Images</h4>
-						<ImageCount />
+				<div className='sideBar'>
+					<div className='content-counter'>
+						<div>
+							<h4>Images</h4>
+							<ImageCount />
+						</div>
+						<div>
+							<h4>Albums</h4>
+							<AlbumCount />
+						</div>
 					</div>
-					<div>
-						<h4>Albums</h4>
-						<AlbumCount />
+					<div className='albums-container'>
+						<h2>Albums</h2>
+						<Albums />
 					</div>
 				</div>
-				<h2>Albums</h2>
-				<Albums state={this.props} />
-				<ImageGrid />
+
+				<div className='images-container'>
+					<ImageGrid />
+				</div>
 			</div>
 		);
 	}
