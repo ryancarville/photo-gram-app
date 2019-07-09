@@ -8,6 +8,10 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			userId: '',
+			userName: '',
+			userPhoto: '',
+			users: [],
 			images: [],
 			albums: [],
 			signUp: false,
@@ -22,8 +26,13 @@ class App extends Component {
 		alert('New User account created!  Please login.');
 	};
 
-	login = e => {
+	login = userId => {
+		console.log(userId);
+		const user = this.state.users.filter(usr => usr.id === userId);
 		this.setState({
+			userId: userId,
+			userName: user[0].name,
+			userPhoto: user[0].photo,
 			validLogin: true
 		});
 		console.log(this.state);
@@ -31,6 +40,12 @@ class App extends Component {
 
 	goBack = e => {
 		this.props.history.goBack();
+	};
+
+	handleProfileImageChange = profileImage => {
+		this.setState({
+			userPhoto: profileImage
+		});
 	};
 
 	setImages = images => {
@@ -77,6 +92,7 @@ class App extends Component {
 
 	componentDidMount() {
 		this.setState({
+			users: this.context.users,
 			images: this.context.images,
 			albums: this.context.albums
 		});
@@ -101,6 +117,8 @@ class App extends Component {
 	}
 	render() {
 		const contextValue = {
+			users: this.state.users,
+			handleProfileImageChange: this.handleProfileImageChange,
 			images: this.state.images,
 			albums: this.state.albums,
 			addAlbum: this.addAlbum,

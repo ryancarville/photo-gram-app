@@ -2,12 +2,6 @@ import React, { Component } from 'react';
 import './selectFile.css';
 
 export default class SelectFile extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			imagePreview: null
-		};
-	}
 	componentDidMount() {
 		document.getElementById('fileToUpload').click();
 	}

@@ -65,6 +65,7 @@ export default class ImagePage extends Component {
 	};
 
 	render() {
+		const userId = this.props.match.params.user_id;
 		return (
 			<PhotoGramContext.Consumer>
 				{context => (
@@ -87,7 +88,7 @@ export default class ImagePage extends Component {
 								<span>Date:{this.state.date}</span>
 
 								<div className='imageButtons'>
-									<Link to={`/edit/${this.state.id}`}>
+									<Link to={`/${userId}/edit/${this.state.id}`}>
 										<button type='button'>Edit Post</button>
 									</Link>
 									<button

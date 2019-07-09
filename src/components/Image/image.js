@@ -9,7 +9,7 @@ export default function Image(props) {
 		<PhotoGramContext.Consumer>
 			{context => (
 				<div className='image-container'>
-					<Link to={`/images/${props.id}`}>
+					<Link to={`/${props.userId}/images/${props.id}`}>
 						<img
 							key={props.id}
 							src={props.imgUrl}

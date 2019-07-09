@@ -14,6 +14,8 @@ class Login extends Component {
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
+
+	static contextType = PhotoGramContext;
 	//set state on change for email
 	handleEmailChange = e => {
 		this.setState({ email: e.target.value });
@@ -25,18 +27,36 @@ class Login extends Component {
 	//handle form submit
 	handleSubmit = e => {
 		e.preventDefault();
-		this.setState({
-			redirect: true,
-			error: null
-		});
+		const { users } = this.context;
+		const loginEmail = this.state.email;
+		const loginPass = this.state.password;
+		const validUser = users.filter(
+			usr => usr.email === loginEmail && usr.password === loginPass
+		);
+		console.log(validUser);
+		if (validUser == 0) {
+			this.setState({
+				error: 'Not a valid Email Address'
+			});
+		} else {
+			const userId = validUser[0].id;
+			console.log(userId);
+			this.context.login(userId);
+			// this.setState({
+			// 	userId: userId,
+			// 	redirect: true,
+			// 	error: null
+			// });
+		}
 	};
 
 	render() {
 		//redirect validation on succesful login
-		const redirectToHome = this.state.redirect;
+		const redirectToHome = this.context.state.validLogin;
 		if (redirectToHome) {
 			console.log(this.state);
-			return <Redirect to='/homePage' />;
+			const userId = this.context.state.userId;
+			return <Redirect to={`/${userId}/homePage`} />;
 		}
 		return (
 			<PhotoGramContext.Consumer>
@@ -47,6 +67,7 @@ class Login extends Component {
 							This is a dummy form. Entires are required but nothing will be
 							validated. Strickly for UI/UX and user flow feedback.
 						</p>
+						<div className='errMsg-login'>{this.state.error}</div>
 						<form className='login-form' onSubmit={this.handleSubmit}>
 							<label htmlFor='email'>
 								Email Address
@@ -70,7 +91,10 @@ class Login extends Component {
 									required
 								/>
 							</label>
-							<button type='submit' id='loginFormBtn' onClick={context.login}>
+							<button
+								type='submit'
+								id='loginFormBtn'
+								onClick={this.handleSubmit}>
 								Let's Go!
 							</button>
 						</form>

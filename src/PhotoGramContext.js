@@ -4,11 +4,30 @@ const PhotGramContext = React.createContext({
 	signUp: () => {},
 	login: () => {},
 	goBack: () => {},
+	handleProfileImageChange: () => {},
 	uploadImage: () => {},
 	deleteImage: () => {},
 	updateImage: () => {},
 	addAlbum: () => {},
 	deletAlbum: () => {},
+	users: [
+		{
+			id: 'user1',
+			name: 'Ryan Carville',
+			email: 'ryancarville@gmail.com',
+			password: '1219Smile',
+			photo:
+				'http://beardystudios.com/ZURICH_SITE/images/photography/food/Breakfast/05.jpg'
+		},
+		{
+			id: 'user2',
+			name: 'Sally Smith',
+			email: 'sSmith@aol.com',
+			password: 'sue',
+			photo:
+				'/Users/ryancarville/Desktop/Zurich_Site/images/meet_beardy/beardystudiosfounder.jpg'
+		}
+	],
 	images: [
 		{
 			id: 1,
@@ -61,7 +80,8 @@ const PhotGramContext = React.createContext({
 				'http://beardystudios.com/ZURICH_SITE/images/photography/earth/sand/08.jpg',
 			alt: 'desert,sand,nature',
 			caption: 'Test caption two for breakfast',
-			date: '2019-26-11'
+			date: '2019-26-11',
+			albumId: 'album1'
 		},
 		{
 			id: 7,

@@ -21,6 +21,7 @@ class Nav extends Component {
 	};
 	render() {
 		const state = this.context.state.validLogin;
+		const userId = this.context.state.userId;
 		const publicNav = (
 			<div className='navBar'>
 				<ul>
@@ -40,10 +41,10 @@ class Nav extends Component {
 			<div className='navBar'>
 				<ul>
 					<li>
-						<Link to='/upload'>Upload</Link>
+						<Link to={`/${userId}/upload`}>Upload</Link>
 					</li>
 					<li>
-						<Link to='/homePage'>PhotoGram</Link>
+						<Link to={`/${userId}/homePage`}>PhotoGram</Link>
 					</li>
 					<li>
 						<Link to='/logout'>
