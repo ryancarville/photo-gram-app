@@ -1,7 +1,41 @@
 import React, { Component } from 'react';
+import config from '../../config';
 import './landingPage.css';
 
 class LandingPage extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			mobile_img: '',
+			desktop_img: '',
+			error: null
+		};
+	}
+	setImage = e => {
+		this.setState({
+			desktop_img: e[0].desktop_img_url,
+			mobile_img: e[0].mobile_img_url
+		});
+	};
+	componentDidMount() {
+		fetch(config.API_ENDPOINT, {
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json'
+			}
+		})
+			.then(res => {
+				if (!res.ok) {
+					res.json().then(err => Promise.reject(err));
+				}
+				return res.json();
+			})
+			.then(res => this.setImage(res))
+			.catch(err => {
+				console.log(err);
+				this.setState({ error: err.message });
+			});
+	}
 	render() {
 		return (
 			<>
@@ -15,12 +49,12 @@ class LandingPage extends Component {
 					</p>
 					<div className='landing-example'>
 						<img
-							src='http://beardystudios.com/Bloc_Capstone/photoGram/images/landingPage-example.png'
+							src={this.state.mobile_img}
 							alt='account-example'
 							id='mobile-example'
 						/>
 						<img
-							src='http://beardystudios.com/Bloc_Capstone/photoGram/images/desktop-example.png'
+							src={this.state.desktop_img}
 							alt='account-example'
 							id='desktop-example'
 						/>

@@ -25,7 +25,7 @@ const PhotGramContext = React.createContext({
 			email: 'sSmith@aol.com',
 			password: 'sue',
 			photo:
-				'/Users/ryancarville/Desktop/Zurich_Site/images/meet_beardy/beardystudiosfounder.jpg'
+				'http://beardystudios.com/ZURICH_SITE/images/photography/faces/editorial/01.jpg'
 		}
 	],
 	images: [

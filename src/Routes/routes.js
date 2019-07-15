@@ -15,7 +15,7 @@ class Router extends Component {
 	render() {
 		return (
 			<Switch>
-				<Route exact path='/' component={LandingPage} />
+				<Route path='/' exact component={LandingPage} />
 				<Route path='/signUp' component={SignUp} />
 				<Route path='/login' component={Login} />
 				<Route path='/:user_id/homePage' component={HomePage} />

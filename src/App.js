@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import config from './config.js';
 import Nav from './components/Nav/nav';
 import Routes from './Routes/routes.js';
 import PhotoGramContext from './PhotoGramContext';

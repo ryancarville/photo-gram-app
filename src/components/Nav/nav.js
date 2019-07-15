@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PhotoGramContext from '../../PhotoGramContext';
 
 import './nav.css';
 
 class Nav extends Component {
 	static contextType = PhotoGramContext;
-	//listens for all pathname changes
-	componentWillMount() {
-		// will trigger the callback function whenever a new Route renders a component(as long as this component stays mounted as routes change)
-		this.props.history.listen(() => {
-			// view new URL
-			console.log('New URL', this.props.history.location.pathname);
-		});
-	}
+
 	//handle logout
 	handleLogout = e => {
 		this.context.state.validLogin = false;
@@ -62,4 +55,4 @@ class Nav extends Component {
 		);
 	}
 }
-export default withRouter(Nav);
+export default Nav;

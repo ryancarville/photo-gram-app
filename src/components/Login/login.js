@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import PhotoGramContext from '../../PhotoGramContext';
+import config from '../../config';
 import './login.css';
 
 class Login extends Component {
@@ -27,32 +28,30 @@ class Login extends Component {
 	//handle form submit
 	handleSubmit = e => {
 		e.preventDefault();
-		const { users } = this.context;
-		const loginEmail = this.state.email;
-		const loginPass = this.state.password;
-		const validUser = users.filter(
-			usr => usr.email === loginEmail && usr.password === loginPass
-		);
-		console.log(validUser);
-		if (validUser == 0) {
-			this.setState({
-				error: 'Not a valid Email Address'
-			});
-		} else {
-			const userId = validUser[0].id;
-			console.log(userId);
-			this.context.login(userId);
-			// this.setState({
-			// 	userId: userId,
-			// 	redirect: true,
-			// 	error: null
-			// });
-		}
+		const user_name = this.state.email;
+		const password = this.state.password;
+		const data = { user_name, password };
+		fetch(config.API_ENDPOINT + '/login', {
+			method: 'POST',
+			body: JSON.stringify(data),
+			headers: {
+				'content-type': 'application/json'
+			},
+			mode: 'cors'
+		}).then(res => {
+			console.log(res);
+			if (!res.ok) {
+				this.setState({ error: res.statusText });
+			} else {
+				this.setState({ redirect: true });
+			}
+			return null;
+		});
 	};
 
 	render() {
 		//redirect validation on succesful login
-		const redirectToHome = this.context.state.validLogin;
+		const redirectToHome = this.state.redirect;
 		if (redirectToHome) {
 			console.log(this.state);
 			const userId = this.context.state.userId;
@@ -64,8 +63,12 @@ class Login extends Component {
 					<div className='login-form-container'>
 						<h3>Login</h3>
 						<p>
-							This is a dummy form. Entires are required but nothing will be
-							validated. Strickly for UI/UX and user flow feedback.
+							Use the folowing details for a valid login or try anything else to
+							test validation: <br />
+							<br />
+							email Address: sSmith@aol.com
+							<br />
+							password: sue
 						</p>
 						<div className='errMsg-login'>{this.state.error}</div>
 						<form className='login-form' onSubmit={this.handleSubmit}>
@@ -83,7 +86,7 @@ class Login extends Component {
 							<label htmlFor='password'>
 								Password
 								<input
-									type='text'
+									type='password'
 									className='loginFormInput'
 									name='password'
 									id='login-password'
