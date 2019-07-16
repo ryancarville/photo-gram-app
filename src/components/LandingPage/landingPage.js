@@ -8,14 +8,17 @@ class LandingPage extends Component {
 		this.state = {
 			mobile_img: '',
 			desktop_img: '',
+			dataReady: false,
 			error: null
 		};
 	}
 	setImage = e => {
 		this.setState({
 			desktop_img: e[0].desktop_img_url,
-			mobile_img: e[0].mobile_img_url
+			mobile_img: e[0].mobile_img_url,
+			dataReady: true
 		});
+		console.log('image ran');
 	};
 	componentDidMount() {
 		fetch(config.API_ENDPOINT, {
@@ -37,6 +40,22 @@ class LandingPage extends Component {
 			});
 	}
 	render() {
+		const image = (
+			<>
+				<img
+					src={this.state.mobile_img}
+					alt='account-example'
+					id='mobile-example'
+				/>
+				<img
+					src={this.state.desktop_img}
+					alt='account-example'
+					id='desktop-example'
+				/>
+			</>
+		);
+		const dataReady =
+			this.state.dataReady === true ? image : <p>Getting Image...</p>;
 		return (
 			<>
 				<div className='landing-content'>
@@ -47,18 +66,7 @@ class LandingPage extends Component {
 						trolls or unauthorized usage. Easy to use and offers many options to
 						organize your photo sets.{' '}
 					</p>
-					<div className='landing-example'>
-						<img
-							src={this.state.mobile_img}
-							alt='account-example'
-							id='mobile-example'
-						/>
-						<img
-							src={this.state.desktop_img}
-							alt='account-example'
-							id='desktop-example'
-						/>
-					</div>
+					<div className='landing-example'>{dataReady}</div>
 				</div>
 			</>
 		);

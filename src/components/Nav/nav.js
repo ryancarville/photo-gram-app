@@ -41,7 +41,7 @@ class Nav extends Component {
 						<Link to={`/${userId}/upload`}>Upload</Link>
 					</li>
 					<li>
-						<Link to={`/${userId}`}>PhotoGram</Link>
+						<Link to={`/user/${userId}`}>PhotoGram</Link>
 					</li>
 					<li>
 						<Link to='/logout'>

@@ -11,7 +11,7 @@ class Albums extends Component {
 			const userId = this.props.userId;
 			return (
 				<li key={album.id} id={album.id}>
-					<Link to={`/${userId}/albums/${album.id}`}>
+					<Link to={`/user/${userId}/albums/${album.id}`}>
 						<img src={album.img_url} className='albumImg' alt={album.alt} />
 						<p>{album.album_name}</p>
 					</Link>
@@ -28,7 +28,7 @@ class Albums extends Component {
 						<ul>
 							{this.createAlbum(albums)}
 							<li>
-								<Link to={`/${userId}/albums/addAlbum`} id='addAlbum'>
+								<Link to={`/user/${userId}/albums/addAlbum`} id='addAlbum'>
 									<img
 										src='http://beardystudios.com/Bloc_Capstone/photoGram/images/addAlbumBtn.png'
 										className='albumImg'

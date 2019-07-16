@@ -4,14 +4,14 @@ import Image from '../Image/image';
 import './imageGrid.css';
 
 function ImageGrid(props) {
-	const userId = props.userId;
+	const userId = props.userId.toString();
 	const images = props.images;
 	console.log(images);
 	return (
 		<section>
 			<div className='grid-container'>
 				{images.map(img => (
-					<Image key={img.id.toString()} {...img} user_id={userId} />
+					<Image key={img.id.toString()} {...img} userId={userId} />
 				))}
 			</div>
 		</section>

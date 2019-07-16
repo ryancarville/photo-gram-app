@@ -61,7 +61,7 @@ class Login extends Component {
 			this.context.login(this.state.userId);
 			console.log(this.state);
 			const userId = this.state.userId;
-			return <Redirect to={`/users/${userId}`} />;
+			return <Redirect to={`/user/${userId}`} />;
 		}
 		return (
 			<PhotoGramContext.Consumer>
@@ -72,9 +72,9 @@ class Login extends Component {
 							Use the folowing details for a valid login or try anything else to
 							test validation: <br />
 							<br />
-							email Address: sSmith@aol.com
+							user name: RCarville
 							<br />
-							password: sue
+							password: 1!Aa2@Bb3#Cc
 						</p>
 						<div className='errMsg-login'>{this.state.error}</div>
 						<form className='login-form' onSubmit={this.handleSubmit}>

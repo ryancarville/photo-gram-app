@@ -60,13 +60,8 @@ class HomePage extends Component {
 	}
 	render() {
 		const user_id = this.props.match.params.user_id;
-		const dataReady =
-			this.state.dataReady === true ? (
-				<ImageGrid userId={user_id} images={this.state.images} />
-			) : (
-				<p>Retrieving Images...</p>
-			);
-		return (
+
+		const content = (
 			<div className='homePage'>
 				<div className='sideBar'>
 					<div className='userInfo'>
@@ -92,9 +87,14 @@ class HomePage extends Component {
 					</div>
 				</div>
 
-				<div className='images-container'>{dataReady}</div>
+				<div className='images-container'>
+					<ImageGrid userId={user_id} images={this.state.images} />
+				</div>
 			</div>
 		);
+		const dataReady =
+			this.state.dataReady === true ? content : <p>Retrieving Images...</p>;
+		return <div className='homePage'>{dataReady}</div>;
 	}
 }
 

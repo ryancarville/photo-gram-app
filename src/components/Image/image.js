@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import './image.css';
 
 function Image(props) {
-	const image_id = props.id;
-	const user_id = props.user_id;
+	const image_id = props.id.toString();
+	const user_id = props.userId;
 	return (
 		<div className='image-container'>
-			<Link to={`/users/${user_id}/images/${image_id}`}>
+			<Link to={`/user/${user_id}/images/${image_id}`}>
 				<img
-					key={image_id.toString()}
+					key={image_id}
 					src={props.img_url}
 					alt={props.alt}
 					className='gridImg'
@@ -23,8 +23,5 @@ export default withRouter(Image);
 
 Image.propTypes = {
 	id: PropTypes.number.isRequired,
-	img_url: PropTypes.string.isRequired,
-	caption: PropTypes.string,
-	date: PropTypes.string,
-	onClickDelete: PropTypes.func
+	img_url: PropTypes.string.isRequired
 };
