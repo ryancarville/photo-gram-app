@@ -60,7 +60,6 @@ class App extends Component {
 			userId: userId,
 			validLogin: true
 		});
-		console.log(this.state);
 	};
 
 	logout = () => {

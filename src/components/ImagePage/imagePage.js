@@ -22,7 +22,7 @@ export default class ImagePage extends Component {
 	componentWillMount() {
 		const imageId = this.props.match.params.image_id;
 		console.log(imageId);
-		fetch(config.API_ENDPOINT + `/${imageId}`, {
+		fetch(config.API_ENDPOINT + `/images/${imageId}`, {
 			method: 'GET',
 			headers: {
 				'content-type': 'application/json'
