@@ -16,12 +16,12 @@ class Router extends Component {
 		return (
 			<Switch>
 				<Route path='/' exact component={LandingPage} />
-				<Route path='/signUp' component={SignUp} />
-				<Route path='/login' component={Login} />
-				<Route path='/user/:user_id' component={HomePage} />
+				<Route path='/signUp' exact component={SignUp} />
+				<Route path='/login' exact component={Login} />
+				<Route path='/user/:user_id' exact component={HomePage} />
 				<Route path='/user/:user_id/addAlbum' exact component={AddAlbum} />
 				<Route
-					path='/users/:user_id/albums/:album_id'
+					path='/user/:user_id/albums/:album_id'
 					exact
 					component={AlbumPage}
 				/>
@@ -32,10 +32,15 @@ class Router extends Component {
 				/>
 				<Route
 					path='/user/:user_id/upload/profileImage'
+					exact
 					component={UploadProfileImage}
 				/>
-				<Route path='/user/:user_id/upload' component={Upload} />
-				<Route path='/user/:user_id/edit/:image_id' component={EditPage} />
+				<Route path='/user/:user_id/upload' exact component={Upload} />
+				<Route
+					path='/user/:user_id/edit/:image_id'
+					exact
+					component={EditPage}
+				/>
 				<Redirect from='*' to='/' />
 			</Switch>
 		);
