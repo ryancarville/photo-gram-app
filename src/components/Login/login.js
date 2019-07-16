@@ -61,7 +61,7 @@ class Login extends Component {
 			this.context.login(this.state.userId);
 			console.log(this.state);
 			const userId = this.state.userId;
-			return <Redirect to={`/${userId}/homePage`} />;
+			return <Redirect to={`/users/${userId}`} />;
 		}
 		return (
 			<PhotoGramContext.Consumer>

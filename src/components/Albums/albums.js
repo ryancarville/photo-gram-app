@@ -7,19 +7,19 @@ class Albums extends Component {
 	static contextType = PhotoGramContext;
 	//create all albums withing the context array
 	createAlbum = albums =>
-		this.context.state.albums.map(album => {
-			const userId = this.context.state.userId;
+		this.props.albums.map(album => {
+			const userId = this.props.userId;
 			return (
 				<li key={album.id} id={album.id}>
 					<Link to={`/${userId}/albums/${album.id}`}>
-						<img src={album.imgUrl} className='albumImg' alt={album.alt} />
-						<p>{album.name}</p>
+						<img src={album.img_url} className='albumImg' alt={album.alt} />
+						<p>{album.album_name}</p>
 					</Link>
 				</li>
 			);
 		});
 	render() {
-		const { albums } = this.context.state.albums;
+		const { albums } = this.props.albums;
 		const userId = this.context.state.userId;
 		return (
 			<PhotoGramContext.Consumer>

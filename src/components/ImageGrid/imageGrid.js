@@ -1,25 +1,21 @@
-import React, { Component } from 'react';
-import PhotoGramContext from '../../PhotoGramContext';
+import React from 'react';
+import { withRouter } from 'react-router-dom';
 import Image from '../Image/image';
 import './imageGrid.css';
 
-class ImageGrid extends Component {
-	static contextType = PhotoGramContext;
-
-	render() {
-		const userId = this.context.state.userId;
-		const { images } = this.context;
-		console.log(images);
-		return (
-			<section>
-				<div className='grid-container'>
-					{images.map(img => (
-						<Image key={img.id.toString()} {...img} userId={userId} />
-					))}
-				</div>
-			</section>
-		);
-	}
+function ImageGrid(props) {
+	const userId = props.userId;
+	const images = props.images;
+	console.log(images);
+	return (
+		<section>
+			<div className='grid-container'>
+				{images.map(img => (
+					<Image key={img.id.toString()} {...img} user_id={userId} />
+				))}
+			</div>
+		</section>
+	);
 }
 
-export default ImageGrid;
+export default withRouter(ImageGrid);

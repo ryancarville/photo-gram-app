@@ -123,13 +123,6 @@ class App extends Component {
 		});
 	};
 
-	componentDidMount() {
-		this.setState({
-			users: this.context.users,
-			images: this.context.images,
-			albums: this.context.albums
-		});
-	}
 	render() {
 		if (this.state.signup) {
 			return <Redirect to={`/login`} />;

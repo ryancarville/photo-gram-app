@@ -5,7 +5,7 @@ export default class numOfImages extends Component {
 	static contextType = PhotoGramContext;
 	//counts all images in context array
 	render() {
-		const count = this.context.images.length;
+		const count = this.props.images.length;
 		return <span>{count}</span>;
 	}
 }

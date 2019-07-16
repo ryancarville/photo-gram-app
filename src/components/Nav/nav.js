@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PhotoGramContext from '../../PhotoGramContext';
-import config from '../../config';
-
 import './nav.css';
 
 class Nav extends Component {
@@ -43,7 +41,7 @@ class Nav extends Component {
 						<Link to={`/${userId}/upload`}>Upload</Link>
 					</li>
 					<li>
-						<Link to={`/${userId}/homePage`}>PhotoGram</Link>
+						<Link to={`/${userId}`}>PhotoGram</Link>
 					</li>
 					<li>
 						<Link to='/logout'>
