@@ -8,18 +8,18 @@ class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			email: '',
+			userId: null,
+			user_name: '',
 			password: '',
 			redirect: false,
 			error: null
 		};
-		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	static contextType = PhotoGramContext;
 	//set state on change for email
-	handleEmailChange = e => {
-		this.setState({ email: e.target.value });
+	handleUserNameChange = e => {
+		this.setState({ user_name: e.target.value });
 	};
 	//set state on change for password
 	handlePasswordChange = e => {
@@ -28,7 +28,7 @@ class Login extends Component {
 	//handle form submit
 	handleSubmit = e => {
 		e.preventDefault();
-		const user_name = this.state.email;
+		const user_name = this.state.user_name;
 		const password = this.state.password;
 		const data = { user_name, password };
 		fetch(config.API_ENDPOINT + '/login', {
@@ -39,13 +39,18 @@ class Login extends Component {
 			},
 			mode: 'cors'
 		}).then(res => {
-			console.log(res);
-			if (!res.ok) {
-				this.setState({ error: res.statusText });
-			} else {
-				this.setState({ redirect: true });
-			}
-			return null;
+			res.json().then(data => {
+				if (data.error) {
+					this.setState({ error: data.error });
+				} else {
+					const token = data.authToken;
+					window.sessionStorage.setItem(config.TOKEN_KEY, token);
+					this.setState({
+						userId: data.user_id,
+						redirect: true
+					});
+				}
+			});
 		});
 	};
 
@@ -53,8 +58,9 @@ class Login extends Component {
 		//redirect validation on succesful login
 		const redirectToHome = this.state.redirect;
 		if (redirectToHome) {
+			this.context.login(this.state.userId);
 			console.log(this.state);
-			const userId = this.context.state.userId;
+			const userId = this.state.userId;
 			return <Redirect to={`/${userId}/homePage`} />;
 		}
 		return (
@@ -72,14 +78,14 @@ class Login extends Component {
 						</p>
 						<div className='errMsg-login'>{this.state.error}</div>
 						<form className='login-form' onSubmit={this.handleSubmit}>
-							<label htmlFor='email'>
-								Email Address
+							<label htmlFor='user_name'>
+								User Name
 								<input
 									type='text'
 									className='loginFormInput'
-									name='email'
+									name='user_name'
 									id='login-email'
-									onChange={this.handleEmailChange}
+									onChange={this.handleUserNameChange}
 									required
 								/>
 							</label>

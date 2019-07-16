@@ -3,6 +3,7 @@ import React from 'react';
 const PhotGramContext = React.createContext({
 	signUp: () => {},
 	login: () => {},
+	logout: () => {},
 	goBack: () => {},
 	handleProfileImageChange: () => {},
 	uploadImage: () => {},

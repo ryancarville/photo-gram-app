@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import config from './config.js';
 import Nav from './components/Nav/nav';
 import Routes from './Routes/routes.js';
@@ -15,28 +16,59 @@ class App extends Component {
 			users: [],
 			images: [],
 			albums: [],
-			signUp: false,
+			singUp: false,
 			validLogin: false,
 			error: null
 		};
 	}
 	static contextType = PhotoGramContext;
 
-	signUp = e => {
-		this.setState({ signUp: true });
-		alert('New User account created!  Please login.');
+	signUp = newUser => {
+		console.log(newUser);
+		fetch(config.API_ENDPOINT + '/signup', {
+			method: 'POST',
+			body: JSON.stringify(newUser),
+			headers: {
+				'content-type': 'application/json'
+			},
+			mode: 'cors'
+		}).then(res =>
+			res
+				.json()
+				.then(data => {
+					if (data.error) {
+						console.log(data.error);
+						this.setState({ error: data.error });
+					} else {
+						this.setState({
+							signUp: true
+						});
+					}
+				})
+				.catch(err => {
+					console.log(err);
+					this.setState({
+						error: err
+					});
+				})
+		);
 	};
 
 	login = userId => {
 		console.log(userId);
-		const user = this.state.users.filter(usr => usr.id === userId);
 		this.setState({
 			userId: userId,
-			userName: user[0].name,
-			userPhoto: user[0].photo,
 			validLogin: true
 		});
 		console.log(this.state);
+	};
+
+	logout = () => {
+		window.sessionStorage.removeItem(config.TOKEN_KEY);
+		this.setState({
+			validLogin: false,
+			signUp: false
+		});
 	};
 
 	goBack = e => {
@@ -97,26 +129,11 @@ class App extends Component {
 			images: this.context.images,
 			albums: this.context.albums
 		});
-
-		// fetch(config.API_ENDPOINT, {
-		// 	method: 'GET',
-		// 	header: {
-		// 		'content-type': 'application/json'
-		// 	}
-		// })
-		// 	.then(res => {
-		// 		if (!res.ok) {
-		// 			return res.json().then(error => Promise.reject(error));
-		// 		}
-		// 		return res.json();
-		// 	})
-		// 	.then(this.setImages)
-		// 	.catch(error => {
-		// 		console.log(error);
-		// 		this.setState({ error });
-		// 	});
 	}
 	render() {
+		if (this.state.signup) {
+			return <Redirect to={`/login`} />;
+		}
 		const contextValue = {
 			users: this.state.users,
 			handleProfileImageChange: this.handleProfileImageChange,
@@ -128,6 +145,7 @@ class App extends Component {
 			deleteImage: this.deleteImage,
 			updateImage: this.updateImage,
 			login: this.login,
+			logout: this.logout,
 			signUp: this.signUp,
 			goBack: this.goBack,
 			state: this.state

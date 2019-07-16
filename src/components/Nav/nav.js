@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PhotoGramContext from '../../PhotoGramContext';
+import config from '../../config';
 
 import './nav.css';
 
 class Nav extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			validLogin: false
+		};
+	}
 	static contextType = PhotoGramContext;
 
 	//handle logout
 	handleLogout = e => {
-		this.context.state.validLogin = false;
-		this.context.state.signUp = false;
+		this.context.logout();
 	};
 	render() {
 		const state = this.context.state.validLogin;
