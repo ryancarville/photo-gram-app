@@ -15,19 +15,32 @@ class Router extends Component {
 	render() {
 		return (
 			<Switch>
-				<Route path='/' component={LandingPage} />
-				<Route path='/signUp' component={SignUp} />
-				<Route path='/login' component={Login} />
-				<Route path='/user/:user_id' component={HomePage} />
-				<Route path='/user/:user_id/addAlbum' component={AddAlbum} />
-				<Route path='/user/:user_id/albums/:album_id' component={AlbumPage} />
-				<Route path='/user/:user_id/images/:image_id' component={ImagePage} />
+				<Route path='/' exact component={LandingPage} />
+				<Route path='/signUp' exact component={SignUp} />
+				<Route path='/login' exact component={Login} />
+				<Route path='/user/:user_id' exact component={HomePage} />
+				<Route path='/user/:user_id/addAlbum' exact component={AddAlbum} />
+				<Route
+					path='/user/:user_id/albums/:album_id'
+					exact
+					component={AlbumPage}
+				/>
+				<Route
+					path='/user/:user_id/images/:image_id'
+					exact
+					component={ImagePage}
+				/>
 				<Route
 					path='/user/:user_id/upload/profileImage'
+					exact
 					component={UploadProfileImage}
 				/>
-				<Route path='/user/:user_id/upload' component={Upload} />
-				<Route path='/user/:user_id/edit/:image_id' component={EditPage} />
+				<Route path='/user/:user_id/upload' exact component={Upload} />
+				<Route
+					path='/user/:user_id/edit/:image_id'
+					exact
+					component={EditPage}
+				/>
 				<Redirect from='*' to='/' />
 			</Switch>
 		);

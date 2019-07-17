@@ -8,44 +8,17 @@ export default class ImagePage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			id: null,
-			img_url: '',
-			alt: '',
-			caption: '',
-			date: '',
+			id: this.props.location.state.id,
+			img_url: this.props.location.state.img_url,
+			alt: this.props.location.state.tags,
+			caption: this.props.location.state.caption,
+			date: this.props.location.state.date,
 			error: null
 		};
 	}
 
 	static contextType = PhotoGramContext;
-	//on mount set state with current image attributes
-	componentWillMount() {
-		const imageId = this.props.match.params.image_id;
-		console.log(imageId);
-		fetch(config.API_ENDPOINT + `/images/${imageId}`, {
-			method: 'GET',
-			headers: {
-				'content-type': 'application/json'
-			}
-		}).then(res =>
-			res.json().then(data => {
-				if (data.error) {
-					this.setState({
-						error: data.error
-					});
-				} else {
-					this.setState({
-						id: data.id,
-						img_url: data.img_url,
-						alt: data.alt,
-						caption: data.caption,
-						date: data.date_created,
-						error: null
-					});
-				}
-			})
-		);
-	}
+
 	//handle back event
 	handleBack = e => {
 		this.props.history.goBack();
@@ -71,7 +44,7 @@ export default class ImagePage extends Component {
 						<div className='image-page-container'>
 							<img
 								key={this.state.id}
-								src={this.state.imgUrl}
+								src={this.state.img_url}
 								alt={this.state.alt}
 								className='singleImg'
 							/>

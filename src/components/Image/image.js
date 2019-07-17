@@ -8,7 +8,17 @@ function Image(props) {
 	const user_id = props.userId;
 	return (
 		<div className='image-container'>
-			<Link to={`/user/${user_id}/images/${image_id}`}>
+			<Link
+				to={{
+					pathname: `/user/${user_id}/images/${image_id}`,
+					state: {
+						id: props.id,
+						img_url: props.img_url,
+						caption: props.caption,
+						alt: props.tags,
+						date: props.date_created
+					}
+				}}>
 				<img
 					key={image_id}
 					src={props.img_url}
