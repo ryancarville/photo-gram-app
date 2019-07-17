@@ -8,6 +8,8 @@ export default class AlbumPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			albumId: this.props.match.params.album_id,
+			images: this.props.location.state.images,
 			albumImages: [],
 			albumName: '',
 			error: null
@@ -24,16 +26,17 @@ export default class AlbumPage extends Component {
 	static contextType = PhotoGramContext;
 	//on mount set state with all images assigned to current album
 	componentWillMount() {
-		const { images } = this.context;
-		const { albums } = this.context;
-		const albumId = this.props.match.params.album_id;
-		const albumImgs = images.filter(img => img.albumId === albumId);
-		const album = albums.filter(album => album.id === albumId);
-		const albumName = album[0].name;
-		this.setState({
-			albumImages: albumImgs,
-			albumName: albumName
-		});
+		const { images } = this.state;
+		const albumId = this.state.albumId;
+		const albumImgs = images.filter(img => img.album_id == albumId);
+		const albumName = this.props.location.state.album_name;
+		this.setState(
+			{
+				albumImages: albumImgs,
+				albumName: albumName
+			},
+			() => console.log(this.state)
+		);
 	}
 	//handle back event
 	handleBack = e => {

@@ -12,7 +12,7 @@ class HomePage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			userId: '',
+			user_id: this.props.match.params.user_id,
 			userName: '',
 			userPhoto: '',
 			images: [],
@@ -24,7 +24,7 @@ class HomePage extends Component {
 	static contextType = PhotoGramContext;
 
 	componentDidMount() {
-		const user_id = this.props.match.params.user_id;
+		const user_id = this.state.user_id;
 		fetch(config.API_ENDPOINT + `/users/${user_id}`, {
 			method: 'GET',
 			headers: {
@@ -41,7 +41,6 @@ class HomePage extends Component {
 					} else {
 						console.log(data);
 						this.setState({
-							userId: data.user[0].id,
 							userName: data.user[0].full_name,
 							userPhoto: data.user[0].profile_img_url,
 							images: data.images,
@@ -59,16 +58,12 @@ class HomePage extends Component {
 		);
 	}
 	render() {
-		const user_id = this.props.match.params.user_id;
-
+		const user_id = this.state.user_id;
 		const content = (
 			<div className='homePage'>
 				<div className='sideBar'>
 					<div className='userInfo'>
-						<UserProfileImage
-							image={this.state.userPhoto}
-							userId={this.state.userId}
-						/>
+						<UserProfileImage image={this.state.userPhoto} user_id={user_id} />
 						<p>{this.state.userName}</p>
 					</div>
 					<div className='content-counter'>
@@ -78,12 +73,16 @@ class HomePage extends Component {
 						</div>
 						<div>
 							<h4>Albums</h4>
-							<AlbumCount albums={this.state.albums} />
+							<AlbumCount albums={this.state.albums} user_id={user_id} />
 						</div>
 					</div>
 					<div className='albums-container'>
 						<h2>Albums</h2>
-						<Albums userId={user_id} albums={this.state.albums} />
+						<Albums
+							userId={user_id}
+							albums={this.state.albums}
+							images={this.state.images}
+						/>
 					</div>
 				</div>
 

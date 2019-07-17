@@ -1,17 +1,31 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import PhotoGramContext from '../../PhotoGramContext';
 import './albums.css';
 
 class Albums extends Component {
-	static contextType = PhotoGramContext;
+	constructor(props) {
+		super(props);
+		this.state = {
+			albums: this.props.albums,
+			user_id: this.props.user_id,
+			images: this.props.images
+		};
+	}
+
 	//create all albums withing the context array
-	createAlbum = albums =>
-		this.props.albums.map(album => {
-			const userId = this.props.userId;
+	createAlbums = albums =>
+		albums.map(album => {
+			const user_id = this.state.user_id;
 			return (
 				<li key={album.id} id={album.id}>
-					<Link to={`/user/${userId}/albums/${album.id}`}>
+					<Link
+						to={{
+							pathname: `/user/${user_id}/albums/${album.id}`,
+							state: {
+								images: this.state.images,
+								album_name: album.name
+							}
+						}}>
 						<img src={album.img_url} className='albumImg' alt={album.alt} />
 						<p>{album.album_name}</p>
 					</Link>
@@ -19,29 +33,24 @@ class Albums extends Component {
 			);
 		});
 	render() {
-		const { albums } = this.props.albums;
-		const userId = this.context.state.userId;
+		const user_id = this.state.user_id;
 		return (
-			<PhotoGramContext.Consumer>
-				{context => (
-					<div className='albums-bar' id='albums'>
-						<ul>
-							{this.createAlbum(albums)}
-							<li>
-								<Link to={`/user/${userId}/albums/addAlbum`} id='addAlbum'>
-									<img
-										src='http://beardystudios.com/Bloc_Capstone/photoGram/images/addAlbumBtn.png'
-										className='albumImg'
-										id='addAlbumButton'
-										alt='add album button'
-									/>
-									<p> add album</p>
-								</Link>
-							</li>
-						</ul>
-					</div>
-				)}
-			</PhotoGramContext.Consumer>
+			<div className='albums-bar' id='albums'>
+				<ul>
+					{this.createAlbums(this.state.albums)}
+					<li>
+						<Link to={`/user/${user_id}/albums/addAlbum`} id='addAlbum'>
+							<img
+								src='http://beardystudios.com/Bloc_Capstone/photoGram/images/addAlbumBtn.png'
+								className='albumImg'
+								id='addAlbumButton'
+								alt='add album button'
+							/>
+							<p> add album</p>
+						</Link>
+					</li>
+				</ul>
+			</div>
 		);
 	}
 }

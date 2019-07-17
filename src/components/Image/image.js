@@ -16,7 +16,8 @@ function Image(props) {
 						img_url: props.img_url,
 						caption: props.caption,
 						alt: props.tags,
-						date: props.date_created
+						date: props.date_created,
+						album_id: props.album_id
 					}
 				}}>
 				<img
