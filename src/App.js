@@ -118,16 +118,11 @@ class App extends Component {
 
 	updateImage = imageToUpdate => {
 		const images = this.state.images;
-		this.setState(
-			{
-				images: images.filter(img =>
-					img.id === imageToUpdate.id ? imageToUpdate : img
-				)
-			},
-			() => {
-				console.log(imageToUpdate);
-			}
-		);
+		this.setState({
+			images: images.filter(img =>
+				img.id === imageToUpdate.id ? imageToUpdate : img
+			)
+		});
 	};
 
 	addAlbum = album => {
