@@ -10,14 +10,18 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			userId: '',
-			userName: '',
-			userPhoto: '',
-			users: [],
+			user: {
+				id: null,
+				name: '',
+				email: '',
+				user_name: '',
+				photo: '',
+				date_created: ''
+			},
 			images: [],
 			albums: [],
 			singUp: false,
-			validLogin: false,
+			loggedIn: false,
 			error: null
 		};
 	}
@@ -54,18 +58,25 @@ class App extends Component {
 		);
 	};
 
-	login = userId => {
-		console.log(userId);
+	login = user => {
+		console.log(user);
 		this.setState({
-			userId: userId,
-			validLogin: true
+			user: {
+				id: user.id,
+				name: user.name,
+				user_name: user.user_name,
+				email: user.email,
+				photo: user.photo,
+				date_created: user.date_created
+			},
+			loggedIn: true
 		});
 	};
 
 	logout = () => {
 		window.sessionStorage.removeItem(config.TOKEN_KEY);
 		this.setState({
-			validLogin: false,
+			loggedIn: false,
 			signUp: false
 		});
 	};
@@ -74,16 +85,20 @@ class App extends Component {
 		this.props.history.goBack();
 	};
 
-	handleProfileImageChange = profileImage => {
+	setImages = images => {
 		this.setState({
-			userPhoto: profileImage
+			images: images
 		});
 	};
 
-	setImages = images => {
+	setAlbums = albums => {
 		this.setState({
-			images: images,
-			error: null
+			albums: albums
+		});
+	};
+	handleProfileImageChange = profileImage => {
+		this.setState({
+			user_photo: profileImage
 		});
 	};
 
@@ -101,12 +116,18 @@ class App extends Component {
 		console.log(this.state.images);
 	};
 
-	updateImage = updatedImage => {
-		this.setState({
-			images: this.state.images.map(img =>
-				img.id !== updatedImage.id ? img : updatedImage
-			)
-		});
+	updateImage = imageToUpdate => {
+		const images = this.state.images;
+		this.setState(
+			{
+				images: images.filter(img =>
+					img.id === imageToUpdate.id ? imageToUpdate : img
+				)
+			},
+			() => {
+				console.log(imageToUpdate);
+			}
+		);
 	};
 
 	addAlbum = album => {
@@ -127,15 +148,17 @@ class App extends Component {
 			return <Redirect to={`/login`} />;
 		}
 		const contextValue = {
-			users: this.state.users,
-			handleProfileImageChange: this.handleProfileImageChange,
+			user: this.state.user,
+			setImages: this.setImages,
+			setAlbums: this.setAlbums,
 			images: this.state.images,
 			albums: this.state.albums,
+			uploadImage: this.uploadImage,
 			addAlbum: this.addAlbum,
 			deleteAlbum: this.deleteAlbum,
-			uploadImage: this.uploadImage,
 			deleteImage: this.deleteImage,
 			updateImage: this.updateImage,
+			handleProfileImageChange: this.handleProfileImageChange,
 			login: this.login,
 			logout: this.logout,
 			signUp: this.signUp,

@@ -1,48 +1,38 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import PhotoGramContext from '../../PhotoGramContext';
+import config from '../../config';
 import './editPage.css';
 
 export default class EditPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			id: '',
-			imgUrl: '',
-			caption: '',
-			albumId: '',
-			alt: '',
-			date: ''
+			id: this.props.location.state.id,
+			img_url: this.props.location.state.img_url,
+			alt: this.props.location.state.tags,
+			caption: this.props.location.state.caption,
+			date_created: this.props.location.state.date,
+			album_id: this.props.location.state.album_id
 		};
 	}
-	static proptTypes = {
-		images: PropTypes.arrayOf(
-			PropTypes.shape({
-				id: PropTypes.string
-			})
-		)
-	};
-	static defaultProps = { images: [] };
+
 	static contextType = PhotoGramContext;
-	//on mount set state with current image and attributes
-	componentDidMount() {
-		const { images } = this.context;
-		const imageId = this.props.match.params.image_id;
-		const image = images.filter(img => img.id.toString() === imageId);
-		console.log(image);
-		this.setState({
-			id: image[0].id,
-			imgUrl: image[0].imgUrl,
-			caption: image[0].caption,
-			albumId: image[0].albumId,
-			alt: image[0].alt,
-			date: image[0].date
-		});
-	}
+
 	//handle fomr submit event
 	handleSubmit = e => {
 		e.preventDefault();
-		this.context.updateImage(this.state);
+		const { id, caption, alt, album_id, date_created } = this.state;
+		const data = { id, caption, alt, album_id, date_created };
+		fetch(config.API_ENDPOINT + `/images/${id}`, {
+			method: 'PATCH',
+			body: JSON.stringify(data),
+			headers: {
+				'content-type': 'application/json'
+			}
+		});
+		console.log(data);
+		this.context.updateImage(data);
 		this.goBack();
 	};
 	//set state on change for caption
@@ -74,17 +64,18 @@ export default class EditPage extends Component {
 		this.props.history.goBack();
 	};
 	//get all albums for select menu
-	getAlbumNames(e) {
+	getAlbumNames = e => {
 		console.log(e);
 		const albums = e.map(album => (
 			<option key={album.id} value={album.id}>
-				{album.name}
+				{album.album_name}
 			</option>
 		));
 		return albums;
-	}
+	};
 
 	render() {
+		const albums = this.context.albums;
 		return (
 			<PhotoGramContext.Consumer>
 				{context => (
@@ -96,7 +87,7 @@ export default class EditPage extends Component {
 							<img
 								key={this.state.id}
 								className='imgPreview'
-								src={this.state.imgUrl}
+								src={this.state.img_url}
 								alt={this.state.alt}
 							/>
 							<form onSubmit={this.handleSubmit} className='imageEditForm'>
@@ -113,9 +104,9 @@ export default class EditPage extends Component {
 								<label htmlFor='album'>
 									Album{' '}
 									<select
-										value={this.state.albumId}
+										value={this.state.album_id}
 										onChange={this.handleAlbumChange}>
-										{this.getAlbumNames(context.albums)}
+										{this.getAlbumNames(albums)}
 									</select>
 								</label>
 								<label htmlFor='tags'>

@@ -1,11 +1,11 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './image.css';
 
 function Image(props) {
 	const image_id = props.id.toString();
-	const user_id = props.userId;
+	const user_id = props.user_id;
 	return (
 		<div className='image-container'>
 			<Link
@@ -18,6 +18,7 @@ function Image(props) {
 						alt: props.tags,
 						date: props.date_created,
 						album_id: props.album_id
+						//albums: props.albums
 					}
 				}}>
 				<img
@@ -30,7 +31,7 @@ function Image(props) {
 		</div>
 	);
 }
-export default withRouter(Image);
+export default Image;
 
 Image.propTypes = {
 	id: PropTypes.number.isRequired,

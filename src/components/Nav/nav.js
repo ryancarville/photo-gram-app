@@ -17,8 +17,8 @@ class Nav extends Component {
 		this.context.logout();
 	};
 	render() {
-		const state = this.context.state.validLogin;
-		const userId = this.context.state.userId;
+		const state = this.context.state.loggedIn;
+		const userId = this.context.state.user.id;
 		const publicNav = (
 			<div className='navBar'>
 				<ul>

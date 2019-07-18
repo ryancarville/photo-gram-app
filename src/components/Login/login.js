@@ -8,10 +8,17 @@ class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			userId: null,
+			user: {
+				id: null,
+				name: '',
+				email: '',
+				user_name: '',
+				photo: '',
+				date_created: ''
+			},
 			user_name: '',
 			password: '',
-			redirect: false,
+			validLogin: false,
 			error: null
 		};
 	}
@@ -43,11 +50,19 @@ class Login extends Component {
 				if (data.error) {
 					this.setState({ error: data.error });
 				} else {
+					console.log(data);
 					const token = data.authToken;
 					window.sessionStorage.setItem(config.TOKEN_KEY, token);
 					this.setState({
-						userId: data.user_id,
-						redirect: true
+						user: {
+							id: data.user.id,
+							name: data.user.full_name,
+							user_name: data.user.user_name,
+							email: data.user.email,
+							photo: data.user.profile_img_url,
+							date_created: data.user.date_created
+						},
+						validLogin: true
 					});
 				}
 			});
@@ -56,11 +71,10 @@ class Login extends Component {
 
 	render() {
 		//redirect validation on succesful login
-		const redirectToHome = this.state.redirect;
+		const redirectToHome = this.state.validLogin;
 		if (redirectToHome) {
-			this.context.login(this.state.userId);
-			console.log(this.state);
-			const userId = this.state.userId;
+			this.context.login(this.state.user);
+			const userId = this.state.user.id;
 			return <Redirect to={`/user/${userId}`} />;
 		}
 		return (

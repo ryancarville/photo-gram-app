@@ -1,11 +1,7 @@
-import React, { Component } from 'react';
-import PhotoGramContext from '../../PhotoGramContext';
+import React from 'react';
 
-export default class numOfAlbums extends Component {
-	static contextType = PhotoGramContext;
-	//counts the currnet number of album objects in context array
-	render() {
-		const count = this.props.albums.length;
-		return <span>{count}</span>;
-	}
+export default function AlbumCount(props) {
+	//counts the currnet number of albums
+	const count = props.albums.length;
+	return <span>{count}</span>;
 }

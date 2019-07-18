@@ -1,11 +1,7 @@
-import React, { Component } from 'react';
-import PhotoGramContext from '../../PhotoGramContext';
+import React from 'react';
 
-export default class numOfImages extends Component {
-	static contextType = PhotoGramContext;
-	//counts all images in context array
-	render() {
-		const count = this.props.images.length;
-		return <span>{count}</span>;
-	}
+export default function ImageCount(props) {
+	//counts all images
+	const count = props.images.length;
+	return <span>{count}</span>;
 }

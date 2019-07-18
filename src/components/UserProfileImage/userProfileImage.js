@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function UserProfileImage(props) {
 	return (
-		<Link to={`/${props.userId}/upload/profileImage`}>
+		<Link to={`/user/${props.user_id}/upload/profileImage`}>
 			<img src={props.image} alt='' id='userPhoto' />
 		</Link>
 	);

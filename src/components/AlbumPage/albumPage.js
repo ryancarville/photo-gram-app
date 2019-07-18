@@ -10,8 +10,9 @@ export default class AlbumPage extends Component {
 		this.state = {
 			albumId: this.props.match.params.album_id,
 			images: this.props.location.state.images,
+			albumName: this.props.location.state.album_name,
 			albumImages: [],
-			albumName: '',
+
 			error: null
 		};
 	}
@@ -25,15 +26,13 @@ export default class AlbumPage extends Component {
 	static defaultProps = { images: [], albums: [] };
 	static contextType = PhotoGramContext;
 	//on mount set state with all images assigned to current album
-	componentWillMount() {
-		const { images } = this.state;
-		const albumId = this.state.albumId;
+	componentDidMount() {
+		const images = this.context.images;
+		const { albumId } = this.state;
 		const albumImgs = images.filter(img => img.album_id == albumId);
-		const albumName = this.props.location.state.album_name;
 		this.setState(
 			{
-				albumImages: albumImgs,
-				albumName: albumName
+				albumImages: albumImgs
 			},
 			() => console.log(this.state)
 		);
@@ -49,7 +48,7 @@ export default class AlbumPage extends Component {
 	};
 
 	render() {
-		const albumId = this.props.match.params.album_id;
+		const { albumId, albumImages } = this.state;
 		return (
 			<PhotoGramContext.Consumer>
 				{context => (
@@ -73,8 +72,12 @@ export default class AlbumPage extends Component {
 								</button>
 							</div>
 							<div className='grid-container'>
-								{this.state.albumImages.map(img => (
-									<Image key={img.id.toString()} {...img} />
+								{albumImages.map(img => (
+									<Image
+										key={img.id.toString()}
+										{...img}
+										user_id={context.user.id}
+									/>
 								))}
 							</div>
 						</div>

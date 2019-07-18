@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PhotoGramContext from '../../PhotoGramContext';
-import config from '../../config';
 import './imagePage.css';
 
 export default class ImagePage extends Component {
@@ -13,6 +12,8 @@ export default class ImagePage extends Component {
 			alt: this.props.location.state.tags,
 			caption: this.props.location.state.caption,
 			date: this.props.location.state.date,
+			album_id: this.props.location.state.album_id,
+			albums: this.props.location.state.albums,
 			error: null
 		};
 	}
@@ -53,7 +54,18 @@ export default class ImagePage extends Component {
 								<span>Date:{this.state.date}</span>
 
 								<div className='imageButtons'>
-									<Link to={`/users/${userId}/edit/${this.state.id}`}>
+									<Link
+										to={{
+											pathname: `/user/${userId}/edit/${this.state.id}`,
+											state: {
+												id: this.state.id,
+												img_url: this.state.img_url,
+												alt: this.state.tags,
+												caption: this.state.caption,
+												date: this.state.date,
+												albums: this.state.albums
+											}
+										}}>
 										<button type='button'>Edit Post</button>
 									</Link>
 									<button

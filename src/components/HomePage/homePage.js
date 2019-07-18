@@ -13,19 +13,14 @@ class HomePage extends Component {
 		super(props);
 		this.state = {
 			user_id: this.props.match.params.user_id,
-			userName: '',
-			userPhoto: '',
-			images: [],
-			albums: [],
 			dataReady: false,
 			error: null
 		};
 	}
 	static contextType = PhotoGramContext;
-
 	componentDidMount() {
 		const user_id = this.state.user_id;
-		fetch(config.API_ENDPOINT + `/users/${user_id}`, {
+		fetch(config.API_ENDPOINT + `/user/${user_id}`, {
 			method: 'GET',
 			headers: {
 				'content-type': 'application/json'
@@ -40,11 +35,9 @@ class HomePage extends Component {
 						});
 					} else {
 						console.log(data);
+						this.context.setImages(data.images);
+						this.context.setAlbums(data.albums);
 						this.setState({
-							userName: data.user[0].full_name,
-							userPhoto: data.user[0].profile_img_url,
-							images: data.images,
-							albums: data.albums,
 							dataReady: true
 						});
 					}
@@ -57,42 +50,39 @@ class HomePage extends Component {
 				})
 		);
 	}
+
 	render() {
-		const user_id = this.state.user_id;
+		const user = this.context.user;
 		const content = (
 			<div className='homePage'>
 				<div className='sideBar'>
 					<div className='userInfo'>
-						<UserProfileImage image={this.state.userPhoto} user_id={user_id} />
-						<p>{this.state.userName}</p>
+						<UserProfileImage image={user.photo} user_id={user.id} />
+						<p>{user.name}</p>
 					</div>
 					<div className='content-counter'>
 						<div>
 							<h4>Images</h4>
-							<ImageCount images={this.state.images} />
+							<ImageCount images={this.context.images} />
 						</div>
 						<div>
 							<h4>Albums</h4>
-							<AlbumCount albums={this.state.albums} user_id={user_id} />
+							<AlbumCount albums={this.context.albums} />
 						</div>
 					</div>
 					<div className='albums-container'>
 						<h2>Albums</h2>
-						<Albums
-							userId={user_id}
-							albums={this.state.albums}
-							images={this.state.images}
-						/>
+						<Albums />
 					</div>
 				</div>
 
 				<div className='images-container'>
-					<ImageGrid userId={user_id} images={this.state.images} />
+					<ImageGrid />
 				</div>
 			</div>
 		);
-		const dataReady =
-			this.state.dataReady === true ? content : <p>Retrieving Images...</p>;
+		const dataReady = content;
+
 		return <div className='homePage'>{dataReady}</div>;
 	}
 }
