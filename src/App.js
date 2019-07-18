@@ -58,21 +58,6 @@ class App extends Component {
 		);
 	};
 
-	login = user => {
-		console.log(user);
-		this.setState({
-			user: {
-				id: user.id,
-				name: user.name,
-				user_name: user.user_name,
-				email: user.email,
-				photo: user.photo,
-				date_created: user.date_created
-			},
-			loggedIn: true
-		});
-	};
-
 	logout = () => {
 		window.sessionStorage.removeItem(config.TOKEN_KEY);
 		this.setState({
@@ -96,10 +81,34 @@ class App extends Component {
 			albums: albums
 		});
 	};
-	handleProfileImageChange = profileImage => {
-		this.setState({
-			user_photo: profileImage
-		});
+	handleProfileImageChange = newInfo => {
+		const user_id = this.state.user.id;
+		const { profile_img_url } = newInfo;
+		const data = { profile_img_url };
+		fetch(config.API_ENDPOINT + `/user/${user_id}`, {
+			method: 'PATCH',
+			body: JSON.stringify(data),
+			headers: {
+				'content-type': 'application/json'
+			}
+		})
+			.then(res => res.json())
+			.then(data => {
+				if (data.error) {
+					this.setState({
+						error: data.error
+					});
+				} else {
+					this.setState({
+						user: { data }
+					});
+				}
+			})
+			.catch(err =>
+				this.setState({
+					error: err
+				})
+			);
 	};
 
 	uploadImage = img => {
@@ -116,13 +125,34 @@ class App extends Component {
 		console.log(this.state.images);
 	};
 
-	updateImage = imageToUpdate => {
-		const images = this.state.images;
-		this.setState({
-			images: images.filter(img =>
-				img.id === imageToUpdate.id ? imageToUpdate : img
-			)
-		});
+	updateImage = id => {
+		const user_id = this.state.user.id;
+		console.log(user_id);
+		fetch(config.API_ENDPOINT + `/images/${user_id}`, {
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json'
+			}
+		})
+			.then(res => res.json())
+			.then(data => {
+				if (data.error) {
+					this.setState({
+						error: data.error
+					});
+				} else {
+					console.log(data);
+					this.setImages(data);
+				}
+			})
+			.catch(err => {
+				console.log(err);
+				this.setState({
+					error: err
+				});
+			});
+
+		return <Redirect to={`/user/${user_id}/images/${id}`} />;
 	};
 
 	addAlbum = album => {
@@ -135,6 +165,48 @@ class App extends Component {
 		const newAlbums = this.state.albums.filter(alb => alb.id !== albumId);
 		this.setState({
 			albums: newAlbums
+		});
+	};
+
+	login = user => {
+		console.log(user);
+
+		fetch(config.API_ENDPOINT + `/user/${user.id}`, {
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json'
+			}
+		}).then(res =>
+			res
+				.json()
+				.then(data => {
+					if (data.error) {
+						this.setState({
+							error: data.error
+						});
+					} else {
+						console.log(data);
+						this.setImages(data.images);
+						this.setAlbums(data.albums);
+					}
+				})
+				.catch(err => {
+					console.log(err);
+					this.setState({
+						error: err
+					});
+				})
+		);
+		this.setState({
+			user: {
+				id: user.id,
+				name: user.name,
+				user_name: user.user_name,
+				email: user.email,
+				photo: user.photo,
+				date_created: user.date_created
+			},
+			loggedIn: true
 		});
 	};
 

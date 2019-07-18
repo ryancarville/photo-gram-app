@@ -18,7 +18,6 @@ function Image(props) {
 						alt: props.tags,
 						date: props.date_created,
 						album_id: props.album_id
-						//albums: props.albums
 					}
 				}}>
 				<img

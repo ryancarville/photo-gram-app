@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import PhotoGramContext from '../../PhotoGramContext';
 import config from '../../config';
 import './editPage.css';
@@ -19,22 +18,6 @@ export default class EditPage extends Component {
 
 	static contextType = PhotoGramContext;
 
-	//handle fomr submit event
-	handleSubmit = e => {
-		e.preventDefault();
-		const { id, caption, alt, album_id, date_created } = this.state;
-		const data = { id, caption, alt, album_id, date_created };
-		fetch(config.API_ENDPOINT + `/images/${id}`, {
-			method: 'PATCH',
-			body: JSON.stringify(data),
-			headers: {
-				'content-type': 'application/json'
-			}
-		});
-		console.log(data);
-		this.context.updateImage(data);
-		this.goBack();
-	};
 	//set state on change for caption
 	handleCaptionChange = e => {
 		this.setState({
@@ -44,7 +27,7 @@ export default class EditPage extends Component {
 	//set state on change for album
 	handleAlbumChange = e => {
 		this.setState({
-			albumId: e.target.value
+			album_id: e.target.value
 		});
 	};
 	//set state on change for date
@@ -73,9 +56,22 @@ export default class EditPage extends Component {
 		));
 		return albums;
 	};
+	//handle fomr submit event
+	handleSubmit = e => {
+		e.preventDefault();
+		const { id, img_url, caption, alt, album_id, date_created } = this.state;
+		const data = { id, img_url, caption, alt, album_id, date_created };
+		fetch(config.API_ENDPOINT + `/images/${id}`, {
+			method: 'PATCH',
+			body: JSON.stringify(data),
+			headers: {
+				'content-type': 'application/json'
+			}
+		});
+		this.context.updateImage(id);
+	};
 
 	render() {
-		const albums = this.context.albums;
 		return (
 			<PhotoGramContext.Consumer>
 				{context => (
@@ -106,7 +102,8 @@ export default class EditPage extends Component {
 									<select
 										value={this.state.album_id}
 										onChange={this.handleAlbumChange}>
-										{this.getAlbumNames(albums)}
+										<option value=''>No Album</option>
+										{this.getAlbumNames(context.albums)}
 									</select>
 								</label>
 								<label htmlFor='tags'>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PhotoGramContext from '../../PhotoGramContext';
-import config from '../../config';
+// import config from '../../config';
 import UserProfileImage from '../UserProfileImage/userProfileImage.js';
 import Albums from '../Albums/albums';
 import ImageGrid from '../ImageGrid/imageGrid';
@@ -13,43 +13,10 @@ class HomePage extends Component {
 		super(props);
 		this.state = {
 			user_id: this.props.match.params.user_id,
-			dataReady: false,
 			error: null
 		};
 	}
 	static contextType = PhotoGramContext;
-	componentDidMount() {
-		const user_id = this.state.user_id;
-		fetch(config.API_ENDPOINT + `/user/${user_id}`, {
-			method: 'GET',
-			headers: {
-				'content-type': 'application/json'
-			}
-		}).then(res =>
-			res
-				.json()
-				.then(data => {
-					if (data.error) {
-						this.setState({
-							error: data.error
-						});
-					} else {
-						console.log(data);
-						this.context.setImages(data.images);
-						this.context.setAlbums(data.albums);
-						this.setState({
-							dataReady: true
-						});
-					}
-				})
-				.catch(err => {
-					console.log(err);
-					this.setState({
-						error: err
-					});
-				})
-		);
-	}
 
 	render() {
 		const user = this.context.user;
@@ -81,9 +48,8 @@ class HomePage extends Component {
 				</div>
 			</div>
 		);
-		const dataReady = content;
 
-		return <div className='homePage'>{dataReady}</div>;
+		return <div className='homePage'>{content}</div>;
 	}
 }
 

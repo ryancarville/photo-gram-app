@@ -16,7 +16,8 @@ class UploadProfileImage extends Component {
 	}
 
 	handleChange = e => {
-		const image = URL.createObjectURL(e.target.files[0]);
+		const image = { profile_img_url: URL.createObjectURL(e.target.files[0]) };
+
 		this.context.handleProfileImageChange(image);
 		this.setState({
 			uploadRedirect: true
@@ -25,8 +26,8 @@ class UploadProfileImage extends Component {
 
 	render() {
 		if (this.state.uploadRedirect === true) {
-			const userId = this.context.state.userId;
-			return <Redirect to={`/${userId}/homepage`} />;
+			const user_id = this.context.user.id;
+			return <Redirect to={`/user/${user_id}`} />;
 		}
 		return <input type='file' id='fileToUpload' onChange={this.handleChange} />;
 	}

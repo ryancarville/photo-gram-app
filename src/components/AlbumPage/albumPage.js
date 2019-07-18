@@ -8,7 +8,7 @@ export default class AlbumPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			albumId: this.props.match.params.album_id,
+			album_id: this.props.match.params.album_id,
 			images: this.props.location.state.images,
 			albumName: this.props.location.state.album_name,
 			albumImages: [],
@@ -28,8 +28,8 @@ export default class AlbumPage extends Component {
 	//on mount set state with all images assigned to current album
 	componentDidMount() {
 		const images = this.context.images;
-		const { albumId } = this.state;
-		const albumImgs = images.filter(img => img.album_id == albumId);
+		const { album_id } = this.state;
+		const albumImgs = images.filter(img => img.album_id == album_id);
 		this.setState(
 			{
 				albumImages: albumImgs
