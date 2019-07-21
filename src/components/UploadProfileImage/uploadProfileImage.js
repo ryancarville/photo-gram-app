@@ -3,6 +3,12 @@ import { Redirect } from 'react-router-dom';
 import Dropzone from 'react-dropzone';
 import PhotoGramContext from '../../PhotoGramContext';
 import config from '../../config';
+import {
+	Image,
+	Video,
+	Transformation,
+	CloudinaryContext
+} from 'cloudinary-react';
 
 class UploadProfileImage extends Component {
 	constructor(props) {
@@ -41,32 +47,32 @@ class UploadProfileImage extends Component {
 	};
 	handleSubmit = e => {
 		e.preventDefault();
-		const preset = config.CLOUDINARY_UPLOAD_PRESET;
-		const url = config.CLOUDINARY_API;
-		const photoId = this.photoId++;
-		const file = this.state.file;
-		const fileName = file.name;
-		const data = {
-			upload_preset: preset,
-			file: file
-		};
+		// const preset = config.CLOUDINARY_UPLOAD_PRESET;
+		// const url = config.CLOUDINARY_API;
+		// const photoId = this.photoId++;
+		// const file = this.state.file;
+		// const fileName = file.name;
+		// const data = {
+		// 	upload_preset: preset,
+		// 	file: file
+		// };
 
-		var cloudinary = require('cloudinary-react');
+		//
 
-		cloudinary.config({
-			cloud_name: config.CLOUDINARY_NAME,
-			api_key: config.CLOUDINARY_API_KEY,
-			api_secret: config.CLOUDINARY_API_SECRET
-		});
+		// cloudinary.config({
+		// 	cloud_name: config.CLOUDINARY_NAME,
+		// 	api_key: config.CLOUDINARY_API_KEY,
+		// 	api_secret: config.CLOUDINARY_API_SECRET
+		// });
 
-		cloudinary.v2.uploader.upload(
-			file,
-			{ folder: 'test4', resource_type: 'auto' },
-			(err, fileResponse) => {
-				if (err) console.log(err);
-				console.log(fileResponse);
-			}
-		);
+		// cloudinary.v2.uploader.upload(
+		// 	file,
+		// 	{ folder: 'test4', resource_type: 'auto' },
+		// 	(err, fileResponse) => {
+		// 		if (err) console.log(err);
+		// 		console.log(fileResponse);
+		// 	}
+		// );
 
 		// console.log(url);
 		// fetch(url, {
@@ -79,12 +85,32 @@ class UploadProfileImage extends Component {
 		// 	console.log(error || response);
 		// });
 
-		this.setState({
-			uploadRedirect: true
-		});
+		// this.setState({
+		// 	uploadRedirect: true
+		// });
 	};
 
 	render() {
+		var cloudinary = require('cloudinary-react');
+		var myWidget = cloudinary.createUploadWidget(
+			{
+				cloudName: 'my_cloud_name',
+				uploadPreset: 'my_preset'
+			},
+			(error, result) => {
+				if (!error && result && result.event === 'success') {
+					console.log('Done! Here is the image info: ', result.info);
+				}
+			}
+		);
+
+		document.getElementById('upload_widget').addEventListener(
+			'click',
+			function() {
+				myWidget.open();
+			},
+			false
+		);
 		if (this.state.uploadRedirect === true) {
 			const user_id = this.context.user.id;
 			return <Redirect to={`/user/${user_id}`} />;
@@ -147,6 +173,7 @@ class UploadProfileImage extends Component {
 													multiple={false}
 													accpets='images/*'
 													ref={fileInputEl => (this.fileInputEl = fileInputEl)}
+													onClick={myWidget}
 													onChange={() => this.onDrop(this.fileInputEl)}
 												/>
 											</div>
