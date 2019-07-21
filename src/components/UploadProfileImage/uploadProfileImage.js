@@ -3,19 +3,12 @@ import { Redirect } from 'react-router-dom';
 import Dropzone from 'react-dropzone';
 import PhotoGramContext from '../../PhotoGramContext';
 import config from '../../config';
-import {
-	Image,
-	Video,
-	Transformation,
-	CloudinaryContext
-} from 'cloudinary-react';
-var cloudinary = require('cloudinary-react');
+
 class UploadProfileImage extends Component {
 	constructor(props) {
 		super(props);
-
 		this.state = {
-			widget: cloudinary.createUploadWidget(
+			widget: window.cloudinary.createUploadWidget(
 				{
 					cloudName: config.CLOUDINARY_NAME,
 					uploadPreset: config.CLOUDINARY_UPLOAD_PRESET
@@ -126,7 +119,6 @@ class UploadProfileImage extends Component {
 													accpets='images/*'
 													ref={fileInputEl => (this.fileInputEl = fileInputEl)}
 													onClick={this.openWidget}
-													onChange={() => this.onDrop(this.fileInputEl)}
 												/>
 											</div>
 										</div>
