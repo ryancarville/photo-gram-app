@@ -3,10 +3,16 @@
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
+		"cloudinary": "^1.14.0",
+		"cloudinary-core": "^2.6.3",
+		"cloudinary-react": "^1.1.1",
+		"fs": "0.0.1-security",
 		"react": "^16.8.6",
 		"react-dom": "^16.8.6",
+		"react-dropzone": "^10.1.5",
 		"react-router-dom": "^5.0.1",
-		"react-scripts": "3.0.1"
+		"react-scripts": "3.0.1",
+		"superagent": "^5.1.0"
 	},
 	"scripts": {
 		"start": "react-scripts start",

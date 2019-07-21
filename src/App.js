@@ -81,7 +81,7 @@ class App extends Component {
 			albums: albums
 		});
 	};
-	handleProfileImageChange = newInfo => {
+	handleUserInfoChange = newInfo => {
 		const user_id = this.state.user.id;
 		const { profile_img_url } = newInfo;
 		const data = { profile_img_url };
@@ -111,9 +111,16 @@ class App extends Component {
 			);
 	};
 
-	uploadImage = img => {
+	uploadImage = image => {
+		fetch(config.CLOUDINARY_API, {
+			method: 'POST',
+			body: JSON.stringify(image),
+			headers: {
+				'content-typ': 'application/json'
+			}
+		});
 		this.setState({
-			images: [...this.state.images, img]
+			images: [...this.state.images, image]
 		});
 	};
 
@@ -211,6 +218,7 @@ class App extends Component {
 	};
 
 	render() {
+		console.log(process.versions.node);
 		if (this.state.signup) {
 			return <Redirect to={`/login`} />;
 		}
@@ -225,7 +233,7 @@ class App extends Component {
 			deleteAlbum: this.deleteAlbum,
 			deleteImage: this.deleteImage,
 			updateImage: this.updateImage,
-			handleProfileImageChange: this.handleProfileImageChange,
+			handleUserInfoChange: this.handleUserInfoChange,
 			login: this.login,
 			logout: this.logout,
 			signUp: this.signUp,
