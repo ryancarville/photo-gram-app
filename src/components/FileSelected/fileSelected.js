@@ -74,15 +74,19 @@ export default class FileSelected extends Component {
 		});
 	};
 	componentDidMount() {
-		this.setState({
-			user_id: this.context.user.id
-		});
+		this.setState(
+			{
+				user_id: this.context.user.id
+			},
+			() => {
+				console.log(this.state.user_id);
+			}
+		);
 	}
 
 	render() {
 		if (this.state.redirect === true) {
-			const id = this.state.user_id;
-			return <Redirect to={`/user/${id}`} />;
+			this.context.refreshState();
 		}
 		return (
 			<PhotoGramContext.Consumer>

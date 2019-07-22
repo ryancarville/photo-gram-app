@@ -70,17 +70,6 @@ class App extends Component {
 		this.props.history.goBack();
 	};
 
-	setImages = images => {
-		this.setState({
-			images: images
-		});
-	};
-
-	setAlbums = albums => {
-		this.setState({
-			albums: albums
-		});
-	};
 	handleUserInfoChange = newInfo => {
 		const user_id = this.state.user.id;
 		console.log(newInfo);
@@ -113,25 +102,6 @@ class App extends Component {
 					error: err
 				})
 			);
-	};
-
-	uploadImage = (image, e) => {
-		// e.preventDefault();
-		// const { user_id, img_url, caption, tags, date_created, album_id } = image;
-		// const data = { user_id, img_url, caption, tags, date_created, album_id };
-		// fetch(config.API_ENDPOINT, +`/upload/${user_id}`, {
-		// 	method: 'POST',
-		// 	body: JSON.stringify(data),
-		// 	headers: {
-		// 		'content-type': 'application/json'
-		// 	},
-		// 	mode: 'cors'
-		// });
-
-		this.setState({
-			images: [...this.state.images, image]
-		});
-		this.props.history.push('/homePage');
 	};
 
 	deleteImage = imageId => {
@@ -187,35 +157,42 @@ class App extends Component {
 		});
 	};
 
-	login = user => {
-		console.log(user);
-
-		fetch(config.API_ENDPOINT + `/user/${user.id}`, {
+	refreshState = e => {
+		const id = this.state.user.id;
+		fetch(config.API_ENDPOINT + `/user/${id}`, {
 			method: 'GET',
 			headers: {
 				'content-type': 'application/json'
 			}
-		}).then(res =>
-			res
-				.json()
-				.then(data => {
-					if (data.error) {
-						this.setState({
-							error: data.error
-						});
-					} else {
-						console.log(data);
-						this.setImages(data.images);
-						this.setAlbums(data.albums);
-					}
-				})
-				.catch(err => {
-					console.log(err);
+		})
+			.then(res => res.json())
+			.then(data => {
+				if (data.error) {
 					this.setState({
-						error: err
+						error: data.error
 					});
-				})
-		);
+				} else {
+					console.log(data);
+					this.setState(
+						{
+							images: data.images,
+							albums: data.albums
+						},
+						() => {
+							console.log(this.state);
+						}
+					);
+				}
+			})
+			.catch(err => {
+				console.log(err);
+				this.setState({
+					error: err
+				});
+			});
+	};
+
+	login = user => {
 		this.setState({
 			user: {
 				id: user.id,
@@ -227,10 +204,35 @@ class App extends Component {
 			},
 			loggedIn: true
 		});
+		fetch(config.API_ENDPOINT + `/user/${user.id}`, {
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json'
+			}
+		})
+			.then(res => res.json())
+			.then(data => {
+				if (data.error) {
+					this.setState({
+						error: data.error
+					});
+				} else {
+					console.log(data);
+					this.setState({
+						images: data.images,
+						albums: data.albums
+					});
+				}
+			})
+			.catch(err => {
+				console.log(err);
+				this.setState({
+					error: err
+				});
+			});
 	};
 
 	render() {
-		console.log(process.versions.node);
 		if (this.state.signup) {
 			return <Redirect to={`/login`} />;
 		}
@@ -240,7 +242,7 @@ class App extends Component {
 			setAlbums: this.setAlbums,
 			images: this.state.images,
 			albums: this.state.albums,
-			uploadImage: this.uploadImage,
+			refreshState: this.refreshState,
 			addAlbum: this.addAlbum,
 			deleteAlbum: this.deleteAlbum,
 			deleteImage: this.deleteImage,

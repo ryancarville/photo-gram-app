@@ -19,37 +19,43 @@ class HomePage extends Component {
 	static contextType = PhotoGramContext;
 
 	render() {
-		const user = this.context.user;
-		const content = (
-			<div className='homePage'>
-				<div className='sideBar'>
-					<div className='userInfo'>
-						<UserProfileImage image={user.photo} user_id={user.id} />
-						<p>{user.name}</p>
-					</div>
-					<div className='content-counter'>
-						<div>
-							<h4>Images</h4>
-							<ImageCount images={this.context.images} />
-						</div>
-						<div>
-							<h4>Albums</h4>
-							<AlbumCount albums={this.context.albums} />
-						</div>
-					</div>
-					<div className='albums-container'>
-						<h2>Albums</h2>
-						<Albums />
-					</div>
-				</div>
+		return (
+			<PhotoGramContext.Consumer>
+				{context => (
+					<div className='homePage'>
+						<div className='homePage'>
+							<div className='sideBar'>
+								<div className='userInfo'>
+									<UserProfileImage
+										image={context.user.photo}
+										user_id={context.user.id}
+									/>
+									<p>{context.user.name}</p>
+								</div>
+								<div className='content-counter'>
+									<div>
+										<h4>Images</h4>
+										<ImageCount images={context.images} />
+									</div>
+									<div>
+										<h4>Albums</h4>
+										<AlbumCount albums={context.albums} />
+									</div>
+								</div>
+								<div className='albums-container'>
+									<h2>Albums</h2>
+									<Albums />
+								</div>
+							</div>
 
-				<div className='images-container'>
-					<ImageGrid />
-				</div>
-			</div>
+							<div className='images-container'>
+								<ImageGrid />
+							</div>
+						</div>
+					</div>
+				)}
+			</PhotoGramContext.Consumer>
 		);
-
-		return <div className='homePage'>{content}</div>;
 	}
 }
 
