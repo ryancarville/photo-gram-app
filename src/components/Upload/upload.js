@@ -11,29 +11,15 @@ export default class Upload extends Component {
 			imagePreview: null,
 			albumNames: []
 		};
-		this.handleImagePreview = this.handleImagePreview.bind(this);
 	}
-
-	//handle form submit
-	handleUpload = e => {
-		e.preventDefault();
-		alert('This is just a mock UX for Upload images');
-		this.handleBack();
-	};
 
 	//handle image preview on adding image to upload form
-	handleImagePreview(imagePreview) {
-		console.log('Img preview ran', imagePreview);
-		this.setState(
-			{
-				imagePreview: imagePreview,
-				fileSelected: true
-			},
-			() => {
-				console.log(this.state);
-			}
-		);
-	}
+	handleImagePreview = imagePreview => {
+		this.setState({
+			imagePreview: imagePreview,
+			fileSelected: true
+		});
+	};
 
 	//handle back event
 	handleBack = e => {

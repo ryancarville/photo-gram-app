@@ -78,52 +78,45 @@ class Login extends Component {
 			return <Redirect to={`/user/${userId}`} />;
 		}
 		return (
-			<PhotoGramContext.Consumer>
-				{context => (
-					<div className='login-form-container'>
-						<h3>Login</h3>
-						<p>
-							Use the folowing details for a valid login or try anything else to
-							test validation: <br />
-							<br />
-							user name: RCarville
-							<br />
-							password: 1!Aa2@Bb3#Cc
-						</p>
-						<div className='errMsg-login'>{this.state.error}</div>
-						<form className='login-form' onSubmit={this.handleSubmit}>
-							<label htmlFor='user_name'>
-								User Name
-								<input
-									type='text'
-									className='loginFormInput'
-									name='user_name'
-									id='login-email'
-									onChange={this.handleUserNameChange}
-									required
-								/>
-							</label>
-							<label htmlFor='password'>
-								Password
-								<input
-									type='password'
-									className='loginFormInput'
-									name='password'
-									id='login-password'
-									onChange={this.handlePasswordChange}
-									required
-								/>
-							</label>
-							<button
-								type='submit'
-								id='loginFormBtn'
-								onClick={this.handleSubmit}>
-								Let's Go!
-							</button>
-						</form>
-					</div>
-				)}
-			</PhotoGramContext.Consumer>
+			<div className='login-form-container'>
+				<h3>Login</h3>
+				<p>
+					Use the folowing details for a valid login or try anything else to
+					test validation: <br />
+					<br />
+					user name: RCarville
+					<br />
+					password: 1!Aa2@Bb3#Cc
+				</p>
+				<div className='errMsg-login'>{this.state.error}</div>
+				<form className='login-form' onSubmit={this.handleSubmit}>
+					<label htmlFor='user_name'>
+						User Name
+						<input
+							type='text'
+							className='loginFormInput'
+							name='user_name'
+							id='login-email'
+							onChange={this.handleUserNameChange}
+							required
+						/>
+					</label>
+					<label htmlFor='password'>
+						Password
+						<input
+							type='password'
+							className='loginFormInput'
+							name='password'
+							id='login-password'
+							onChange={this.handlePasswordChange}
+							required
+						/>
+					</label>
+					<button type='submit' id='loginFormBtn' onClick={this.handleSubmit}>
+						Let's Go!
+					</button>
+				</form>
+			</div>
 		);
 	}
 }

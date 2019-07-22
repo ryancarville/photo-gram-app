@@ -83,11 +83,10 @@ class App extends Component {
 	};
 	handleUserInfoChange = newInfo => {
 		const user_id = this.state.user.id;
-		const { profile_img_url } = newInfo;
-		const data = { profile_img_url };
+		console.log(newInfo);
 		fetch(config.API_ENDPOINT + `/user/${user_id}`, {
 			method: 'PATCH',
-			body: JSON.stringify(data),
+			body: JSON.stringify(newInfo),
 			headers: {
 				'content-type': 'application/json'
 			}
@@ -99,8 +98,13 @@ class App extends Component {
 						error: data.error
 					});
 				} else {
+					console.log(data);
 					this.setState({
-						user: { data }
+						user: {
+							full_name: data.full_name,
+							user_name: data.user_name,
+							photo: data.profile_img_url
+						}
 					});
 				}
 			})
@@ -111,25 +115,33 @@ class App extends Component {
 			);
 	};
 
-	uploadImage = image => {
-		fetch(config.CLOUDINARY_API, {
-			method: 'POST',
-			body: JSON.stringify(image),
-			headers: {
-				'content-typ': 'application/json'
-			}
-		});
+	uploadImage = (image, e) => {
+		// e.preventDefault();
+		// const { user_id, img_url, caption, tags, date_created, album_id } = image;
+		// const data = { user_id, img_url, caption, tags, date_created, album_id };
+		// fetch(config.API_ENDPOINT, +`/upload/${user_id}`, {
+		// 	method: 'POST',
+		// 	body: JSON.stringify(data),
+		// 	headers: {
+		// 		'content-type': 'application/json'
+		// 	},
+		// 	mode: 'cors'
+		// });
+
 		this.setState({
 			images: [...this.state.images, image]
 		});
+		this.props.history.push('/homePage');
 	};
 
 	deleteImage = imageId => {
-		const newImages = this.state.images.filter(img => img.id !== imageId);
-		this.setState({
-			images: newImages
+		fetch(config.API_ENDPOINT + `/images/${imageId}`, {
+			method: 'DELETE',
+			headers: {
+				'content-type': 'application/json'
+			},
+			mode: 'cors'
 		});
-		console.log(this.state.images);
 	};
 
 	updateImage = id => {

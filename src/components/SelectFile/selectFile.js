@@ -1,23 +1,56 @@
 import React, { Component } from 'react';
+import cloudinary from 'cloudinary-react';
+import config from '../../config';
 import './selectFile.css';
 
 export default class SelectFile extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			imageUrl: '',
+			widget: window.cloudinary.createUploadWidget(
+				{
+					cloudName: config.CLOUDINARY_NAME,
+					uploadPreset: config.CLOUDINARY_UPLOAD_PRESET,
+					cropping: 'server'
+				},
+				(error, result) => {
+					if (!error && result && result.event === 'success') {
+						console.log('Done! Here is the image info: ', result.info);
+						this.setState({
+							uploadedImage: result.info.public_id,
+							imageUrl:
+								'https://res.cloudinary.com/rcarville/image/upload/' +
+								result.info.public_id
+						});
+					}
+				}
+			)
+		};
+	}
 	componentDidMount() {
 		document.getElementById('fileToUpload').click();
 	}
 
 	handleOnChange = e => {
-		const image = URL.createObjectURL(e.target.files[0]);
+		const image = this.state.imageUrl;
+		console.log(image);
 		this.props.handleImagePreview(image);
 	};
+	openWidget = () => {
+		this.state.widget.open();
+	};
 	render() {
+		if (this.state.imageUrl) {
+			this.handleOnChange();
+		}
 		return (
-			<input
+			<button
 				className='uploadFormInput'
-				type='file'
+				type='button'
 				name='fileToUpload'
 				id='fileToUpload'
-				onChange={this.handleOnChange}
+				onClick={this.openWidget}
 			/>
 		);
 	}

@@ -1,12 +1,26 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import PhotoGramContext from '../../PhotoGramContext';
+import config from '../../config';
 import './fileSelected.css';
 
 export default class FileSelected extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			user_id: '',
+			img_url: this.props.state.imagePreview,
+			caption: '',
+			tags: '',
+			album_id: null,
+			date_taken: '',
+			redirect: false
+		};
+	}
+
 	static contextType = PhotoGramContext;
 	//get all albums in context array
 	getAlbumNames = e => {
-		console.log(e);
 		const albums = e.map(album => (
 			<option key={album.id} value={album.id}>
 				{album.name}
@@ -15,21 +29,75 @@ export default class FileSelected extends Component {
 		return albums;
 	};
 
+	handleCaptionChange = e => {
+		this.setState({
+			caption: e.target.value
+		});
+	};
+	handleTagChange = e => {
+		this.setState({
+			tags: e.target.value
+		});
+	};
+	handleAlbumChange = e => {
+		this.setState({
+			album_id: e.target.value
+		});
+	};
+	handleDateChange = e => {
+		this.setState({
+			date_taken: e.target.value
+		});
+	};
+
+	handleUpload = e => {
+		e.preventDefault();
+		const {
+			user_id,
+			img_url,
+			caption,
+			tags,
+			date_created,
+			album_id
+		} = this.state;
+		const data = { user_id, img_url, caption, tags, date_created, album_id };
+		fetch(config.API_ENDPOINT + `/upload/${user_id}`, {
+			method: 'POST',
+			body: JSON.stringify(data),
+			headers: {
+				'content-type': 'application/json'
+			},
+			mode: 'cors'
+		});
+		this.setState({
+			redirect: true
+		});
+	};
+	componentDidMount() {
+		this.setState({
+			user_id: this.context.user.id
+		});
+	}
+
 	render() {
+		if (this.state.redirect === true) {
+			const id = this.state.user_id;
+			return <Redirect to={`/user/${id}`} />;
+		}
 		return (
 			<PhotoGramContext.Consumer>
 				{context => (
 					<>
 						<div className='uploadFormContainer'>
 							<img
-								src={this.props.state.imagePreview}
+								src={this.state.img_url}
 								className='uploadImgPreview'
 								alt=''
 							/>
 							<form
 								className='imageUploadForm'
 								encType='multipart/form-data'
-								onSubmit={this.props.handleUpload}>
+								onSubmit={this.handleUpload}>
 								<label htmlFor='comments'>
 									{' '}
 									Caption
@@ -37,6 +105,7 @@ export default class FileSelected extends Component {
 										className='uploadFormInput'
 										name='comments'
 										id='commentsForImage'
+										onChange={this.handleCaptionChange}
 									/>
 								</label>
 								<label htmlFor='tags'>
@@ -46,11 +115,14 @@ export default class FileSelected extends Component {
 										type='text'
 										name='tags'
 										id='tagsForImage'
+										onChange={this.handleTagChange}
 									/>
 								</label>
 								<label htmlFor='album'>
 									Album{' '}
-									<select className='uploadFormInput'>
+									<select
+										className='uploadFormInput'
+										onChange={this.handleAlbumChange}>
 										{this.getAlbumNames(context.albums)}
 									</select>
 								</label>
@@ -61,6 +133,7 @@ export default class FileSelected extends Component {
 										type='date'
 										name='date'
 										id='dateForImage'
+										onChange={this.handleDateChange}
 									/>
 								</label>
 								<input

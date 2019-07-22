@@ -38,7 +38,7 @@ class Nav extends Component {
 			<div className='navBar'>
 				<ul>
 					<li>
-						<Link to={`/${userId}/upload`}>Upload</Link>
+						<Link to={`/user/${userId}/upload`}>Upload</Link>
 					</li>
 					<li>
 						<Link to={`/user/${userId}`}>PhotoGram</Link>
