@@ -27,6 +27,7 @@ export default class ImagePage extends Component {
 	//delete request event handle sent to context
 	deleteImageRequest = (imageId, cd) => {
 		cd(imageId);
+		this.context.refreshState();
 		this.handleBack();
 	};
 

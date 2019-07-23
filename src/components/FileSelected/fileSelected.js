@@ -69,11 +69,13 @@ export default class FileSelected extends Component {
 				'content-type': 'application/json'
 			},
 			mode: 'cors'
-		});
-		this.context.refreshState();
-		this.setState({
-			redirect: true
-		});
+		})
+			.then(this.context.refreshState())
+			.then(
+				this.setState({
+					redirect: true
+				})
+			);
 	};
 	componentDidMount() {
 		this.setState({

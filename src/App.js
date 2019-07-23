@@ -104,16 +104,6 @@ class App extends Component {
 			);
 	};
 
-	deleteImage = imageId => {
-		fetch(config.API_ENDPOINT + `/images/${imageId}`, {
-			method: 'DELETE',
-			headers: {
-				'content-type': 'application/json'
-			},
-			mode: 'cors'
-		});
-	};
-
 	updateImage = id => {
 		const user_id = this.state.user.id;
 		console.log(user_id);
@@ -159,6 +149,7 @@ class App extends Component {
 
 	refreshState = e => {
 		const id = this.state.user.id;
+
 		fetch(config.API_ENDPOINT + `/user/${id}`, {
 			method: 'GET',
 			headers: {
@@ -166,18 +157,13 @@ class App extends Component {
 			}
 		})
 			.then(res => res.json())
+
 			.then(data => {
-				if (data.error) {
-					this.setState({
-						error: data.error
-					});
-				} else {
-					console.log(data);
-					this.setState({
-						images: data.images,
-						albums: data.albums
-					});
-				}
+				console.log(data);
+				this.setState({
+					images: data.images,
+					albums: data.albums
+				});
 			})
 			.catch(err => {
 				console.log(err);
@@ -185,6 +171,15 @@ class App extends Component {
 					error: err
 				});
 			});
+	};
+	deleteImage = imageId => {
+		fetch(config.API_ENDPOINT + `/images/${imageId}`, {
+			method: 'DELETE',
+			headers: {
+				'content-type': 'application/json'
+			},
+			mode: 'cors'
+		});
 	};
 
 	login = user => {
