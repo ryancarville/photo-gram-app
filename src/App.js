@@ -173,15 +173,10 @@ class App extends Component {
 					});
 				} else {
 					console.log(data);
-					this.setState(
-						{
-							images: data.images,
-							albums: data.albums
-						},
-						() => {
-							console.log(this.state);
-						}
-					);
+					this.setState({
+						images: data.images,
+						albums: data.albums
+					});
 				}
 			})
 			.catch(err => {

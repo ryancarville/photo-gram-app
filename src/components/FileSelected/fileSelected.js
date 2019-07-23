@@ -60,6 +60,7 @@ export default class FileSelected extends Component {
 			date_created,
 			album_id
 		} = this.state;
+		console.log(user_id);
 		const data = { user_id, img_url, caption, tags, date_created, album_id };
 		fetch(config.API_ENDPOINT + `/upload/${user_id}`, {
 			method: 'POST',
@@ -69,24 +70,20 @@ export default class FileSelected extends Component {
 			},
 			mode: 'cors'
 		});
+		this.context.refreshState();
 		this.setState({
 			redirect: true
 		});
 	};
 	componentDidMount() {
-		this.setState(
-			{
-				user_id: this.context.user.id
-			},
-			() => {
-				console.log(this.state.user_id);
-			}
-		);
+		this.setState({
+			user_id: this.context.user.id
+		});
 	}
 
 	render() {
 		if (this.state.redirect === true) {
-			this.context.refreshState();
+			return <Redirect to={`/user/${this.state.user_id}`} />;
 		}
 		return (
 			<PhotoGramContext.Consumer>
