@@ -149,7 +149,6 @@ class App extends Component {
 
 	refreshState = e => {
 		const id = this.state.user.id;
-
 		fetch(config.API_ENDPOINT + `/user/${id}`, {
 			method: 'GET',
 			headers: {
@@ -157,7 +156,6 @@ class App extends Component {
 			}
 		})
 			.then(res => res.json())
-
 			.then(data => {
 				console.log(data);
 				this.setState({
@@ -179,21 +177,10 @@ class App extends Component {
 				'content-type': 'application/json'
 			},
 			mode: 'cors'
-		});
+		}).then(this.refreshState());
 	};
 
 	login = user => {
-		this.setState({
-			user: {
-				id: user.id,
-				name: user.name,
-				user_name: user.user_name,
-				email: user.email,
-				photo: user.photo,
-				date_created: user.date_created
-			},
-			loggedIn: true
-		});
 		fetch(config.API_ENDPOINT + `/user/${user.id}`, {
 			method: 'GET',
 			headers: {
@@ -214,6 +201,19 @@ class App extends Component {
 					});
 				}
 			})
+			.then(
+				this.setState({
+					user: {
+						id: user.id,
+						name: user.name,
+						user_name: user.user_name,
+						email: user.email,
+						photo: user.photo,
+						date_created: user.date_created
+					},
+					loggedIn: true
+				})
+			)
 			.catch(err => {
 				console.log(err);
 				this.setState({
