@@ -22,6 +22,7 @@ class App extends Component {
 			albums: [],
 			singUp: false,
 			loggedIn: false,
+			isData: false,
 			error: null
 		};
 	}
@@ -169,6 +170,7 @@ class App extends Component {
 					error: err
 				});
 			});
+		console.log('refresh state ran');
 	};
 	deleteImage = imageId => {
 		fetch(config.API_ENDPOINT + `/images/${imageId}`, {
@@ -177,49 +179,52 @@ class App extends Component {
 				'content-type': 'application/json'
 			},
 			mode: 'cors'
-		}).then(this.refreshState());
+		}).then(this.refreshState);
 	};
 
 	login = user => {
-		fetch(config.API_ENDPOINT + `/user/${user.id}`, {
-			method: 'GET',
-			headers: {
-				'content-type': 'application/json'
-			}
-		})
-			.then(res => res.json())
-			.then(data => {
-				if (data.error) {
-					this.setState({
-						error: data.error
-					});
-				} else {
-					console.log(data);
-					this.setState({
-						images: data.images,
-						albums: data.albums
-					});
+		setTimeout(() => {
+			fetch(config.API_ENDPOINT + `/user/${user.id}`, {
+				method: 'GET',
+				headers: {
+					'content-type': 'application/json'
 				}
 			})
-			.then(
-				this.setState({
-					user: {
-						id: user.id,
-						name: user.name,
-						user_name: user.user_name,
-						email: user.email,
-						photo: user.photo,
-						date_created: user.date_created
-					},
-					loggedIn: true
+				.then(res => res.json())
+				.then(data => {
+					if (data.error) {
+						this.setState({
+							error: data.error
+						});
+					} else {
+						console.log(data);
+						this.setState({
+							isData: true,
+							images: data.images,
+							albums: data.albums
+						});
+					}
 				})
-			)
-			.catch(err => {
-				console.log(err);
-				this.setState({
-					error: err
+				.then(
+					this.setState({
+						user: {
+							id: user.id,
+							name: user.name,
+							user_name: user.user_name,
+							email: user.email,
+							photo: user.photo,
+							date_created: user.date_created
+						},
+						loggedIn: true
+					})
+				)
+				.catch(err => {
+					console.log(err);
+					this.setState({
+						error: err
+					});
 				});
-			});
+		}, 1000);
 	};
 
 	render() {
@@ -228,8 +233,6 @@ class App extends Component {
 		}
 		const contextValue = {
 			user: this.state.user,
-			setImages: this.setImages,
-			setAlbums: this.setAlbums,
 			images: this.state.images,
 			albums: this.state.albums,
 			refreshState: this.refreshState,

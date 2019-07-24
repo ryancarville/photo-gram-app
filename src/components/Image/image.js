@@ -6,6 +6,7 @@ import './image.css';
 function Image(props) {
 	const image_id = props.id.toString();
 	const user_id = props.user_id;
+
 	return (
 		<div className='image-container'>
 			<Link

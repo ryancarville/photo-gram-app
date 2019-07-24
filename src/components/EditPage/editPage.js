@@ -6,7 +6,9 @@ import './editPage.css';
 export default class EditPage extends Component {
 	constructor(props) {
 		super(props);
+		debugger;
 		this.state = {
+			user_id: this.props.location.state.user_id,
 			id: this.props.location.state.id,
 			img_url: this.props.location.state.img_url,
 			alt: this.props.location.state.tags,
@@ -67,8 +69,13 @@ export default class EditPage extends Component {
 			headers: {
 				'content-type': 'application/json'
 			}
-		});
-		this.context.updateImage(id);
+		})
+			.then(this.context.refreshState())
+			.then(
+				this.props.history.push(
+					`/user/${this.state.user_id}/images/${this.state.id}`
+				)
+			);
 	};
 
 	render() {
@@ -125,9 +132,7 @@ export default class EditPage extends Component {
 									/>
 								</label>
 								<div className='imageEditFormBtnContainer'>
-									<button type='submit' value='save'>
-										Save
-									</button>
+									<button type='submit'>Save</button>
 									<button type='button' onClick={this.goBack}>
 										Cancel
 									</button>

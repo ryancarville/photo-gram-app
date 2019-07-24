@@ -6,6 +6,7 @@ import './imagePage.css';
 export default class ImagePage extends Component {
 	constructor(props) {
 		super(props);
+		debugger;
 		this.state = {
 			id: this.props.location.state.id,
 			img_url: this.props.location.state.img_url,
@@ -27,7 +28,6 @@ export default class ImagePage extends Component {
 	//delete request event handle sent to context
 	deleteImageRequest = (imageId, cd) => {
 		cd(imageId);
-
 		this.handleBack();
 	};
 
@@ -59,6 +59,7 @@ export default class ImagePage extends Component {
 										to={{
 											pathname: `/user/${userId}/edit/${this.state.id}`,
 											state: {
+												user_id: userId,
 												id: this.state.id,
 												img_url: this.state.img_url,
 												alt: this.state.tags,
