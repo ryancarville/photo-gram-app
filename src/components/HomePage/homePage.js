@@ -35,7 +35,7 @@ class HomePage extends Component {
 								<div className='content-counter'>
 									<div>
 										<h4>Images</h4>
-										<ImageCount images={context.images} />
+										<ImageCount />
 									</div>
 									<div>
 										<h4>Albums</h4>

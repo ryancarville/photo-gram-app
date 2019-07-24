@@ -22,7 +22,7 @@ class App extends Component {
 			albums: [],
 			singUp: false,
 			loggedIn: false,
-			isData: false,
+
 			error: null
 		};
 	}
@@ -71,6 +71,18 @@ class App extends Component {
 		this.props.history.goBack();
 	};
 
+	getImageData = imageId => {
+		const images = this.state.images;
+		const image = images.filter(img => img.id == imageId);
+		return image[0];
+	};
+
+	getAlbumData = album_id => {
+		const albums = this.state.albums;
+		const album = albums.filter(alb => alb.id == album_id);
+		console.log(album[0]);
+		return album[0];
+	};
 	handleUserInfoChange = newInfo => {
 		const user_id = this.state.user.id;
 		console.log(newInfo);
@@ -141,11 +153,14 @@ class App extends Component {
 		});
 	};
 
-	deleteAlbum = albumId => {
-		const newAlbums = this.state.albums.filter(alb => alb.id !== albumId);
-		this.setState({
-			albums: newAlbums
-		});
+	deleteAlbum = album_id => {
+		fetch(config.API_ENDPOINT + `/albums/${album_id}`, {
+			method: 'DELETE',
+
+			headers: {
+				'content-type': 'application/json'
+			}
+		}).then(this.refreshState());
 	};
 
 	refreshState = e => {
@@ -179,52 +194,50 @@ class App extends Component {
 				'content-type': 'application/json'
 			},
 			mode: 'cors'
-		}).then(this.refreshState);
+		}).then(this.refreshState());
 	};
 
 	login = user => {
-		setTimeout(() => {
-			fetch(config.API_ENDPOINT + `/user/${user.id}`, {
-				method: 'GET',
-				headers: {
-					'content-type': 'application/json'
+		fetch(config.API_ENDPOINT + `/user/${user.id}`, {
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json'
+			}
+		})
+			.then(res => res.json())
+			.then(data => {
+				if (data.error) {
+					this.setState({
+						error: data.error
+					});
+				} else {
+					console.log(data);
+					this.setState({
+						isData: true,
+						images: data.images,
+						albums: data.albums
+					});
 				}
 			})
-				.then(res => res.json())
-				.then(data => {
-					if (data.error) {
-						this.setState({
-							error: data.error
-						});
-					} else {
-						console.log(data);
-						this.setState({
-							isData: true,
-							images: data.images,
-							albums: data.albums
-						});
-					}
+			.then(
+				this.setState({
+					user: {
+						id: user.id,
+						name: user.name,
+						user_name: user.user_name,
+						email: user.email,
+						photo: user.photo,
+						date_created: user.date_created
+					},
+					loggedIn: true
 				})
-				.then(
-					this.setState({
-						user: {
-							id: user.id,
-							name: user.name,
-							user_name: user.user_name,
-							email: user.email,
-							photo: user.photo,
-							date_created: user.date_created
-						},
-						loggedIn: true
-					})
-				)
-				.catch(err => {
-					console.log(err);
-					this.setState({
-						error: err
-					});
+			)
+			.catch(err => {
+				console.log(err);
+				this.setState({
+					error: err
 				});
-		}, 1000);
+			});
 	};
 
 	render() {
@@ -236,6 +249,8 @@ class App extends Component {
 			images: this.state.images,
 			albums: this.state.albums,
 			refreshState: this.refreshState,
+			getImageData: this.getImageData,
+			getAlbumData: this.getAlbumData,
 			addAlbum: this.addAlbum,
 			deleteAlbum: this.deleteAlbum,
 			deleteImage: this.deleteImage,

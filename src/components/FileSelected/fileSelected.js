@@ -23,7 +23,7 @@ export default class FileSelected extends Component {
 	getAlbumNames = e => {
 		const albums = e.map(album => (
 			<option key={album.id} value={album.id}>
-				{album.name}
+				{album.album_name}
 			</option>
 		));
 		return albums;

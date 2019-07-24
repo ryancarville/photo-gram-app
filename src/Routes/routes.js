@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import LandingPage from '../components/LandingPage/landingPage.js';
+import Loading from '../components/Loading/loading';
 import SignUp from '../components/SignUp/signUp.js';
 import Login from '../components/Login/login.js';
 import HomePage from '../components/HomePage/homePage.js';
@@ -21,7 +22,7 @@ class Router extends Component {
 				<Route path='/signUp' exact component={SignUp} />
 				<Route path='/login' exact component={Login} />
 				{this.context.state.isData === false ? (
-					<p>Loading...</p>
+					<Loading />
 				) : (
 					<Route path='/user/:user_id' exact component={HomePage} />
 				)}

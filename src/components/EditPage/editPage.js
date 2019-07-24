@@ -6,15 +6,14 @@ import './editPage.css';
 export default class EditPage extends Component {
 	constructor(props) {
 		super(props);
-		debugger;
 		this.state = {
-			user_id: this.props.location.state.user_id,
-			id: this.props.location.state.id,
-			img_url: this.props.location.state.img_url,
-			alt: this.props.location.state.tags,
-			caption: this.props.location.state.caption,
-			date_created: this.props.location.state.date,
-			album_id: this.props.location.state.album_id
+			user_id: this.props.match.params.user_id,
+			image_id: this.props.match.params.image_id,
+			img_url: this.props.location.state.image.img_url,
+			caption: this.props.location.state.image.caption,
+			tags: this.props.location.state.image.tags,
+			date_created: this.props.location.state.image.date_created,
+			album_id: this.props.location.state.image.album_id
 		};
 	}
 
@@ -35,13 +34,13 @@ export default class EditPage extends Component {
 	//set state on change for date
 	handleDateChange = e => {
 		this.setState({
-			date: e.target.value
+			date_created: e.target.value
 		});
 	};
 	//set state on change for tags
 	handleTagsChange = e => {
 		this.setState({
-			alt: e.target.value
+			tags: e.target.value
 		});
 	};
 	//handle back event
@@ -61,9 +60,17 @@ export default class EditPage extends Component {
 	//handle fomr submit event
 	handleSubmit = e => {
 		e.preventDefault();
-		const { id, img_url, caption, alt, album_id, date_created } = this.state;
-		const data = { id, img_url, caption, alt, album_id, date_created };
-		fetch(config.API_ENDPOINT + `/images/${id}`, {
+		const user_id = this.state.user_id;
+		const {
+			image_id,
+			img_url,
+			caption,
+			tags,
+			album_id,
+			date_created
+		} = this.state;
+		const data = { image_id, img_url, caption, tags, album_id, date_created };
+		fetch(config.API_ENDPOINT + `/images/${image_id}`, {
 			method: 'PATCH',
 			body: JSON.stringify(data),
 			headers: {
@@ -71,14 +78,13 @@ export default class EditPage extends Component {
 			}
 		})
 			.then(this.context.refreshState())
-			.then(
-				this.props.history.push(
-					`/user/${this.state.user_id}/images/${this.state.id}`
-				)
-			);
+			.then(this.props.history.push(`/user/${user_id}/images/${image_id}`));
 	};
 
 	render() {
+		const image_id = this.state.image_id;
+		const user_id = this.state.user_id;
+
 		return (
 			<PhotoGramContext.Consumer>
 				{context => (
@@ -88,7 +94,7 @@ export default class EditPage extends Component {
 						</button>
 						<div className='edit-page-container'>
 							<img
-								key={this.state.id}
+								key={image_id}
 								className='imgPreview'
 								src={this.state.img_url}
 								alt={this.state.alt}
@@ -118,7 +124,7 @@ export default class EditPage extends Component {
 									<input
 										type='text'
 										name='tags'
-										value={this.state.alt}
+										value={this.state.tags}
 										onChange={this.handleTagsChange}
 									/>
 								</label>
@@ -127,7 +133,7 @@ export default class EditPage extends Component {
 									<input
 										type='date'
 										name='date'
-										value={this.state.date}
+										value={this.state.date_created}
 										onChange={this.handleDateChange}
 									/>
 								</label>

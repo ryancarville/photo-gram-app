@@ -16,7 +16,7 @@ class UploadProfileImage extends Component {
 			widget: window.cloudinary.createUploadWidget(
 				{
 					cloudName: config.CLOUDINARY_NAME,
-					uploadPreset: config.CLOUDINARY_UPLOAD_PRESET,
+					uploadPreset: config.CLOUDINARY_PROFILE_UPLOAD_PRESET,
 					cropping: 'server'
 				},
 				(error, result) => {

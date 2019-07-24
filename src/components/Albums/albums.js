@@ -32,7 +32,7 @@ class Albums extends Component {
 				<ul>
 					{this.createAlbums(albums)}
 					<li>
-						<Link to={`/user/${user.id}/albums/addAlbum`} id='addAlbum'>
+						<Link to={`/user/${user.id}/addAlbum`} id='addAlbum'>
 							<img
 								src='http://beardystudios.com/Bloc_Capstone/photoGram/images/addAlbumBtn.png'
 								className='albumImg'

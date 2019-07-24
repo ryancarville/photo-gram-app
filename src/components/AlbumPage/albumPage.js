@@ -8,11 +8,11 @@ export default class AlbumPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			user_id: this.props.match.params.user_id,
 			album_id: this.props.match.params.album_id,
-			images: this.props.location.state.images,
-			albumName: this.props.location.state.album_name,
+			images: [],
+			albumName: '',
 			albumImages: [],
-
 			error: null
 		};
 	}
@@ -28,18 +28,19 @@ export default class AlbumPage extends Component {
 	//on mount set state with all images assigned to current album
 	componentDidMount() {
 		const images = this.context.images;
-		const { album_id } = this.state;
+		const album_id = this.state.album_id;
 		const albumImgs = images.filter(img => img.album_id == album_id);
-		this.setState(
-			{
-				albumImages: albumImgs
-			},
-			() => console.log(this.state)
-		);
+		const albumData = this.context.getAlbumData(this.state.album_id);
+		this.setState({
+			images: images,
+			albumName: albumData.album_name,
+			albumImages: albumImgs
+		});
 	}
 	//handle back event
 	handleBack = e => {
-		this.props.history.goBack();
+		const user_id = this.state.user_id;
+		this.props.history.push(`/user/${user_id}`);
 	};
 	//delete request of Album sent to context event handler
 	deleteAlbumRequest = (albumId, cd) => {
@@ -48,7 +49,7 @@ export default class AlbumPage extends Component {
 	};
 
 	render() {
-		const { albumId, albumImages } = this.state;
+		const { album_id, albumImages } = this.state;
 		return (
 			<PhotoGramContext.Consumer>
 				{context => (
@@ -66,9 +67,9 @@ export default class AlbumPage extends Component {
 									id='removeAlbumBtn'
 									type='button'
 									onClick={() =>
-										this.deleteAlbumRequest(albumId, context.deleteAlbum)
+										this.deleteAlbumRequest(album_id, context.deleteAlbum)
 									}>
-									Remove Album
+									Delete Album
 								</button>
 							</div>
 							<div className='grid-container'>

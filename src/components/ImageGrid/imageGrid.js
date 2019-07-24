@@ -5,7 +5,6 @@ import './imageGrid.css';
 
 function ImageGrid(props) {
 	const context = useContext(PhotoGramContext);
-
 	return (
 		<section>
 			<div className='grid-container'>

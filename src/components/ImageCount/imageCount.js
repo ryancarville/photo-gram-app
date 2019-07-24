@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import PhotoGramContext from '../../PhotoGramContext';
 
 export default function ImageCount(props) {
 	//counts all images
-	const count = props.images.length;
+	const context = useContext(PhotoGramContext);
+	const count = context.images.length;
 	return <span>{count}</span>;
 }

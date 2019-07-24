@@ -6,24 +6,18 @@ import './imagePage.css';
 export default class ImagePage extends Component {
 	constructor(props) {
 		super(props);
-		debugger;
 		this.state = {
-			id: this.props.location.state.id,
-			img_url: this.props.location.state.img_url,
-			alt: this.props.location.state.tags,
-			caption: this.props.location.state.caption,
-			date: this.props.location.state.date,
-			album_id: this.props.location.state.album_id,
-			albums: this.props.location.state.albums,
-			error: null
+			user_id: this.props.match.params.user_id,
+			image_id: this.props.match.params.image_id
 		};
 	}
 
 	static contextType = PhotoGramContext;
 
 	//handle back event
-	handleBack = e => {
-		this.props.history.goBack();
+	goHome = e => {
+		const user_id = this.state.user_id;
+		this.props.history.push(`/user/${user_id}`);
 	};
 	//delete request event handle sent to context
 	deleteImageRequest = (imageId, cd) => {
@@ -32,51 +26,41 @@ export default class ImagePage extends Component {
 	};
 
 	render() {
-		const userId = this.props.match.params.user_id;
+		const image_id = this.state.image_id;
+		const user_id = this.state.user_id;
+		const image = this.context.getImageData(image_id);
+
+		console.log(image);
 		return (
 			<PhotoGramContext.Consumer>
 				{context => (
 					<>
-						<button
-							type='button'
-							id='imagePageBackBtn'
-							onClick={this.handleBack}>
+						<button type='button' id='imagePageBackBtn' onClick={this.goHome}>
 							&#171;{' '}
 						</button>
 						<div className='image-page-container'>
 							<img
-								key={this.state.id}
-								src={this.state.img_url}
-								alt={this.state.alt}
+								key={image.id}
+								src={image.img_url}
+								alt={image.alt}
 								className='singleImg'
 							/>
 							<div className='image-info'>
-								<p>{this.state.caption}</p>
-								<span>Date:{this.state.date}</span>
+								<p>{image.caption}</p>
+								<span>Date:{image.date_created}</span>
 
 								<div className='imageButtons'>
 									<Link
 										to={{
-											pathname: `/user/${userId}/edit/${this.state.id}`,
-											state: {
-												user_id: userId,
-												id: this.state.id,
-												img_url: this.state.img_url,
-												alt: this.state.tags,
-												caption: this.state.caption,
-												date: this.state.date,
-												albums: this.state.albums
-											}
+											pathname: `/user/${user_id}/edit/${image_id}`,
+											state: { image }
 										}}>
 										<button type='button'>Edit Post</button>
 									</Link>
 									<button
 										type='button'
 										onClick={() =>
-											this.deleteImageRequest(
-												this.state.id,
-												context.deleteImage
-											)
+											this.deleteImageRequest(image_id, context.deleteImage)
 										}>
 										Delete
 									</button>

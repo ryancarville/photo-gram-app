@@ -4,23 +4,12 @@ import PropTypes from 'prop-types';
 import './image.css';
 
 function Image(props) {
-	const image_id = props.id.toString();
+	const image_id = props.id;
 	const user_id = props.user_id;
 
 	return (
 		<div className='image-container'>
-			<Link
-				to={{
-					pathname: `/user/${user_id}/images/${image_id}`,
-					state: {
-						id: props.id,
-						img_url: props.img_url,
-						caption: props.caption,
-						alt: props.tags,
-						date: props.date_created,
-						album_id: props.album_id
-					}
-				}}>
+			<Link to={`/user/${user_id}/images/${image_id}`}>
 				<img
 					key={image_id}
 					src={props.img_url}
