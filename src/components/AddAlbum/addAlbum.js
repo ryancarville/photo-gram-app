@@ -8,10 +8,7 @@ export default class AddAlbum extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			user_id: this.props.match.params.user_id,
-			album_id: null,
-			album_name: '',
-			img_url: '',
+			albumData: {},
 			cloudinaryPreview: '',
 			widget: window.cloudinary.createUploadWidget(
 				{
@@ -24,33 +21,59 @@ export default class AddAlbum extends Component {
 						console.log('Done! Here is the image info: ', result.info);
 						this.setState({
 							cloudinaryPreview: result.info.public_id,
-							img_url:
-								'https://res.cloudinary.com/rcarville/image/upload/' +
-								result.info.public_id
+							albumData: {
+								user_id: this.state.albumData.user_id,
+								album_name: this.state.albumData.album_name,
+								img_url:
+									'https://res.cloudinary.com/rcarville/image/upload/' +
+									result.info.public_id
+							}
 						});
+						console.log(this.state);
 					}
 				}
 			),
 			error: null
 		};
 	}
+	componentDidMount() {
+		let user_id = this.props.match.params.user_id;
+		user_id = parseInt(user_id, 10);
+		console.log(user_id);
+		this.setState(
+			{
+				albumData: {
+					user_id: user_id,
+					album_name: '',
+					img_url: ''
+				}
+			},
+			() => {
+				console.log(this.state);
+			}
+		);
+	}
 
 	static contextType = PhotoGramContext;
 	//set state on folder name change
 	handleFolderName = e => {
 		this.setState({
-			album_name: e.target.value
+			albumData: {
+				user_id: this.state.albumData.user_id,
+				album_name: e.target.value,
+				img_url: ''
+			}
 		});
 	};
 	//back button callback
 	goHome = e => {
-		const user_id = this.state.user_id;
+		const user_id = this.state.albumData.user_id;
 		this.props.history.push(`/user/${user_id}`);
 	};
 	//handle form submit event
 	handleSubmit = e => {
 		e.preventDefault();
-		const albumData = this.state;
+		const { albumData } = this.state;
 		console.log(albumData);
 		fetch(config.API_ENDPOINT + '/albums/addAlbum', {
 			method: 'POST',
@@ -66,10 +89,6 @@ export default class AddAlbum extends Component {
 					this.setState({
 						error: data.error
 					});
-				} else {
-					this.setState({
-						albumData: { album_id: data.id }
-					});
 				}
 			})
 			.then(this.context.refreshState())
@@ -82,6 +101,7 @@ export default class AddAlbum extends Component {
 	};
 	//open image uploader widget
 	openWidget = e => {
+		console.log(this.state);
 		this.state.widget.open();
 	};
 

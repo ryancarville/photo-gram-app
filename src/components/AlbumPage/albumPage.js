@@ -29,7 +29,7 @@ export default class AlbumPage extends Component {
 	componentDidMount() {
 		const images = this.context.images;
 		const album_id = this.state.album_id;
-		const albumImgs = images.filter(img => img.album_id == album_id);
+		const albumImgs = images.filter(img => img.album_id === album_id);
 		const albumData = this.context.getAlbumData(this.state.album_id);
 		this.setState({
 			images: images,

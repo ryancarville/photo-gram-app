@@ -36,6 +36,7 @@ class HomePage extends Component {
 								<div className='content-counter'>
 									<div>
 										<h4>Images</h4>
+										{console.log(context.images)}
 										{context.images === [] ? <Loading /> : <ImageCount />}
 									</div>
 									<div>

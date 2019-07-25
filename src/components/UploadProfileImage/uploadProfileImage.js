@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 import Dropzone from 'react-dropzone';
 import PhotoGramContext from '../../PhotoGramContext';
 import config from '../../config';

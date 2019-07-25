@@ -8,12 +8,7 @@ export default class EditPage extends Component {
 		super(props);
 		this.state = {
 			user_id: this.props.match.params.user_id,
-			image_id: this.props.match.params.image_id,
-			img_url: this.props.location.state.image.img_url,
-			caption: this.props.location.state.image.caption,
-			tags: this.props.location.state.image.tags,
-			date_created: this.props.location.state.image.date_created,
-			album_id: this.props.location.state.image.album_id
+			image_id: this.props.match.params.image_id
 		};
 	}
 
@@ -69,19 +64,40 @@ export default class EditPage extends Component {
 			album_id,
 			date_created
 		} = this.state;
-		const data = { image_id, img_url, caption, tags, album_id, date_created };
+		const data = {
+			user_id,
+			image_id,
+			img_url,
+			caption,
+			tags,
+			album_id,
+			date_created
+		};
 		fetch(config.API_ENDPOINT + `/images/${image_id}`, {
 			method: 'PATCH',
 			body: JSON.stringify(data),
 			headers: {
 				'content-type': 'application/json'
 			}
-		}).then(this.context.refreshState());
+		})
+			.then(this.context.refreshState())
+			.catch(err => this.setState({ error: err }));
 	};
+
+	componentWillMount() {
+		const image_id = this.state.image_id;
+		const image = this.context.getImageData(image_id);
+		this.setState({
+			img_url: image.img_url,
+			caption: image.caption,
+			tags: image.tags,
+			date_created: image.date_created,
+			album_id: image.album_id
+		});
+	}
 
 	render() {
 		const image_id = this.state.image_id;
-		const user_id = this.state.user_id;
 
 		return (
 			<PhotoGramContext.Consumer>
@@ -95,7 +111,7 @@ export default class EditPage extends Component {
 								key={image_id}
 								className='imgPreview'
 								src={this.state.img_url}
-								alt={this.state.alt}
+								alt={this.state.tags}
 							/>
 							<form onSubmit={this.handleSubmit} className='imageEditForm'>
 								<label htmlFor='caption'>

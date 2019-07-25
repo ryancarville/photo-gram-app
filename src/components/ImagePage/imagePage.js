@@ -28,7 +28,6 @@ export default class ImagePage extends Component {
 		const image_id = this.state.image_id;
 		const user_id = this.state.user_id;
 		const image = this.context.getImageData(image_id);
-
 		console.log(image);
 		return (
 			<PhotoGramContext.Consumer>
@@ -49,11 +48,7 @@ export default class ImagePage extends Component {
 								<span>Date:{image.date_created}</span>
 
 								<div className='imageButtons'>
-									<Link
-										to={{
-											pathname: `/user/${user_id}/edit/${image_id}`,
-											state: { image }
-										}}>
+									<Link to={`/user/${user_id}/edit/${image_id}`}>
 										<button type='button'>Edit Post</button>
 									</Link>
 									<button

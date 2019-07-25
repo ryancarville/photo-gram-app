@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import config from './config.js';
 import Nav from './components/Nav/nav';
 import Routes from './Routes/routes.js';
@@ -88,7 +88,10 @@ class App extends Component {
 					albums: data.albums
 				});
 			})
-			.then(rd => <Redirect to={`/user/${this.state.user.id}`} />)
+			.then(rd => {
+				console.log('Redirect Ran');
+				return this.props.history.push(`/user/${id}`);
+			})
 			.catch(err => {
 				console.log(err);
 				this.setState({
@@ -99,13 +102,13 @@ class App extends Component {
 
 	getImageData = imageId => {
 		const images = this.state.images;
-		const image = images.filter(img => img.id == imageId);
+		const image = images.filter(img => img.id.toString() === imageId);
 		return image[0];
 	};
 
 	getAlbumData = album_id => {
 		const albums = this.state.albums;
-		const album = albums.filter(alb => alb.id == album_id);
+		const album = albums.filter(alb => alb.id.toString() === album_id);
 		console.log(album[0]);
 		return album[0];
 	};
@@ -237,7 +240,7 @@ class App extends Component {
 	};
 
 	render() {
-		if (this.state.signup) {
+		if (this.state.signup === true) {
 			return <Redirect to={`/login`} />;
 		}
 		const contextValue = {
@@ -269,4 +272,4 @@ class App extends Component {
 		);
 	}
 }
-export default App;
+export default withRouter(App);
