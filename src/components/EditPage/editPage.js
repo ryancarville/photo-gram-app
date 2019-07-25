@@ -76,9 +76,7 @@ export default class EditPage extends Component {
 			headers: {
 				'content-type': 'application/json'
 			}
-		})
-			.then(this.context.refreshState())
-			.then(this.props.history.push(`/user/${user_id}/images/${image_id}`));
+		}).then(this.context.refreshState());
 	};
 
 	render() {

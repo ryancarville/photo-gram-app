@@ -30,8 +30,7 @@ class UploadProfileImage extends Component {
 						});
 					}
 				}
-			),
-			uploadRedirect: false
+			)
 		};
 	}
 
@@ -52,9 +51,6 @@ class UploadProfileImage extends Component {
 		const { profile_img_url, full_name, user_name } = this.state;
 		const newUserInfo = { profile_img_url, full_name, user_name };
 		this.context.handleUserInfoChange(newUserInfo);
-		this.setState({
-			uploadRedirect: true
-		});
 	};
 	openWidget = () => {
 		this.state.widget.open();
@@ -68,11 +64,6 @@ class UploadProfileImage extends Component {
 		});
 	}
 	render() {
-		if (this.state.uploadRedirect === true) {
-			const user_id = this.context.user.id;
-			return <Redirect to={`/user/${user_id}`} />;
-		}
-
 		return (
 			<PhotoGramContext.Consumer>
 				{context => (

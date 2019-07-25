@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PhotoGramContext from '../../PhotoGramContext';
 // import config from '../../config';
+import Loading from '../Loading/loading';
 import UserProfileImage from '../UserProfileImage/userProfileImage.js';
 import Albums from '../Albums/albums';
 import ImageGrid from '../ImageGrid/imageGrid';
@@ -35,7 +36,7 @@ class HomePage extends Component {
 								<div className='content-counter'>
 									<div>
 										<h4>Images</h4>
-										<ImageCount />
+										{context.images === [] ? <Loading /> : <ImageCount />}
 									</div>
 									<div>
 										<h4>Albums</h4>
@@ -49,7 +50,7 @@ class HomePage extends Component {
 							</div>
 
 							<div className='images-container'>
-								<ImageGrid />
+								{context.images === [] ? <Loading /> : <ImageGrid />}
 							</div>
 						</div>
 					</div>

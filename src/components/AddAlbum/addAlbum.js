@@ -43,7 +43,7 @@ export default class AddAlbum extends Component {
 		});
 	};
 	//back button callback
-	handleBack = e => {
+	goHome = e => {
 		const user_id = this.state.user_id;
 		this.props.history.push(`/user/${user_id}`);
 	};
@@ -72,13 +72,13 @@ export default class AddAlbum extends Component {
 					});
 				}
 			})
+			.then(this.context.refreshState())
+			.then(this.goHome())
 			.catch(err =>
 				this.setState({
 					error: err
 				})
 			);
-		this.context.refreshState();
-		this.handleBack();
 	};
 	//open image uploader widget
 	openWidget = e => {
@@ -124,7 +124,7 @@ export default class AddAlbum extends Component {
 					<button type='submit' value='add folder'>
 						Add Folder{' '}
 					</button>
-					<button type='button' value='cancel' onClick={this.handleBack}>
+					<button type='button' value='cancel' onClick={this.goHome}>
 						Cancel
 					</button>
 				</form>

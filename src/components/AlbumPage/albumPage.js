@@ -45,7 +45,6 @@ export default class AlbumPage extends Component {
 	//delete request of Album sent to context event handler
 	deleteAlbumRequest = (albumId, cd) => {
 		cd(albumId);
-		this.handleBack();
 	};
 
 	render() {

@@ -67,8 +67,34 @@ class App extends Component {
 		});
 	};
 
-	goBack = e => {
-		this.props.history.goBack();
+	goHome = e => {
+		const user_id = this.state.user.id;
+		window.history.pushState('goHome', null, `/user/${user_id}`);
+	};
+	refreshState = e => {
+		console.log('refresh state ran');
+		const id = this.state.user.id;
+		fetch(config.API_ENDPOINT + `/user/${id}`, {
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json'
+			}
+		})
+			.then(res => res.json())
+			.then(data => {
+				console.log(data);
+				this.setState({
+					images: data.images,
+					albums: data.albums
+				});
+			})
+			.then(rd => <Redirect to={`/user/${this.state.user.id}`} />)
+			.catch(err => {
+				console.log(err);
+				this.setState({
+					error: err
+				});
+			});
 	};
 
 	getImageData = imageId => {
@@ -110,6 +136,7 @@ class App extends Component {
 					});
 				}
 			})
+			.then(this.refreshState())
 			.catch(err =>
 				this.setState({
 					error: err
@@ -137,20 +164,13 @@ class App extends Component {
 					this.setImages(data);
 				}
 			})
+			.then(this.refreshState())
 			.catch(err => {
 				console.log(err);
 				this.setState({
 					error: err
 				});
 			});
-
-		return <Redirect to={`/user/${user_id}/images/${id}`} />;
-	};
-
-	addAlbum = album => {
-		this.setState({
-			albums: [...this.state.albums, album]
-		});
 	};
 
 	deleteAlbum = album_id => {
@@ -163,30 +183,6 @@ class App extends Component {
 		}).then(this.refreshState());
 	};
 
-	refreshState = e => {
-		const id = this.state.user.id;
-		fetch(config.API_ENDPOINT + `/user/${id}`, {
-			method: 'GET',
-			headers: {
-				'content-type': 'application/json'
-			}
-		})
-			.then(res => res.json())
-			.then(data => {
-				console.log(data);
-				this.setState({
-					images: data.images,
-					albums: data.albums
-				});
-			})
-			.catch(err => {
-				console.log(err);
-				this.setState({
-					error: err
-				});
-			});
-		console.log('refresh state ran');
-	};
 	deleteImage = imageId => {
 		fetch(config.API_ENDPOINT + `/images/${imageId}`, {
 			method: 'DELETE',
@@ -259,7 +255,7 @@ class App extends Component {
 			login: this.login,
 			logout: this.logout,
 			signUp: this.signUp,
-			goBack: this.goBack,
+			goHome: this.goHome,
 			state: this.state
 		};
 
