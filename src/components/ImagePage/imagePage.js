@@ -28,6 +28,8 @@ export default class ImagePage extends Component {
 		const image_id = this.state.image_id;
 		const user_id = this.state.user_id;
 		const image = this.context.getImageData(image_id);
+		const date = new Date(image.date_created);
+		const formatted_date = new Intl.DateTimeFormat('en-GB').format(date);
 		console.log(image);
 		return (
 			<PhotoGramContext.Consumer>
@@ -45,7 +47,7 @@ export default class ImagePage extends Component {
 							/>
 							<div className='image-info'>
 								<p>{image.caption}</p>
-								<span>Date:{image.date_created}</span>
+								<span>Date: {formatted_date}</span>
 
 								<div className='imageButtons'>
 									<Link to={`/user/${user_id}/edit/${image_id}`}>

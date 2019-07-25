@@ -120,6 +120,7 @@ export default class EditPage extends Component {
 										type='text'
 										name='caption'
 										id='captionTextarea'
+										autofocus='autofoucs'
 										value={this.state.caption}
 										onChange={this.handleCaptionChange}
 									/>

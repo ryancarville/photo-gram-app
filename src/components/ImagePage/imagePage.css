@@ -37,12 +37,16 @@
 
 @media only screen and (min-width: 700px) {
 	.image-page-container {
+		width: 60%;
 		display: flex;
+		justify-content: center;
 		align-items: center;
-		padding-top: 5px;
+		padding-top: 150px;
+		margin-left: auto;
+		margin-right: auto;
 	}
 	.singleImg {
-		width: 1000px;
+		width: 50%;
 		margin-top: 1%;
 		margin-left: 2%;
 	}
@@ -50,6 +54,12 @@
 		width: 100%;
 		display: flex;
 		flex-direction: column;
+	}
+
+	.image-info button {
+		border-radius: 10px;
+		width: 150px;
+		margin: 20px;
 	}
 	#imagePageBackBtn {
 		margin-top: 50px;

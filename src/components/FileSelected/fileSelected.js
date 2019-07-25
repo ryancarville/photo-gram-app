@@ -126,6 +126,7 @@ export default class FileSelected extends Component {
 									<select
 										className='uploadFormInput'
 										onChange={this.handleAlbumChange}>
+										<option value=''>No Album</option>
 										{this.getAlbumNames(context.albums)}
 									</select>
 								</label>

@@ -3,6 +3,7 @@ import Dropzone from 'react-dropzone';
 import PhotoGramContext from '../../PhotoGramContext';
 import config from '../../config';
 import { Image, Transformation } from 'cloudinary-react';
+import './uploadProfileImage.css';
 
 class UploadProfileImage extends Component {
 	constructor(props) {
@@ -66,7 +67,7 @@ class UploadProfileImage extends Component {
 		return (
 			<PhotoGramContext.Consumer>
 				{context => (
-					<div>
+					<div className='updateProfile'>
 						<Dropzone
 							id='direct-upload-dropzone'
 							disableClick={true}
@@ -78,12 +79,9 @@ class UploadProfileImage extends Component {
 								<div id='profile_update'>
 									<h1>Update Profile Info</h1>
 									<h2>
-										You can hange your profile image, User name or Full Name
+										You can change your Full Name, User Name or Profile Image
 									</h2>
-									<p>
-										You can also drag and drop an image file into the dashed
-										area.
-									</p>
+
 									<form onSubmit={this.handleSubmit}>
 										<div className='form_line'>
 											<label path='full_name'>Name:</label>
@@ -111,7 +109,6 @@ class UploadProfileImage extends Component {
 										</div>
 										<div className='form_line'>
 											<label htmlFor='fileUpload'>Upload Image</label>
-
 											<div className='form_control'>
 												<Image
 													cloudName={config.CLOUDINARY_NAME}
@@ -123,6 +120,7 @@ class UploadProfileImage extends Component {
 														radius='100'
 													/>
 												</Image>
+												<br />
 												<button
 													type='button'
 													id='fileUplaod'

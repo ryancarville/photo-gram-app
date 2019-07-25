@@ -16,7 +16,7 @@
 	background-color: deepskyblue;
 	border-radius: 0px 0px 20px 20px;
 	box-shadow: rgb(216, 216, 216) 0px 10px 50px 0px;
-	padding-bottom: 20px;
+	padding-bottom: 15px;
 	color: aliceblue;
 }
 
@@ -26,16 +26,22 @@
 
 .albums-container {
 	margin-bottom: 50px;
-	padding-top: 20px;
+	padding-top: 10px;
 }
 
 .userInfo {
 	display: flex;
-	justify-content: space-around;
+	flex-direction: column;
+	justify-content: space-between;
 	align-items: center;
 	padding: 15px;
 }
-
+#changeProfileBtn {
+	position: absolute;
+	margin-top: 70px;
+	margin-left: -40px;
+	width: 40px;
+}
 #userPhoto {
 	width: 100px;
 	height: 100px;
