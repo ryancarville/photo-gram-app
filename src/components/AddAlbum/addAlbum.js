@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import PhotoGramContext from '../../PhotoGramContext';
 import config from '../../config';
 import { Image, Transformation } from 'cloudinary-react';
 import TokenService from '../../services/token-service';
+import PhotoGramApiService from '../../services/photoGram-api-service';
 import './addAlbum.css';
 
 export default class AddAlbum extends Component {
@@ -11,6 +13,7 @@ export default class AddAlbum extends Component {
 		this.state = {
 			albumData: {},
 			cloudinaryPreview: '',
+			redirect: false,
 			widget: window.cloudinary.createUploadWidget(
 				{
 					cloudName: config.CLOUDINARY_NAME,
@@ -41,18 +44,13 @@ export default class AddAlbum extends Component {
 		let user_id = this.props.match.params.user_id;
 		user_id = parseInt(user_id, 10);
 		console.log(user_id);
-		this.setState(
-			{
-				albumData: {
-					user_id: user_id,
-					album_name: '',
-					img_url: ''
-				}
-			},
-			() => {
-				console.log(this.state);
+		this.setState({
+			albumData: {
+				user_id: user_id,
+				album_name: '',
+				img_url: ''
 			}
-		);
+		});
 	}
 
 	static contextType = PhotoGramContext;
@@ -62,7 +60,7 @@ export default class AddAlbum extends Component {
 			albumData: {
 				user_id: this.state.albumData.user_id,
 				album_name: e.target.value,
-				img_url: ''
+				img_url: this.state.albumData.img_url
 			}
 		});
 	};
@@ -74,40 +72,25 @@ export default class AddAlbum extends Component {
 	//handle form submit event
 	handleSubmit = e => {
 		e.preventDefault();
-		const { albumData } = this.state;
+		const albumData = this.state.albumData;
 		console.log(albumData);
-		fetch(config.API_ENDPOINT + '/albums/addAlbum', {
-			method: 'POST',
-			body: JSON.stringify(albumData),
-			headers: {
-				'content-type': 'application/json',
-				authorization: `bearer ${TokenService.getAuthToken()}`
-			},
-			mode: 'cors'
-		})
-			.then(res => res.json())
-			.then(data => {
-				if (data.error) {
-					this.setState({
-						error: data.error
-					});
-				}
-			})
-			.then(this.context.refreshState())
-			.then(this.goHome())
-			.catch(err =>
-				this.setState({
-					error: err
-				})
-			);
+		PhotoGramApiService.addAlbum(albumData).then(data => {
+			this.setState({
+				redirect: true
+			});
+		});
 	};
 	//open image uploader widget
 	openWidget = e => {
-		console.log(this.state);
 		this.state.widget.open();
 	};
 
 	render() {
+		if (this.state.redirect) {
+			const user_id = this.state.albumData.user_id;
+			PhotoGramApiService.refreshContent(user_id);
+			return <Redirect to={`/user/{user_id}`} />;
+		}
 		return (
 			<div className='add-album-container'>
 				<div className='folderUploadErrorMsg'>{this.state.error}</div>

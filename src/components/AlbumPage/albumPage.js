@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import PhotoGramContext from '../../PhotoGramContext';
 import Image from '../Image/image';
 import './albumPage.css';
+import PhotoGramApiService from '../../services/photoGram-api-service';
 
 export default class AlbumPage extends Component {
 	constructor(props) {
@@ -13,6 +15,7 @@ export default class AlbumPage extends Component {
 			images: [],
 			albumName: '',
 			albumImages: [],
+			redirect: false,
 			error: null
 		};
 	}
@@ -43,11 +46,16 @@ export default class AlbumPage extends Component {
 		this.props.history.push(`/user/${user_id}`);
 	};
 	//delete request of Album sent to context event handler
-	deleteAlbumRequest = (albumId, cd) => {
-		cd(albumId);
+	deleteAlbumRequest = albumId => {
+		PhotoGramApiService.deleteAlbum(albumId);
 	};
 
 	render() {
+		if (this.state.redirect) {
+			const user_id = this.state.user_id;
+			PhotoGramApiService.refreshContent(user_id);
+			return <Redirect to={`/user/${user_id}`} />;
+		}
 		const { album_id, albumImages } = this.state;
 		return (
 			<PhotoGramContext.Consumer>
@@ -65,9 +73,7 @@ export default class AlbumPage extends Component {
 								<button
 									id='removeAlbumBtn'
 									type='button'
-									onClick={() =>
-										this.deleteAlbumRequest(album_id, context.deleteAlbum)
-									}>
+									onClick={() => this.deleteAlbumRequest(album_id)}>
 									Delete Album
 								</button>
 							</div>

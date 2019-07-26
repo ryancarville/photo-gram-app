@@ -90,6 +90,19 @@ const PhotoGramApiService = {
 		}).then(res =>
 			!res.ok ? res.json().then(e => Promise.reject(e)) : res.json()
 		);
+	},
+	addAlbum(newAlbum) {
+		return fetch(config.API_ENDPOINT + '/albums/addAlbum', {
+			method: 'POST',
+			body: JSON.stringify(newAlbum),
+			headers: {
+				'content-type': 'application/json',
+				authorization: `bearer ${TokenService.getAuthToken()}`
+			},
+			mode: 'cors'
+		}).then(res =>
+			!res.ok ? res.json().then(e => Promise.reject(e)) : res.json()
+		);
 	}
 };
 
