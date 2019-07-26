@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import Dropzone from 'react-dropzone';
 import PhotoGramContext from '../../PhotoGramContext';
 import config from '../../config';
 import { Image, Transformation } from 'cloudinary-react';
 import './uploadProfileImage.css';
+import PhotoGramApiService from '../../services/photoGram-api-service';
 
 class UploadProfileImage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			uploadedImage: '',
-			profile_img_url: '',
+			user_id: this.props.match.params.user_id,
 			full_name: '',
 			user_name: '',
+			profile_img_url: '',
+			redirect: false,
 			widget: window.cloudinary.createUploadWidget(
 				{
 					cloudName: config.CLOUDINARY_NAME,
@@ -22,12 +26,17 @@ class UploadProfileImage extends Component {
 				(error, result) => {
 					if (!error && result && result.event === 'success') {
 						console.log('Done! Here is the image info: ', result.info);
-						this.setState({
-							uploadedImage: result.info.public_id,
-							profile_img_url:
-								'https://res.cloudinary.com/rcarville/image/upload/' +
-								result.info.public_id
-						});
+						this.setState(
+							{
+								uploadedImage: result.info.public_id,
+								profile_img_url:
+									'https://res.cloudinary.com/rcarville/image/upload/' +
+									result.info.public_id
+							},
+							() => {
+								console.log(this.state.uploadedImage);
+							}
+						);
 					}
 				}
 			)
@@ -48,9 +57,12 @@ class UploadProfileImage extends Component {
 	};
 	handleSubmit = e => {
 		e.preventDefault();
-		const { profile_img_url, full_name, user_name } = this.state;
-		const newUserInfo = { profile_img_url, full_name, user_name };
-		this.context.handleUserInfoChange(newUserInfo);
+		const { full_name, user_name, profile_img_url } = this.state;
+		const newUserInfo = { full_name, user_name, profile_img_url };
+		const user_id = this.state.user_id;
+		PhotoGramApiService.updateUserInfo(user_id, newUserInfo).then(
+			this.setState({ redirect: true })
+		);
 	};
 	openWidget = () => {
 		this.state.widget.open();
@@ -60,14 +72,20 @@ class UploadProfileImage extends Component {
 		this.props.history.goBack();
 	};
 
-	componentDidMount() {
+	componentWillMount() {
 		this.setState({
 			full_name: this.context.user.name,
 			user_name: this.context.user.user_name,
-			profile_img_url: this.context.user.profile_img_url
+			profile_img_url: this.context.user.photo,
+			uploadedImage: this.context.user.photo.substring(50)
 		});
 	}
 	render() {
+		if (this.state.redirect) {
+			const user_id = this.state.user_id;
+			PhotoGramApiService.refreshContent(user_id);
+			return <Redirect to={`/user/${user_id}`} />;
+		}
 		return (
 			<PhotoGramContext.Consumer>
 				{context => (

@@ -10,7 +10,6 @@ const PhotGramContext = React.createContext({
 	handleUserInfoChange: () => {},
 	refreshState: () => {},
 	deleteImage: () => {},
-	updateImage: () => {},
 	addAlbum: () => {},
 	deletAlbum: () => {},
 	user: {},

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PhotoGramContext from '../../PhotoGramContext';
 import config from '../../config';
+import TokenServices from '../../services/token-service';
 import './editPage.css';
 
 export default class EditPage extends Component {
@@ -77,7 +78,8 @@ export default class EditPage extends Component {
 			method: 'PATCH',
 			body: JSON.stringify(data),
 			headers: {
-				'content-type': 'application/json'
+				'content-type': 'application/json',
+				authorization: `bearer ${TokenServices.getAuthToken()}`
 			}
 		})
 			.then(this.context.refreshState())

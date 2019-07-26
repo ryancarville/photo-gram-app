@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PhotoGramContext from '../../PhotoGramContext';
 import config from '../../config';
 import { Image, Transformation } from 'cloudinary-react';
+import TokenService from '../../services/token-service';
 import './addAlbum.css';
 
 export default class AddAlbum extends Component {
@@ -79,7 +80,8 @@ export default class AddAlbum extends Component {
 			method: 'POST',
 			body: JSON.stringify(albumData),
 			headers: {
-				'content-type': 'application/json'
+				'content-type': 'application/json',
+				authorization: `bearer ${TokenService.getAuthToken()}`
 			},
 			mode: 'cors'
 		})

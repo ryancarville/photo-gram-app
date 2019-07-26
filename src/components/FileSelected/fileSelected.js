@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import PhotoGramContext from '../../PhotoGramContext';
+import TokenService from '../../services/token-service';
 import config from '../../config';
 import './fileSelected.css';
+import PhotoGramApiService from '../../services/photoGram-api-service';
 
 export default class FileSelected extends Component {
 	constructor(props) {
@@ -60,22 +62,12 @@ export default class FileSelected extends Component {
 			date_created,
 			album_id
 		} = this.state;
-		console.log(user_id);
 		const data = { user_id, img_url, caption, tags, date_created, album_id };
-		fetch(config.API_ENDPOINT + `/upload/${user_id}`, {
-			method: 'POST',
-			body: JSON.stringify(data),
-			headers: {
-				'content-type': 'application/json'
-			},
-			mode: 'cors'
-		})
-			.then(this.context.refreshState())
-			.then(
-				this.setState({
-					redirect: true
-				})
-			);
+		PhotoGramApiService.uploadImage(data).then(
+			this.setState({
+				redirect: true
+			})
+		);
 	};
 	componentDidMount() {
 		this.setState({
@@ -85,6 +77,8 @@ export default class FileSelected extends Component {
 
 	render() {
 		if (this.state.redirect === true) {
+			const user_id = this.state.user_id;
+			PhotoGramApiService.refreshContent(user_id);
 			return <Redirect to={`/user/${this.state.user_id}`} />;
 		}
 		return (

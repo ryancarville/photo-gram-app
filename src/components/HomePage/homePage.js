@@ -37,21 +37,29 @@ class HomePage extends Component {
 									<div>
 										<h4>Images</h4>
 										{console.log(context.images)}
-										{context.images === [] ? <Loading /> : <ImageCount />}
+										{context.images === undefined ? (
+											<Loading />
+										) : (
+											<ImageCount />
+										)}
 									</div>
 									<div>
 										<h4>Albums</h4>
-										<AlbumCount albums={context.albums} />
+										{context.albums === undefined ? (
+											<Loading />
+										) : (
+											<AlbumCount />
+										)}
 									</div>
 								</div>
 								<div className='albums-container'>
 									<h2>Albums</h2>
-									<Albums />
+									{context.albums === undefined ? <Loading /> : <Albums />}
 								</div>
 							</div>
 
 							<div className='images-container'>
-								{context.images === [] ? <Loading /> : <ImageGrid />}
+								{context.images === undefined ? <Loading /> : <ImageGrid />}
 							</div>
 						</div>
 					</div>

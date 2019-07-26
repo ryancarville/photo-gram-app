@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { PrivateRoute } from '../helpers/PrivateRoute';
 import LandingPage from '../components/LandingPage/landingPage.js';
-import Loading from '../components/Loading/loading';
 import SignUp from '../components/SignUp/signUp.js';
 import Login from '../components/Login/login.js';
 import HomePage from '../components/HomePage/homePage.js';
@@ -24,7 +23,6 @@ class Router extends Component {
 				<Route path='/login' exact component={Login} />
 
 				<PrivateRoute path='/user/:user_id' exact component={HomePage} />
-
 				<PrivateRoute
 					path='/user/:user_id/addAlbum'
 					exact

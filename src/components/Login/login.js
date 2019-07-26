@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import PhotoGramContext from '../../PhotoGramContext';
+import TokenService from '../../services/token-service';
 import config from '../../config';
 import './login.css';
 
@@ -52,7 +53,7 @@ class Login extends Component {
 				} else {
 					console.log(data);
 					const token = data.authToken;
-					window.sessionStorage.setItem(config.TOKEN_KEY, token);
+					TokenService.saveAuthToken(token);
 					this.setState({
 						user: {
 							id: data.user.id,

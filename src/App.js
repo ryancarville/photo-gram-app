@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Redirect, withRouter } from 'react-router-dom';
-import config from './config.js';
 import Nav from './components/Nav/nav';
 import Routes from './Routes/routes.js';
 import PhotoGramContext from './PhotoGramContext';
+import PhotoGramApiService from './services/photoGram-api-service';
+import TokenService from './services/token-service';
 import './App.css';
 
 class App extends Component {
@@ -28,59 +29,36 @@ class App extends Component {
 	}
 	static contextType = PhotoGramContext;
 
-	signUp = newUser => {
-		console.log(newUser);
-		fetch(config.API_ENDPOINT + '/signup', {
-			method: 'POST',
-			body: JSON.stringify(newUser),
-			headers: {
-				'content-type': 'application/json'
-			},
-			mode: 'cors'
-		}).then(res =>
-			res
-				.json()
-				.then(data => {
-					if (data.error) {
-						console.log(data.error);
-						this.setState({ error: data.error });
-					} else {
-						this.setState({
-							signUp: true
-						});
-					}
-				})
-				.catch(err => {
-					console.log(err);
-					this.setState({
-						error: err
-					});
-				})
-		);
-	};
-
 	logout = () => {
-		window.sessionStorage.removeItem(config.TOKEN_KEY);
+		TokenService.clearAuthToken();
 		this.setState({
 			loggedIn: false,
 			signUp: false
 		});
 	};
 
+	getImageData = imageId => {
+		const images = this.state.images;
+		const image = images.filter(img => img.id.toString() === imageId);
+		return image[0];
+	};
+
+	getAlbumData = album_id => {
+		const albums = this.state.albums;
+		const album = albums.filter(alb => alb.id.toString() === album_id);
+		console.log(album[0]);
+		return album[0];
+	};
+
 	goHome = e => {
 		const user_id = this.state.user.id;
 		window.history.pushState('goHome', null, `/user/${user_id}`);
 	};
-	refreshState = e => {
+
+	refreshContent = e => {
 		console.log('refresh state ran');
 		const id = this.state.user.id;
-		fetch(config.API_ENDPOINT + `/user/${id}`, {
-			method: 'GET',
-			headers: {
-				'content-type': 'application/json'
-			}
-		})
-			.then(res => res.json())
+		PhotoGramApiService.refreshContent(id)
 			.then(data => {
 				console.log(data);
 				this.setState({
@@ -100,29 +78,18 @@ class App extends Component {
 			});
 	};
 
-	getImageData = imageId => {
-		const images = this.state.images;
-		const image = images.filter(img => img.id.toString() === imageId);
-		return image[0];
+	deleteAlbum = albumId => {
+		PhotoGramApiService.deletAlbum(albumId).then(this.refreshContent);
 	};
 
-	getAlbumData = album_id => {
-		const albums = this.state.albums;
-		const album = albums.filter(alb => alb.id.toString() === album_id);
-		console.log(album[0]);
-		return album[0];
+	deleteImage = imageId => {
+		PhotoGramApiService.deleteImage(imageId).then(this.refreshContent);
 	};
+
 	handleUserInfoChange = newInfo => {
-		const user_id = this.state.user.id;
+		const userId = this.state.user.id;
 		console.log(newInfo);
-		fetch(config.API_ENDPOINT + `/user/${user_id}`, {
-			method: 'PATCH',
-			body: JSON.stringify(newInfo),
-			headers: {
-				'content-type': 'application/json'
-			}
-		})
-			.then(res => res.json())
+		PhotoGramApiService.updateUserInfo(userId, newInfo)
 			.then(data => {
 				if (data.error) {
 					this.setState({
@@ -139,7 +106,6 @@ class App extends Component {
 					});
 				}
 			})
-			.then(this.refreshState())
 			.catch(err =>
 				this.setState({
 					error: err
@@ -147,63 +113,8 @@ class App extends Component {
 			);
 	};
 
-	updateImage = id => {
-		const user_id = this.state.user.id;
-		console.log(user_id);
-		fetch(config.API_ENDPOINT + `/images/${user_id}`, {
-			method: 'GET',
-			headers: {
-				'content-type': 'application/json'
-			}
-		})
-			.then(res => res.json())
-			.then(data => {
-				if (data.error) {
-					this.setState({
-						error: data.error
-					});
-				} else {
-					console.log(data);
-					this.setImages(data);
-				}
-			})
-			.then(this.refreshState())
-			.catch(err => {
-				console.log(err);
-				this.setState({
-					error: err
-				});
-			});
-	};
-
-	deleteAlbum = album_id => {
-		fetch(config.API_ENDPOINT + `/albums/${album_id}`, {
-			method: 'DELETE',
-
-			headers: {
-				'content-type': 'application/json'
-			}
-		}).then(this.refreshState());
-	};
-
-	deleteImage = imageId => {
-		fetch(config.API_ENDPOINT + `/images/${imageId}`, {
-			method: 'DELETE',
-			headers: {
-				'content-type': 'application/json'
-			},
-			mode: 'cors'
-		}).then(this.refreshState());
-	};
-
 	login = user => {
-		fetch(config.API_ENDPOINT + `/user/${user.id}`, {
-			method: 'GET',
-			headers: {
-				'content-type': 'application/json'
-			}
-		})
-			.then(res => res.json())
+		PhotoGramApiService.login(user)
 			.then(data => {
 				if (data.error) {
 					this.setState({
@@ -239,6 +150,27 @@ class App extends Component {
 			});
 	};
 
+	signUp = newUser => {
+		console.log(newUser);
+		PhotoGramApiService.signUp(newUser)
+			.then(data => {
+				if (data.error) {
+					console.log(data.error);
+					this.setState({ error: data.error });
+				} else {
+					this.setState({
+						signUp: true
+					});
+				}
+			})
+			.catch(err => {
+				console.log(err);
+				this.setState({
+					error: err
+				});
+			});
+	};
+
 	render() {
 		if (this.state.signup === true) {
 			return <Redirect to={`/login`} />;
@@ -253,7 +185,6 @@ class App extends Component {
 			addAlbum: this.addAlbum,
 			deleteAlbum: this.deleteAlbum,
 			deleteImage: this.deleteImage,
-			updateImage: this.updateImage,
 			handleUserInfoChange: this.handleUserInfoChange,
 			login: this.login,
 			logout: this.logout,
