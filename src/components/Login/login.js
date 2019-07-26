@@ -4,6 +4,7 @@ import PhotoGramContext from '../../PhotoGramContext';
 import TokenService from '../../services/token-service';
 import config from '../../config';
 import './login.css';
+import PhotoGramApiService from '../../services/photoGram-api-service';
 
 class Login extends Component {
 	constructor(props) {
@@ -38,34 +39,22 @@ class Login extends Component {
 		e.preventDefault();
 		const user_name = this.state.user_name;
 		const password = this.state.password;
-		const data = { user_name, password };
-		fetch(config.API_ENDPOINT + '/login', {
-			method: 'POST',
-			body: JSON.stringify(data),
-			headers: {
-				'content-type': 'application/json'
-			},
-			mode: 'cors'
-		}).then(res => {
-			res.json().then(data => {
-				if (data.error) {
-					this.setState({ error: data.error });
-				} else {
-					console.log(data);
-					const token = data.authToken;
-					TokenService.saveAuthToken(token);
-					this.setState({
-						user: {
-							id: data.user.id,
-							name: data.user.full_name,
-							user_name: data.user.user_name,
-							email: data.user.email,
-							photo: data.user.profile_img_url,
-							date_created: data.user.date_created
-						},
-						validLogin: true
-					});
-				}
+		const credintials = { user_name, password };
+		let token;
+		PhotoGramApiService.login(credintials).then(data => {
+			console.log(data);
+			token = data.authToken;
+			TokenService.saveAuthToken(token);
+			this.setState({
+				user: {
+					id: data.user.id,
+					name: data.user.full_name,
+					user_name: data.user.user_name,
+					email: data.user.email,
+					photo: data.user.profile_img_url,
+					date_created: data.user.date_created
+				},
+				validLogin: true
 			});
 		});
 	};
@@ -74,7 +63,8 @@ class Login extends Component {
 		//redirect validation on succesful login
 		const redirectToHome = this.state.validLogin;
 		if (redirectToHome) {
-			this.context.login(this.state.user);
+			const user = this.state.user;
+			this.context.getUserData(user);
 			const userId = this.state.user.id;
 			return <Redirect to={`/user/${userId}`} />;
 		}

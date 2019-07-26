@@ -34,7 +34,7 @@ class UploadProfileImage extends Component {
 									result.info.public_id
 							},
 							() => {
-								console.log(this.state.uploadedImage);
+								console.log(this.state);
 							}
 						);
 					}
@@ -60,9 +60,11 @@ class UploadProfileImage extends Component {
 		const { full_name, user_name, profile_img_url } = this.state;
 		const newUserInfo = { full_name, user_name, profile_img_url };
 		const user_id = this.state.user_id;
-		PhotoGramApiService.updateUserInfo(user_id, newUserInfo).then(
-			this.setState({ redirect: true })
-		);
+		PhotoGramApiService.updateUserInfo(user_id, newUserInfo)
+			.then(data => {
+				this.context.setAppStateUser(data);
+			})
+			.then(this.setState({ redirect: true }));
 	};
 	openWidget = () => {
 		this.state.widget.open();
@@ -77,13 +79,13 @@ class UploadProfileImage extends Component {
 			full_name: this.context.user.name,
 			user_name: this.context.user.user_name,
 			profile_img_url: this.context.user.photo,
-			uploadedImage: this.context.user.photo.substring(50)
+			uploadedImage: this.context.user.photo.substring(50),
+			context: this.context
 		});
 	}
 	render() {
 		if (this.state.redirect) {
 			const user_id = this.state.user_id;
-			PhotoGramApiService.refreshContent(user_id);
 			return <Redirect to={`/user/${user_id}`} />;
 		}
 		return (

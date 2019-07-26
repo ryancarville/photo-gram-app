@@ -23,7 +23,6 @@ class App extends Component {
 			albums: [],
 			singUp: false,
 			loggedIn: false,
-
 			error: null
 		};
 	}
@@ -113,21 +112,42 @@ class App extends Component {
 			);
 	};
 
-	login = user => {
-		PhotoGramApiService.login(user)
+	checkIfLoggedIn = () => {
+		if (TokenService.getAuthToken()) {
+			let user = {};
+			user.id = this.props.match.params.user_id;
+			console.log(user.id);
+			PhotoGramApiService.login(user)
+				.then(data => {
+					if (data.error) {
+						this.setState({
+							error: data.error
+						});
+					} else {
+						console.log(data);
+						this.setState({
+							images: data.images,
+							albums: data.albums,
+							loggedIn: true
+						});
+					}
+				})
+				.catch(err => {
+					this.setState({ error: err });
+				});
+		} else {
+			return <Redirect to={'/login'} />;
+		}
+	};
+
+	getUserData = user => {
+		PhotoGramApiService.getUserData(user)
 			.then(data => {
-				if (data.error) {
-					this.setState({
-						error: data.error
-					});
-				} else {
-					console.log(data);
-					this.setState({
-						isData: true,
-						images: data.images,
-						albums: data.albums
-					});
-				}
+				console.log(data);
+				this.setState({
+					images: data.images,
+					albums: data.albums
+				});
 			})
 			.then(
 				this.setState({
@@ -171,6 +191,43 @@ class App extends Component {
 			});
 	};
 
+	setAppStateUser = user => {
+		console.log(user);
+		this.setState(
+			{
+				user: {
+					id: user.id,
+					name: user.full_name,
+					user_name: user.user_name,
+					email: user.email,
+					photo: user.profile_img_url,
+					date_created: user.date_created
+				}
+			},
+			() => {
+				console.log(this.state);
+			}
+		);
+	};
+
+	setAppStateImages = image => {
+		this.setState({
+			images: [...this.state.images, image]
+		});
+	};
+
+	setAppStateAlbums = album => {
+		this.setState({
+			albums: [...this.state.albums, album]
+		});
+	};
+
+	updateAlbumsOnDelete = albumId => {
+		const albums = this.state.albums;
+		const updatedAlbums = albums.filter(album => album.id !== albumId);
+		this.setState({ albums: updatedAlbums });
+	};
+
 	render() {
 		if (this.state.signup === true) {
 			return <Redirect to={`/login`} />;
@@ -186,11 +243,16 @@ class App extends Component {
 			deleteAlbum: this.deleteAlbum,
 			deleteImage: this.deleteImage,
 			handleUserInfoChange: this.handleUserInfoChange,
-			login: this.login,
+			getUserData: this.getUserData,
+			checkIfLoggedIn: this.checkIfLoggedIn,
 			logout: this.logout,
 			signUp: this.signUp,
 			goHome: this.goHome,
-			state: this.state
+			state: this.state,
+			setAppStateUser: this.setAppStateUser,
+			setAppStateImages: this.setAppStateImages,
+			setAppStateAlbums: this.setAppStateAlbums,
+			updateAlbumsOnDelete: this.updateAlbumsOnDelete
 		};
 
 		return (

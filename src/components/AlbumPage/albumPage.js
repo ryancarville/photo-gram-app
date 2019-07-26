@@ -47,13 +47,20 @@ export default class AlbumPage extends Component {
 	};
 	//delete request of Album sent to context event handler
 	deleteAlbumRequest = albumId => {
-		PhotoGramApiService.deleteAlbum(albumId);
+		PhotoGramApiService.deleteAlbum(albumId)
+			.then(this.context.updateAlbumsOnDelete(albumId))
+			.then(
+				setTimeout(() => {
+					this.setState({
+						redirect: true
+					});
+				}, 1000)
+			);
 	};
 
 	render() {
 		if (this.state.redirect) {
 			const user_id = this.state.user_id;
-			PhotoGramApiService.refreshContent(user_id);
 			return <Redirect to={`/user/${user_id}`} />;
 		}
 		const { album_id, albumImages } = this.state;

@@ -2,7 +2,8 @@ import React from 'react';
 
 const PhotGramContext = React.createContext({
 	signUp: () => {},
-	login: () => {},
+	getUserData: () => {},
+	checkIfLoggedIn: () => {},
 	logout: () => {},
 	goHome: () => {},
 	getImageData: () => {},
@@ -12,6 +13,9 @@ const PhotGramContext = React.createContext({
 	deleteImage: () => {},
 	addAlbum: () => {},
 	deletAlbum: () => {},
+	setAppStateUser: () => {},
+	setAppStateImages: () => {},
+	setAppStateAlbums: () => {},
 	user: {},
 	state: {},
 	images: [],

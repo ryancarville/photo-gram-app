@@ -74,11 +74,15 @@ export default class AddAlbum extends Component {
 		e.preventDefault();
 		const albumData = this.state.albumData;
 		console.log(albumData);
-		PhotoGramApiService.addAlbum(albumData).then(data => {
-			this.setState({
-				redirect: true
-			});
-		});
+		PhotoGramApiService.addAlbum(albumData)
+			.then(data => this.context.setAppStateAlbums(data))
+			.then(
+				setTimeout(() => {
+					this.setState({
+						redirect: true
+					});
+				}, 1000)
+			);
 	};
 	//open image uploader widget
 	openWidget = e => {
