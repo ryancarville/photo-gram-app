@@ -140,19 +140,21 @@ export default class FileSelected extends Component {
 										onChange={this.handleDateChange}
 									/>
 								</label>
-								<input
+								<button
 									type='submit'
 									value='Upload Image'
 									name='submit'
-									id='uploadFormBtn'
-								/>
-								<input
+									id='uploadFormBtn'>
+									Upload Image
+								</button>
+								<button
 									type='button'
 									value='Cancel'
 									name='returnHome'
 									id='returnHomeBtn'
-									onClick={this.props.handleGoHome}
-								/>
+									onClick={this.props.handleGoHome}>
+									Cancel
+								</button>
 							</form>
 						</div>
 					</>

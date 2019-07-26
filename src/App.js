@@ -89,7 +89,7 @@ class App extends Component {
 				});
 			})
 			.then(rd => {
-				console.log('Redirect Ran');
+				console.log(this.props.history);
 				return this.props.history.push(`/user/${id}`);
 			})
 			.catch(err => {

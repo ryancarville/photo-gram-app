@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import { PrivateRoute } from '../helpers/PrivateRoute';
 import LandingPage from '../components/LandingPage/landingPage.js';
 import Loading from '../components/Loading/loading';
 import SignUp from '../components/SignUp/signUp.js';
@@ -21,29 +22,31 @@ class Router extends Component {
 				<Route path='/' exact component={LandingPage} />
 				<Route path='/signUp' exact component={SignUp} />
 				<Route path='/login' exact component={Login} />
-				{this.context.state.isData === false ? (
-					<Loading />
-				) : (
-					<Route path='/user/:user_id' exact component={HomePage} />
-				)}
-				<Route path='/user/:user_id/addAlbum' exact component={AddAlbum} />
-				<Route
+
+				<PrivateRoute path='/user/:user_id' exact component={HomePage} />
+
+				<PrivateRoute
+					path='/user/:user_id/addAlbum'
+					exact
+					component={AddAlbum}
+				/>
+				<PrivateRoute
 					path='/user/:user_id/albums/:album_id'
 					exact
 					component={AlbumPage}
 				/>
-				<Route
+				<PrivateRoute
 					path='/user/:user_id/images/:image_id'
 					exact
 					component={ImagePage}
 				/>
-				<Route
+				<PrivateRoute
 					path='/user/:user_id/upload/profileImage'
 					exact
 					component={UploadProfileImage}
 				/>
-				<Route path='/user/:user_id/upload' exact component={Upload} />
-				<Route
+				<PrivateRoute path='/user/:user_id/upload' exact component={Upload} />
+				<PrivateRoute
 					path='/user/:user_id/edit/:image_id'
 					exact
 					component={EditPage}

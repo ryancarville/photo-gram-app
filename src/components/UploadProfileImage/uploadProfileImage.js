@@ -56,6 +56,10 @@ class UploadProfileImage extends Component {
 		this.state.widget.open();
 	};
 
+	goHome = e => {
+		this.props.history.goBack();
+	};
+
 	componentDidMount() {
 		this.setState({
 			full_name: this.context.user.name,
@@ -130,6 +134,9 @@ class UploadProfileImage extends Component {
 											</div>
 										</div>
 										<button type='submit'>Save Changes</button>
+										<button type='button' onClick={this.goHome}>
+											Cancel
+										</button>
 									</form>
 								</div>
 							)}
