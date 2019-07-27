@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import PhotoGramContext from '../../PhotoGramContext';
+import PhotoGramApiService from '../../services/photoGram-api-service';
 import config from '../../config';
 import TokenServices from '../../services/token-service';
 import './editPage.css';
@@ -9,7 +11,7 @@ export default class EditPage extends Component {
 		super(props);
 		this.state = {
 			user_id: this.props.match.params.user_id,
-			image_id: this.props.match.params.image_id
+			id: this.props.match.params.image_id
 		};
 	}
 
@@ -57,37 +59,30 @@ export default class EditPage extends Component {
 	handleSubmit = e => {
 		e.preventDefault();
 		const user_id = this.state.user_id;
-		const {
-			image_id,
-			img_url,
-			caption,
-			tags,
-			album_id,
-			date_created
-		} = this.state;
-		const data = {
+		const { id, img_url, caption, tags, album_id, date_created } = this.state;
+		const newImageInfo = {
 			user_id,
-			image_id,
+			id,
 			img_url,
 			caption,
 			tags,
 			album_id,
 			date_created
 		};
-		fetch(config.API_ENDPOINT + `/images/${image_id}`, {
-			method: 'PATCH',
-			body: JSON.stringify(data),
-			headers: {
-				'content-type': 'application/json',
-				authorization: `bearer ${TokenServices.getAuthToken()}`
-			}
-		})
-			.then(this.context.refreshState())
+		PhotoGramApiService.updateImage(newImageInfo)
+			.then(data => this.context.updateImage(newImageInfo))
+			.then(
+				setTimeout(() => {
+					this.setState({
+						redirect: true
+					});
+				}, 1000)
+			)
 			.catch(err => this.setState({ error: err }));
 	};
 
 	componentWillMount() {
-		const image_id = this.state.image_id;
+		const image_id = this.state.id;
 		const image = this.context.getImageData(image_id);
 		this.setState({
 			img_url: image.img_url,
@@ -99,8 +94,11 @@ export default class EditPage extends Component {
 	}
 
 	render() {
-		const image_id = this.state.image_id;
-
+		const image_id = this.state.id;
+		const user_id = this.state.user_id;
+		if (this.state.redirect) {
+			return <Redirect to={`/user/${user_id}/images/${image_id}`} />;
+		}
 		return (
 			<PhotoGramContext.Consumer>
 				{context => (
@@ -122,7 +120,7 @@ export default class EditPage extends Component {
 										type='text'
 										name='caption'
 										id='captionTextarea'
-										autofocus='autofoucs'
+										autoFocus='autofoucs'
 										value={this.state.caption}
 										onChange={this.handleCaptionChange}
 									/>

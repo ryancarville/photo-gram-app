@@ -54,37 +54,6 @@ class App extends Component {
 		window.history.pushState('goHome', null, `/user/${user_id}`);
 	};
 
-	refreshContent = e => {
-		console.log('refresh state ran');
-		const id = this.state.user.id;
-		PhotoGramApiService.refreshContent(id)
-			.then(data => {
-				console.log(data);
-				this.setState({
-					images: data.images,
-					albums: data.albums
-				});
-			})
-			.then(rd => {
-				console.log(this.props.history);
-				return this.props.history.push(`/user/${id}`);
-			})
-			.catch(err => {
-				console.log(err);
-				this.setState({
-					error: err
-				});
-			});
-	};
-
-	deleteAlbum = albumId => {
-		PhotoGramApiService.deletAlbum(albumId).then(this.refreshContent);
-	};
-
-	deleteImage = imageId => {
-		PhotoGramApiService.deleteImage(imageId).then(this.refreshContent);
-	};
-
 	handleUserInfoChange = newInfo => {
 		const userId = this.state.user.id;
 		console.log(newInfo);
@@ -221,10 +190,27 @@ class App extends Component {
 			albums: [...this.state.albums, album]
 		});
 	};
-
+	updateImage = newImageInfo => {
+		const images = this.state.images;
+		console.log(newImageInfo);
+		this.setState({
+			images: images.map(img =>
+				img.id.toString() !== newImageInfo.id ? img : newImageInfo
+			)
+		});
+	};
+	updateImagesOnDelete = imageId => {
+		const images = this.state.images;
+		const updatedImages = images.filter(img => img.id.toString() !== imageId);
+		this.setState({
+			images: updatedImages
+		});
+	};
 	updateAlbumsOnDelete = albumId => {
 		const albums = this.state.albums;
-		const updatedAlbums = albums.filter(album => album.id !== albumId);
+		const updatedAlbums = albums.filter(
+			album => album.id.toString() !== albumId
+		);
 		this.setState({ albums: updatedAlbums });
 	};
 
@@ -252,6 +238,8 @@ class App extends Component {
 			setAppStateUser: this.setAppStateUser,
 			setAppStateImages: this.setAppStateImages,
 			setAppStateAlbums: this.setAppStateAlbums,
+			updateImage: this.updateImage,
+			updateImagesOnDelete: this.updateImagesOnDelete,
 			updateAlbumsOnDelete: this.updateAlbumsOnDelete
 		};
 

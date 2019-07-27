@@ -94,6 +94,25 @@ const PhotoGramApiService = {
 			})
 		);
 	},
+	updateImage(newImageInfo) {
+		return new Promise(resolve =>
+			fetch(config.API_ENDPOINT + `/images/${newImageInfo.id}`, {
+				method: 'PATCH',
+				body: JSON.stringify(newImageInfo),
+				headers: {
+					'content-type': 'application/json',
+					authorization: `bearer ${TokenService.getAuthToken()}`
+				},
+				mode: 'cors'
+			}).then(res => {
+				!res.ok
+					? res.json().then(err => Promise.reject(err))
+					: res.json().then(data => {
+							return resolve(data);
+					  });
+			})
+		);
+	},
 	deleteImage(id) {
 		return new Promise(resolve =>
 			fetch(config.API_ENDPOINT + `/images/${id}`, {
@@ -121,7 +140,9 @@ const PhotoGramApiService = {
 					authorization: `bearer ${TokenService.getAuthToken()}`
 				}
 			}).then(res => {
-				!res.ok ? res.json().then(err => Promise.reject(err)) : res.json();
+				!res.ok
+					? res.json().then(err => Promise.reject(err))
+					: res.json().then(data => resolve(data));
 			})
 		);
 	},

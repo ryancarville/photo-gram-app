@@ -48,7 +48,7 @@ export default class AlbumPage extends Component {
 	//delete request of Album sent to context event handler
 	deleteAlbumRequest = albumId => {
 		PhotoGramApiService.deleteAlbum(albumId)
-			.then(this.context.updateAlbumsOnDelete(albumId))
+			.then(data => this.context.updateAlbumsOnDelete(albumId))
 			.then(
 				setTimeout(() => {
 					this.setState({
