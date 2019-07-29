@@ -12,7 +12,7 @@ import UpdateProfile from '../components/UpdateProfile/updateProfile.js';
 import Upload from '../components/Upload/upload';
 import EditPage from '../components/EditPage/editPage';
 
-class Router extends Component {
+class Routes extends Component {
 	render() {
 		return (
 			<Switch>
@@ -52,4 +52,4 @@ class Router extends Component {
 	}
 }
 
-export default Router;
+export default Routes;

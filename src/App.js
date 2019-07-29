@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Router, Redirect } from 'react-router-dom';
 import Nav from './components/Nav/nav';
 import Routes from './Routes/routes.js';
 import PhotoGramContext from './PhotoGramContext';
@@ -245,8 +245,10 @@ class App extends Component {
 		return (
 			<main className='App'>
 				<PhotoGramContext.Provider value={contextValue}>
-					<Nav />
-					<Routes />
+					<Router>
+						<Nav />
+						<Routes />
+					</Router>
 				</PhotoGramContext.Provider>
 			</main>
 		);
