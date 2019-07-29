@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import PhotoGramContext from '../../PhotoGramContext';
 import PhotoGramApiService from '../../services/photoGram-api-service';
-import config from '../../config';
-import TokenServices from '../../services/token-service';
 import './editPage.css';
 
 export default class EditPage extends Component {
@@ -14,9 +12,7 @@ export default class EditPage extends Component {
 			id: this.props.match.params.image_id
 		};
 	}
-
 	static contextType = PhotoGramContext;
-
 	//set state on change for caption
 	handleCaptionChange = e => {
 		this.setState({
@@ -47,7 +43,6 @@ export default class EditPage extends Component {
 	};
 	//get all albums for select menu
 	getAlbumNames = e => {
-		console.log(e);
 		const albums = e.map(album => (
 			<option key={album.id} value={album.id}>
 				{album.album_name}
@@ -80,7 +75,7 @@ export default class EditPage extends Component {
 			)
 			.catch(err => this.setState({ error: err }));
 	};
-
+	//on mount set state to surrent image data values
 	componentWillMount() {
 		const image_id = this.state.id;
 		const image = this.context.getImageData(image_id);
@@ -96,6 +91,7 @@ export default class EditPage extends Component {
 	render() {
 		const image_id = this.state.id;
 		const user_id = this.state.user_id;
+		//on successful save of data redirect to image page
 		if (this.state.redirect) {
 			return <Redirect to={`/user/${user_id}/images/${image_id}`} />;
 		}

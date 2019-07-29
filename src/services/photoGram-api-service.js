@@ -2,7 +2,28 @@ import config from '../config';
 import TokenService from './token-service';
 
 const PhotoGramApiService = {
-	singUp(newUser) {
+	//all API fetch request
+
+	//GET landing page image
+	landingPageImage() {
+		return new Promise(resolve =>
+			fetch(config.API_ENDPOINT, {
+				method: 'GET',
+				headers: {
+					'content-type': 'application/json'
+				},
+				mode: 'cors'
+			}).then(res => {
+				!res.ok
+					? res.json().then(err => Promise.reject(err))
+					: res.json().then(data => {
+							return resolve(data);
+					  });
+			})
+		);
+	},
+	//POST for new user signup
+	signUp(newUser) {
 		return new Promise(resolve =>
 			fetch(config.API_ENDPOINT + '/signup', {
 				method: 'POST',
@@ -20,6 +41,7 @@ const PhotoGramApiService = {
 			})
 		);
 	},
+	//POST for login credentials
 	login(credintials) {
 		return new Promise(resolve =>
 			fetch(config.API_ENDPOINT + '/login', {
@@ -31,13 +53,14 @@ const PhotoGramApiService = {
 				mode: 'cors'
 			}).then(res => {
 				!res.ok
-					? res.json().then(err => Promise.reject(err))
+					? res.json().then(err => Promise.reject(resolve(err)))
 					: res.json().then(data => {
 							return resolve(data);
 					  });
 			})
 		);
 	},
+	//GET for user data
 	getUserData(user) {
 		return new Promise(resolve =>
 			fetch(config.API_ENDPOINT + `/user/${user.id}`, {
@@ -50,11 +73,22 @@ const PhotoGramApiService = {
 				!res.ok
 					? res.json().then(err => Promise.reject(err))
 					: res.json().then(data => {
+							while (data.images === undefined) {
+								console.log('image fetch re-ran');
+								return fetch(config.API_ENDPOINT + `/user/${user.id}`, {
+									method: 'GET',
+									headers: {
+										'content-type': 'application/json',
+										authorization: `bearer ${TokenService.getAuthToken()}`
+									}
+								});
+							}
 							return resolve(data);
 					  });
 			})
 		);
 	},
+	//POST for image data upload
 	uploadImage(data) {
 		const user_id = data.user_id;
 		return new Promise(resolve =>
@@ -75,6 +109,7 @@ const PhotoGramApiService = {
 			})
 		);
 	},
+	//POST for new album data
 	addAlbum(newAlbum) {
 		return new Promise(resolve =>
 			fetch(config.API_ENDPOINT + '/albums/addAlbum', {
@@ -94,6 +129,7 @@ const PhotoGramApiService = {
 			})
 		);
 	},
+	//PATCH for edit image data
 	updateImage(newImageInfo) {
 		return new Promise(resolve =>
 			fetch(config.API_ENDPOINT + `/images/${newImageInfo.id}`, {
@@ -113,6 +149,7 @@ const PhotoGramApiService = {
 			})
 		);
 	},
+	//DELETE for image
 	deleteImage(id) {
 		return new Promise(resolve =>
 			fetch(config.API_ENDPOINT + `/images/${id}`, {
@@ -131,6 +168,7 @@ const PhotoGramApiService = {
 			})
 		);
 	},
+	//DELETE for album
 	deleteAlbum(id) {
 		return new Promise(resolve =>
 			fetch(config.API_ENDPOINT + `/albums/${id}`, {
@@ -146,6 +184,7 @@ const PhotoGramApiService = {
 			})
 		);
 	},
+	//PATCH for user data change
 	updateUserInfo(user_id, newInfo) {
 		return new Promise(resolve =>
 			fetch(config.API_ENDPOINT + `/user/${user_id}`, {
@@ -162,17 +201,6 @@ const PhotoGramApiService = {
 							return resolve(data);
 					  });
 			})
-		);
-	},
-	refreshContent(id) {
-		return fetch(config.API_ENDPOINT + `/user/${id}`, {
-			method: 'GET',
-			headers: {
-				'content-type': 'application/json',
-				authorization: `bearer ${TokenService.getAuthToken()}`
-			}
-		}).then(res =>
-			!res.ok ? res.json().then(e => Promise.reject(e)) : res.json()
 		);
 	}
 };

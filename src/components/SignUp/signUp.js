@@ -73,7 +73,7 @@ class SignUp extends Component {
 						<h3>SignUp Today!</h3>
 						<div>
 							{this.state.error}
-							{this.context.state.error}
+							{context.state.error}
 						</div>
 						<form
 							onSubmit={e => this.handleSubmit(e, context.signUp)}

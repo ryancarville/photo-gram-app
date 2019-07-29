@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PhotoGramContext from '../../PhotoGramContext';
-import { Redirect } from 'react-router-dom';
 import Loading from '../Loading/loading';
 import UserProfileImage from '../UserProfileImage/userProfileImage.js';
 import Albums from '../Albums/albums';
@@ -8,7 +7,6 @@ import ImageGrid from '../ImageGrid/imageGrid';
 import ImageCount from '../ImageCount/imageCount';
 import AlbumCount from '../AlbumCount/albumCount';
 import './homePage.css';
-import PhotoGramApiService from '../../services/photoGram-api-service';
 
 class HomePage extends Component {
 	constructor(props) {
@@ -18,7 +16,6 @@ class HomePage extends Component {
 			error: null
 		};
 	}
-	static contextType = PhotoGramContext;
 
 	render() {
 		return (
@@ -37,7 +34,6 @@ class HomePage extends Component {
 								<div className='content-counter'>
 									<div>
 										<h4>Images</h4>
-										{console.log(context.images)}
 										{context.images === undefined ? (
 											<Loading />
 										) : (

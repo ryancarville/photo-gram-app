@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import config from '../../config';
 import './landingPage.css';
+import PhotoGramApiService from '../../services/photoGram-api-service';
 
 class LandingPage extends Component {
 	constructor(props) {
@@ -12,28 +12,18 @@ class LandingPage extends Component {
 			error: null
 		};
 	}
+	//set landing page image
 	setImage = e => {
 		this.setState({
 			desktop_img: e[0].desktop_img_url,
 			mobile_img: e[0].mobile_img_url,
 			dataReady: true
 		});
-		console.log('image ran');
 	};
+	//get images from database
 	componentDidMount() {
-		fetch(config.API_ENDPOINT, {
-			method: 'GET',
-			headers: {
-				'content-type': 'application/json'
-			}
-		})
-			.then(res => {
-				if (!res.ok) {
-					res.json().then(err => Promise.reject(err));
-				}
-				return res.json();
-			})
-			.then(res => this.setImage(res))
+		PhotoGramApiService.landingPageImage()
+			.then(data => this.setImage(data))
 			.catch(err => {
 				console.log(err);
 				this.setState({ error: err.message });

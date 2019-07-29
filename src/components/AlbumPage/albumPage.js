@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import PhotoGramContext from '../../PhotoGramContext';
+import PhotoGramApiService from '../../services/photoGram-api-service';
 import Image from '../Image/image';
 import './albumPage.css';
-import PhotoGramApiService from '../../services/photoGram-api-service';
 
 export default class AlbumPage extends Component {
 	constructor(props) {
@@ -32,7 +32,9 @@ export default class AlbumPage extends Component {
 	componentDidMount() {
 		const images = this.context.images;
 		const album_id = this.state.album_id;
-		const albumImgs = images.filter(img => img.album_id == album_id);
+		const albumImgs = images.filter(
+			img => img.album_id.toString() === album_id
+		);
 		const albumData = this.context.getAlbumData(this.state.album_id);
 		this.setState({
 			images: images,
@@ -54,7 +56,7 @@ export default class AlbumPage extends Component {
 					this.setState({
 						redirect: true
 					});
-				}, 1000)
+				}, 500)
 			);
 	};
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { PrivateRoute } from '../helpers/PrivateRoute';
 import LandingPage from '../components/LandingPage/landingPage.js';
 import SignUp from '../components/SignUp/signUp.js';
@@ -8,20 +8,17 @@ import HomePage from '../components/HomePage/homePage.js';
 import AlbumPage from '../components/AlbumPage/albumPage.js';
 import AddAlbum from '../components/AddAlbum/addAlbum';
 import ImagePage from '../components/ImagePage/imagePage.js';
-import UploadProfileImage from '../components/UploadProfileImage/uploadProfileImage.js';
+import UpdateProfile from '../components/UpdateProfile/updateProfile.js';
 import Upload from '../components/Upload/upload';
 import EditPage from '../components/EditPage/editPage';
-import PhotoGramContext from '../PhotoGramContext';
 
 class Router extends Component {
-	static contextType = PhotoGramContext;
 	render() {
 		return (
 			<Switch>
 				<Route path='/' exact component={LandingPage} />
 				<Route path='/signUp' exact component={SignUp} />
 				<Route path='/login' exact component={Login} />
-
 				<PrivateRoute path='/user/:user_id' exact component={HomePage} />
 				<PrivateRoute
 					path='/user/:user_id/addAlbum'
@@ -39,9 +36,9 @@ class Router extends Component {
 					component={ImagePage}
 				/>
 				<PrivateRoute
-					path='/user/:user_id/upload/profileImage'
+					path='/user/:user_id/update-profile'
 					exact
-					component={UploadProfileImage}
+					component={UpdateProfile}
 				/>
 				<PrivateRoute path='/user/:user_id/upload' exact component={Upload} />
 				<PrivateRoute

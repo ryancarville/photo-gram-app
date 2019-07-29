@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Dropzone from 'react-dropzone';
 import PhotoGramContext from '../../PhotoGramContext';
-import config from '../../config';
-import { Image, Transformation } from 'cloudinary-react';
-import './uploadProfileImage.css';
 import PhotoGramApiService from '../../services/photoGram-api-service';
+import { Image, Transformation } from 'cloudinary-react';
+import config from '../../config';
+import './updateProfile.css';
 
-class UploadProfileImage extends Component {
+class UpdateProfile extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -42,19 +42,20 @@ class UploadProfileImage extends Component {
 			)
 		};
 	}
-
 	static contextType = PhotoGramContext;
-
+	//handle name input event change
 	handleNameChange = e => {
 		this.setState({
 			full_name: e.target.value
 		});
 	};
+	//handle user name input event change
 	handleUserNameChange = e => {
 		this.setState({
 			user_name: e.target.value
 		});
 	};
+	//handle submit
 	handleSubmit = e => {
 		e.preventDefault();
 		const { full_name, user_name, profile_img_url } = this.state;
@@ -66,14 +67,15 @@ class UploadProfileImage extends Component {
 			})
 			.then(this.setState({ redirect: true }));
 	};
+	//handle open image upload widget
 	openWidget = () => {
 		this.state.widget.open();
 	};
-
+	//handle back event
 	goHome = e => {
 		this.props.history.goBack();
 	};
-
+	//on mount set the component state with current user data
 	componentWillMount() {
 		this.setState({
 			full_name: this.context.user.name,
@@ -84,6 +86,7 @@ class UploadProfileImage extends Component {
 		});
 	}
 	render() {
+		//redirect to home page on successful save
 		if (this.state.redirect) {
 			const user_id = this.state.user_id;
 			return <Redirect to={`/user/${user_id}`} />;
@@ -168,4 +171,4 @@ class UploadProfileImage extends Component {
 	}
 }
 
-export default UploadProfileImage;
+export default UpdateProfile;

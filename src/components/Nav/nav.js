@@ -11,7 +11,6 @@ class Nav extends Component {
 		};
 	}
 	static contextType = PhotoGramContext;
-
 	//handle logout
 	handleLogout = e => {
 		this.context.logout();

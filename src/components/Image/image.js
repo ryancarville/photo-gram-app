@@ -1,10 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import './image.css';
 
 function Image(props) {
-	const image_id = props.id;
+	const image_id = props.id.toString();
 	const user_id = props.user_id;
 
 	return (
@@ -21,8 +20,3 @@ function Image(props) {
 	);
 }
 export default Image;
-
-Image.propTypes = {
-	id: PropTypes.number.isRequired,
-	img_url: PropTypes.string.isRequired
-};

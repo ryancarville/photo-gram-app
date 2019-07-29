@@ -27,15 +27,16 @@ export default class SelectFile extends Component {
 			)
 		};
 	}
+	//simulate click on mount to open widget
 	componentDidMount() {
 		document.getElementById('fileToUpload').click();
 	}
-
+	//handle image upload url
 	handleOnChange = e => {
 		const image = this.state.imageUrl;
-		console.log(image);
 		this.props.handleImagePreview(image);
 	};
+	//open image upload widget
 	openWidget = () => {
 		this.state.widget.open();
 	};

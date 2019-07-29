@@ -14,15 +14,14 @@ export default class ImagePage extends Component {
 			redirect: false
 		};
 	}
-
+	//set context for component
 	static contextType = PhotoGramContext;
-
 	//handle back event
 	goHome = e => {
 		const user_id = this.state.user_id;
 		this.props.history.push(`/user/${user_id}`);
 	};
-	//delete request event handle sent to context
+	//delete request event handler
 	deleteImageRequest = imageId => {
 		PhotoGramApiService.deleteImage(imageId)
 			.then(data => this.context.updateImagesOnDelete(imageId))
@@ -34,23 +33,23 @@ export default class ImagePage extends Component {
 				}, 1000)
 			);
 	};
-
+	//format date handler
 	formatDate = image => {
 		const date = new Date(image.date_created);
 		const formatted_date = new Intl.DateTimeFormat('en-GB').format(date);
 		return formatted_date;
 	};
-
+	//set component state to select image data
 	componentWillMount() {
 		const image_id = this.state.image_id;
 		const image = this.context.getImageData(image_id);
-		console.log(image);
 		this.setState({
 			image: image
 		});
 	}
 
 	render() {
+		//redirect to home page on succesful delete request
 		if (this.state.redirect) {
 			const user_id = this.state.user_id;
 			return <Redirect to={`/user/${user_id}`} />;

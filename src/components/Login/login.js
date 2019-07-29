@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import PhotoGramContext from '../../PhotoGramContext';
 import TokenService from '../../services/token-service';
-import config from '../../config';
-import './login.css';
 import PhotoGramApiService from '../../services/photoGram-api-service';
+import './login.css';
 
 class Login extends Component {
 	constructor(props) {
@@ -24,7 +23,6 @@ class Login extends Component {
 			error: null
 		};
 	}
-
 	static contextType = PhotoGramContext;
 	//set state on change for email
 	handleUserNameChange = e => {
@@ -42,20 +40,25 @@ class Login extends Component {
 		const credintials = { user_name, password };
 		let token;
 		PhotoGramApiService.login(credintials).then(data => {
-			console.log(data);
-			token = data.authToken;
-			TokenService.saveAuthToken(token);
-			this.setState({
-				user: {
-					id: data.user.id,
-					name: data.user.full_name,
-					user_name: data.user.user_name,
-					email: data.user.email,
-					photo: data.user.profile_img_url,
-					date_created: data.user.date_created
-				},
-				validLogin: true
-			});
+			if (data.error) {
+				this.setState({
+					error: data.error
+				});
+			} else {
+				token = data.authToken;
+				TokenService.saveAuthToken(token);
+				this.setState({
+					user: {
+						id: data.user.id,
+						name: data.user.full_name,
+						user_name: data.user.user_name,
+						email: data.user.email,
+						photo: data.user.profile_img_url,
+						date_created: data.user.date_created
+					},
+					validLogin: true
+				});
+			}
 		});
 	};
 
@@ -75,7 +78,7 @@ class Login extends Component {
 					Use the folowing details for a valid login or try anything else to
 					test validation: <br />
 					<br />
-					user name: RCarville
+					user name: TestUser
 					<br />
 					password: 1!Aa2@Bb3#Cc
 				</p>

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import PhotoGramContext from '../../PhotoGramContext';
-import config from '../../config';
 import { Image, Transformation } from 'cloudinary-react';
-import TokenService from '../../services/token-service';
 import PhotoGramApiService from '../../services/photoGram-api-service';
+import config from '../../config';
 import './addAlbum.css';
 
 export default class AddAlbum extends Component {
@@ -40,6 +39,7 @@ export default class AddAlbum extends Component {
 			error: null
 		};
 	}
+	//set component state on mount with user id as integer
 	componentDidMount() {
 		let user_id = this.props.match.params.user_id;
 		user_id = parseInt(user_id, 10);
@@ -52,7 +52,7 @@ export default class AddAlbum extends Component {
 			}
 		});
 	}
-
+	//set context for component
 	static contextType = PhotoGramContext;
 	//set state on folder name change
 	handleFolderName = e => {
@@ -73,7 +73,6 @@ export default class AddAlbum extends Component {
 	handleSubmit = e => {
 		e.preventDefault();
 		const albumData = this.state.albumData;
-		console.log(albumData);
 		PhotoGramApiService.addAlbum(albumData)
 			.then(data => this.context.setAppStateAlbums(data))
 			.then(
@@ -81,7 +80,7 @@ export default class AddAlbum extends Component {
 					this.setState({
 						redirect: true
 					});
-				}, 1000)
+				}, 500)
 			);
 	};
 	//open image uploader widget
@@ -90,6 +89,7 @@ export default class AddAlbum extends Component {
 	};
 
 	render() {
+		//on sucsessful add of album redirect to home page
 		if (this.state.redirect) {
 			const user_id = this.state.albumData.user_id;
 			PhotoGramApiService.refreshContent(user_id);

@@ -17,6 +17,8 @@
 }
 
 #removeAlbumBtn {
+	border: 1px solid black;
+	cursor: pointer;
 	font-size: 20px;
 }
 
@@ -24,9 +26,9 @@
 	.albumPageBtnContainer {
 		margin-bottom: 20px;
 	}
-
 	#removeAlbumBtn {
-		border: none;
+		width: 200px;
+		margin-right: 10px;
 		background-color: transparent;
 	}
 }

@@ -22,6 +22,10 @@
 	width: 100%;
 }
 
+.landing-example p {
+	margin-left: auto;
+	margin-right: auto;
+}
 .landing-example img {
 	width: 100%;
 }

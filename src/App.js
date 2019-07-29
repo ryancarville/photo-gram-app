@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect, withRouter } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import Nav from './components/Nav/nav';
 import Routes from './Routes/routes.js';
 import PhotoGramContext from './PhotoGramContext';
@@ -8,6 +8,7 @@ import TokenService from './services/token-service';
 import './App.css';
 
 class App extends Component {
+	//shared app state
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -26,8 +27,9 @@ class App extends Component {
 			error: null
 		};
 	}
+	//context type
 	static contextType = PhotoGramContext;
-
+	//handle logout event
 	logout = () => {
 		TokenService.clearAuthToken();
 		this.setState({
@@ -35,36 +37,34 @@ class App extends Component {
 			signUp: false
 		});
 	};
-
+	//get all data for selected image
 	getImageData = imageId => {
 		const images = this.state.images;
 		const image = images.filter(img => img.id.toString() === imageId);
 		return image[0];
 	};
-
+	//get all images assinged to selected album
 	getAlbumData = album_id => {
 		const albums = this.state.albums;
 		const album = albums.filter(alb => alb.id.toString() === album_id);
-		console.log(album[0]);
 		return album[0];
 	};
-
+	//push home path to url callback
 	goHome = e => {
 		const user_id = this.state.user.id;
 		window.history.pushState('goHome', null, `/user/${user_id}`);
 	};
-
+	//handle user info change event
 	handleUserInfoChange = newInfo => {
 		const userId = this.state.user.id;
-		console.log(newInfo);
 		PhotoGramApiService.updateUserInfo(userId, newInfo)
 			.then(data => {
 				if (data.error) {
+					console.log(data.error);
 					this.setState({
 						error: data.error
 					});
 				} else {
-					console.log(data);
 					this.setState({
 						user: {
 							full_name: data.full_name,
@@ -74,18 +74,18 @@ class App extends Component {
 					});
 				}
 			})
-			.catch(err =>
+			.catch(err => {
+				console.log(err);
 				this.setState({
 					error: err
-				})
-			);
+				});
+			});
 	};
-
+	//checks if user sessionStorage has a jwt
 	checkIfLoggedIn = () => {
 		if (TokenService.getAuthToken()) {
 			let user = {};
 			user.id = this.props.match.params.user_id;
-			console.log(user.id);
 			PhotoGramApiService.login(user)
 				.then(data => {
 					if (data.error) {
@@ -93,7 +93,6 @@ class App extends Component {
 							error: data.error
 						});
 					} else {
-						console.log(data);
 						this.setState({
 							images: data.images,
 							albums: data.albums,
@@ -102,21 +101,26 @@ class App extends Component {
 					}
 				})
 				.catch(err => {
+					console.log(err);
 					this.setState({ error: err });
 				});
 		} else {
 			return <Redirect to={'/login'} />;
 		}
 	};
-
+	//gets all data for logged in user
 	getUserData = user => {
 		PhotoGramApiService.getUserData(user)
 			.then(data => {
-				console.log(data);
-				this.setState({
-					images: data.images,
-					albums: data.albums
-				});
+				this.setState(
+					{
+						images: data.images,
+						albums: data.albums
+					},
+					() => {
+						console.log(this.state);
+					}
+				);
 			})
 			.then(
 				this.setState({
@@ -125,7 +129,9 @@ class App extends Component {
 						name: user.name,
 						user_name: user.user_name,
 						email: user.email,
-						photo: user.photo,
+						photo:
+							user.photo ||
+							'https://res.cloudinary.com/rcarville/image/upload/v1564425749/photoGram_profileImage/ozgynn2ehowpitzn8axf.png',
 						date_created: user.date_created
 					},
 					loggedIn: true
@@ -138,9 +144,8 @@ class App extends Component {
 				});
 			});
 	};
-
+	//handles signup event
 	signUp = newUser => {
-		console.log(newUser);
 		PhotoGramApiService.signUp(newUser)
 			.then(data => {
 				if (data.error) {
@@ -159,46 +164,41 @@ class App extends Component {
 				});
 			});
 	};
-
+	//sets shared state with user data on change
 	setAppStateUser = user => {
-		console.log(user);
-		this.setState(
-			{
-				user: {
-					id: user.id,
-					name: user.full_name,
-					user_name: user.user_name,
-					email: user.email,
-					photo: user.profile_img_url,
-					date_created: user.date_created
-				}
-			},
-			() => {
-				console.log(this.state);
+		this.setState({
+			user: {
+				id: user.id,
+				name: user.full_name,
+				user_name: user.user_name,
+				email: user.email,
+				photo: user.profile_img_url,
+				date_created: user.date_created
 			}
-		);
+		});
 	};
-
+	//sets shared state with addtion of a new image
 	setAppStateImages = image => {
 		this.setState({
 			images: [...this.state.images, image]
 		});
 	};
-
+	//sets shared state with additon of a new album
 	setAppStateAlbums = album => {
 		this.setState({
 			albums: [...this.state.albums, album]
 		});
 	};
+	//updates shared state on image data change
 	updateImage = newImageInfo => {
 		const images = this.state.images;
-		console.log(newImageInfo);
 		this.setState({
 			images: images.map(img =>
 				img.id.toString() !== newImageInfo.id ? img : newImageInfo
 			)
 		});
 	};
+	//updates shared state on deletetion of image
 	updateImagesOnDelete = imageId => {
 		const images = this.state.images;
 		const updatedImages = images.filter(img => img.id.toString() !== imageId);
@@ -206,6 +206,7 @@ class App extends Component {
 			images: updatedImages
 		});
 	};
+	//updates shared state on deletion of a album
 	updateAlbumsOnDelete = albumId => {
 		const albums = this.state.albums;
 		const updatedAlbums = albums.filter(
@@ -215,25 +216,23 @@ class App extends Component {
 	};
 
 	render() {
+		//redirect if signUp event successful
 		if (this.state.signup === true) {
 			return <Redirect to={`/login`} />;
 		}
+		//set context values
 		const contextValue = {
+			signUp: this.signUp,
+			logout: this.logout,
+			goHome: this.goHome,
 			user: this.state.user,
 			images: this.state.images,
 			albums: this.state.albums,
-			refreshState: this.refreshState,
 			getImageData: this.getImageData,
 			getAlbumData: this.getAlbumData,
-			addAlbum: this.addAlbum,
-			deleteAlbum: this.deleteAlbum,
-			deleteImage: this.deleteImage,
 			handleUserInfoChange: this.handleUserInfoChange,
 			getUserData: this.getUserData,
 			checkIfLoggedIn: this.checkIfLoggedIn,
-			logout: this.logout,
-			signUp: this.signUp,
-			goHome: this.goHome,
 			state: this.state,
 			setAppStateUser: this.setAppStateUser,
 			setAppStateImages: this.setAppStateImages,
@@ -253,4 +252,4 @@ class App extends Component {
 		);
 	}
 }
-export default withRouter(App);
+export default App;
