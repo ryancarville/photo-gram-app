@@ -58,6 +58,8 @@ class Login extends Component {
 					},
 					validLogin: true
 				});
+				const user = this.state.user;
+				this.context.getUserData(user);
 			}
 		});
 	};
@@ -66,8 +68,6 @@ class Login extends Component {
 		//redirect validation on succesful login
 		const redirectToHome = this.state.validLogin;
 		if (redirectToHome) {
-			const user = this.state.user;
-			this.context.getUserData(user);
 			const userId = this.state.user.id;
 			return <Redirect to={`/user/${userId}`} />;
 		}

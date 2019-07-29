@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Router, Redirect } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 import Nav from './components/Nav/nav';
 import Routes from './Routes/routes.js';
 import PhotoGramContext from './PhotoGramContext';
@@ -241,11 +242,12 @@ class App extends Component {
 			updateImagesOnDelete: this.updateImagesOnDelete,
 			updateAlbumsOnDelete: this.updateAlbumsOnDelete
 		};
+		const history = createBrowserHistory();
 
 		return (
 			<main className='App'>
 				<PhotoGramContext.Provider value={contextValue}>
-					<Router>
+					<Router history={history}>
 						<Nav />
 						<Routes />
 					</Router>
