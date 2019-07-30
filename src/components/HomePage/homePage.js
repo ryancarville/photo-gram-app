@@ -17,6 +17,11 @@ class HomePage extends Component {
 		};
 	}
 	static contextType = PhotoGramContext;
+	componentDidMount() {
+		const user = { id: this.props.match.params.user_id };
+		this.context.checkIfLoggedIn(user);
+		console.log('homePage check log in ran');
+	}
 	render() {
 		return (
 			<PhotoGramContext.Consumer>

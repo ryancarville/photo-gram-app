@@ -5,6 +5,7 @@ import LandingPage from './components/LandingPage/landingPage';
 import SignUp from './components/SignUp/signUp';
 import LogIn from './components/Login/login';
 import HomePage from './components/HomePage/homePage';
+import ImagePage from './components/ImagePage/imagePage';
 
 describe('All views', () => {
 	it('renders without crashing', () => {
@@ -31,10 +32,17 @@ describe('All views', () => {
 		ReactDOM.unmountComponentAtNode(logInForm);
 	});
 
-	it('renders home page', () => {
+	it('renders homePage', () => {
+		const component = <HomePage />;
 		const div = document.createElement('div');
 		const user_id = 1;
-		ReactDOM.render(<HomePage user_id={user_id} />, div);
+		ReactDOM.render(component, div);
+		ReactDOM.unmountComponentAtNode(div);
+	});
+
+	it('renders imagePage', () => {
+		const div = document.createElement('div');
+		ReactDOM.render(<ImagePage />, div);
 		ReactDOM.unmountComponentAtNode(div);
 	});
 });

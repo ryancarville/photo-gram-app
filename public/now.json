@@ -1,6 +1,6 @@
 {
 	"version": 2,
-	"alias": "photo-gram-app",
+	"alias": "ryancarville-photo-gram-app",
 	"name": "photo-gram-app",
 	"routes": [
 		{

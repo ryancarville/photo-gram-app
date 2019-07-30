@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { PrivateRoute } from '../helpers/PrivateRoute';
+import PhotoGramContext from '../PhotoGramContext';
 import Nav from '../components/Nav/nav';
 import LandingPage from '../components/LandingPage/landingPage.js';
 import SignUp from '../components/SignUp/signUp.js';

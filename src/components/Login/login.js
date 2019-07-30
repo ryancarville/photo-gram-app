@@ -49,17 +49,14 @@ class Login extends Component {
 				TokenService.saveAuthToken(token);
 				this.setState({
 					user: {
-						id: data.user.id,
-						name: data.user.full_name,
-						user_name: data.user.user_name,
-						email: data.user.email,
-						photo: data.user.profile_img_url,
-						date_created: data.user.date_created
-					},
-					validLogin: true
+						id: data.user_id
+					}
 				});
 				const user = this.state.user;
 				this.context.getUserData(user);
+				this.setState({
+					validLogin: true
+				});
 			}
 		});
 	};

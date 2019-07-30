@@ -21,6 +21,7 @@ class App extends Component {
 			},
 			images: [],
 			albums: [],
+			image_id: null,
 			singUp: false,
 			loggedIn: false,
 			error: null
@@ -67,7 +68,7 @@ class App extends Component {
 				} else {
 					this.setState({
 						user: {
-							full_name: data.full_name,
+							name: data.full_name,
 							user_name: data.user_name,
 							photo: data.profile_img_url
 						}
@@ -81,68 +82,47 @@ class App extends Component {
 				});
 			});
 	};
-	//checks if user sessionStorage has a jwt
-	checkIfLoggedIn = () => {
-		if (TokenService.getAuthToken()) {
-			let user = {};
-			user.id = this.props.match.params.user_id;
-			PhotoGramApiService.login(user)
-				.then(data => {
-					if (data.error) {
-						this.setState({
-							error: data.error
-						});
-					} else {
-						this.setState({
-							images: data.images,
-							albums: data.albums,
-							loggedIn: true
-						});
-					}
-				})
-				.catch(err => {
-					console.log(err);
-					this.setState({ error: err });
-				});
-		} else {
-			return <Redirect to={'/login'} />;
-		}
-	};
+
 	//gets all data for logged in user
 	getUserData = user => {
 		PhotoGramApiService.getUserData(user)
 			.then(data => {
+				console.log(data);
 				this.setState(
 					{
+						user: {
+							id: data.user[0].id,
+							name: data.user[0].full_name,
+							user_name: data.user[0].user_name,
+							photo:
+								data.user[0].profile_img_url ||
+								'https://res.cloudinary.com/rcarville/image/upload/v1564425749/photoGram_profileImage/ozgynn2ehowpitzn8axf.png',
+							date_created: data.user[0].date_created
+						},
 						images: data.images,
-						albums: data.albums
+						albums: data.albums,
+						loggedIn: true
 					},
 					() => {
 						console.log(this.state);
 					}
 				);
 			})
-			.then(
-				this.setState({
-					user: {
-						id: user.id,
-						name: user.name,
-						user_name: user.user_name,
-						email: user.email,
-						photo:
-							user.photo ||
-							'https://res.cloudinary.com/rcarville/image/upload/v1564425749/photoGram_profileImage/ozgynn2ehowpitzn8axf.png',
-						date_created: user.date_created
-					},
-					loggedIn: true
-				})
-			)
 			.catch(err => {
 				console.log(err);
 				this.setState({
 					error: err
 				});
 			});
+	};
+
+	//checks if user sessionStorage has a jwt
+	checkIfLoggedIn = user => {
+		if (TokenService.getAuthToken() !== null) {
+			this.getUserData(user);
+		} else {
+			return <Redirect to={'/login'} />;
+		}
 	};
 	//handles signup event
 	signUp = newUser => {
@@ -229,6 +209,7 @@ class App extends Component {
 			user: this.state.user,
 			images: this.state.images,
 			albums: this.state.albums,
+			setImageId: this.setImageId,
 			getImageData: this.getImageData,
 			getAlbumData: this.getAlbumData,
 			handleUserInfoChange: this.handleUserInfoChange,

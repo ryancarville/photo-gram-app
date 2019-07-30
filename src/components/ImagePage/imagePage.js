@@ -34,18 +34,27 @@ export default class ImagePage extends Component {
 			);
 	};
 	//format date handler
-	formatDate = image => {
-		const date = new Date(image.date_created);
+	formatDate = imageDate => {
+		const date = new Date(imageDate);
+		console.log(date);
 		const formatted_date = new Intl.DateTimeFormat('en-GB').format(date);
 		return formatted_date;
 	};
 	//set component state to select image data
 	componentWillMount() {
+		const user = { id: this.state.user_id };
+		this.context.checkIfLoggedIn(user);
+		console.log('imagePage check log in ran');
+		console.log(this.context.images);
 		const image_id = this.state.image_id;
-		const image = this.context.getImageData(image_id);
+		console.log(image_id);
+
+		const selectedImage = this.context.getImageData(image_id);
+		console.log(selectedImage);
 		this.setState({
-			image: image
+			image: selectedImage
 		});
+		console.log(this.state);
 	}
 
 	render() {
@@ -54,9 +63,7 @@ export default class ImagePage extends Component {
 			const user_id = this.state.user_id;
 			return <Redirect to={`/user/${user_id}`} />;
 		}
-		const user_id = this.state.user_id;
-		const image_id = this.state.image_id;
-		const image = this.state.image;
+		const { user_id, image_id, image } = this.state;
 
 		return (
 			<PhotoGramContext.Consumer>
@@ -74,7 +81,7 @@ export default class ImagePage extends Component {
 							/>
 							<div className='image-info'>
 								<p>{image.caption}</p>
-								<span>Date: {this.formatDate(image)}</span>
+								<span>Date: {this.formatDate(image.date_created)}</span>
 
 								<div className='imageButtons'>
 									<Link to={`/user/${user_id}/edit/${image_id}`}>

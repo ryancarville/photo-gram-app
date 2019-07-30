@@ -12,6 +12,7 @@ const PhotGramContext = React.createContext({
 	setAppStateUser: () => {},
 	setAppStateImages: () => {},
 	setAppStateAlbums: () => {},
+	setImageId: () => {},
 	updateImage: () => {},
 	updateImagesOnDelete: () => {},
 	updateAlbumsOnDelete: () => {},
