@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Router, Redirect } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
-import Nav from './components/Nav/nav';
+import { BrowserRouter, Redirect } from 'react-router-dom';
 import Routes from './Routes/routes.js';
 import PhotoGramContext from './PhotoGramContext';
 import PhotoGramApiService from './services/photoGram-api-service';
@@ -37,6 +35,7 @@ class App extends Component {
 			loggedIn: false,
 			signUp: false
 		});
+		return <Redirect to='/' />;
 	};
 	//get all data for selected image
 	getImageData = imageId => {
@@ -221,6 +220,7 @@ class App extends Component {
 		if (this.state.signup === true) {
 			return <Redirect to={`/login`} />;
 		}
+
 		//set context values
 		const contextValue = {
 			signUp: this.signUp,
@@ -242,16 +242,14 @@ class App extends Component {
 			updateImagesOnDelete: this.updateImagesOnDelete,
 			updateAlbumsOnDelete: this.updateAlbumsOnDelete
 		};
-		const history = createBrowserHistory();
 
 		return (
 			<main className='App'>
-				<PhotoGramContext.Provider value={contextValue}>
-					<Router history={history}>
-						<Nav />
+				<BrowserRouter>
+					<PhotoGramContext.Provider value={contextValue}>
 						<Routes />
-					</Router>
-				</PhotoGramContext.Provider>
+					</PhotoGramContext.Provider>
+				</BrowserRouter>
 			</main>
 		);
 	}

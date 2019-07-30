@@ -19,12 +19,20 @@ nav {
 	color: white;
 	display: flex;
 	justify-content: space-between;
-	padding: 15px;
+	align-items: center;
+	padding: 0;
 	margin: 0;
 }
 
 .navBar ul li a {
 	text-decoration: none;
 	color: white;
-	padding: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.navBar img {
+	height: 40px;
+	padding: 0;
+	margin-top: 5px;
 }

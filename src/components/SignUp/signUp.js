@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect, withRouter } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import PhotoGramContext from '../../PhotoGramContext';
 import './signUp.css';
 
@@ -133,10 +133,10 @@ class SignUp extends Component {
 									required
 								/>
 							</label>
-							<button type='submit' id='signupFormBtn'>
+							<button type='submit' id='signupFormSubmit'>
 								Let's Go!
 							</button>
-							<button type='reset' id='signupFormBtn'>
+							<button type='reset' id='signupFormReset'>
 								Reset
 							</button>
 						</form>
@@ -147,4 +147,4 @@ class SignUp extends Component {
 	}
 }
 
-export default withRouter(SignUp);
+export default SignUp;

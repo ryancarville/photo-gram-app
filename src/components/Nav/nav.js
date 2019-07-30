@@ -1,22 +1,14 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import PhotoGramContext from '../../PhotoGramContext';
+import TokenService from '../../services/token-service';
 import './nav.css';
 
 class Nav extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			validLogin: false
-		};
-	}
 	static contextType = PhotoGramContext;
-	//handle logout
-	handleLogout = e => {
-		this.context.logout();
-	};
+
 	render() {
-		const state = this.context.state.loggedIn;
+		const loggedIn = TokenService.getAuthToken();
 		const userId = this.context.state.user.id;
 		const publicNav = (
 			<div className='navBar'>
@@ -25,7 +17,12 @@ class Nav extends Component {
 						<Link to='/signUp'>SignUp</Link>
 					</li>
 					<li>
-						<Link to='/'>PhotoGram</Link>
+						<Link to='/'>
+							<img
+								src='http://beardystudios.com/Bloc_Capstone/photoGram/favicon/whiteNav.png'
+								alt='logo'
+							/>
+						</Link>
 					</li>
 					<li>
 						<Link to='/login'>Login</Link>
@@ -40,22 +37,23 @@ class Nav extends Component {
 						<Link to={`/user/${userId}/upload`}>Upload</Link>
 					</li>
 					<li>
-						<Link to={`/user/${userId}`}>PhotoGram</Link>
+						<Link to={`/user/${userId}`}>
+							<img
+								src='http://beardystudios.com/Bloc_Capstone/photoGram/favicon/whiteNav.png'
+								alt='logo'
+							/>
+						</Link>
 					</li>
 					<li>
-						<Link to='/logout'>
-							<span onClick={this.handleLogout}>Logout</span>
+						<Link to={'/login'} onClick={() => this.context.logout()}>
+							Logout
 						</Link>
 					</li>
 				</ul>
 			</div>
 		);
-		const currentNav = state === true ? privateNav : publicNav;
-		return (
-			<PhotoGramContext.Consumer>
-				{context => <nav> {currentNav} </nav>}
-			</PhotoGramContext.Consumer>
-		);
+		const currentNav = loggedIn ? privateNav : publicNav;
+		return <nav> {currentNav} </nav>;
 	}
 }
-export default Nav;
+export default withRouter(Nav);

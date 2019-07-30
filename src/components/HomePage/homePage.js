@@ -16,7 +16,7 @@ class HomePage extends Component {
 			error: null
 		};
 	}
-
+	static contextType = PhotoGramContext;
 	render() {
 		return (
 			<PhotoGramContext.Consumer>

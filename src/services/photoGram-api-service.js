@@ -73,16 +73,6 @@ const PhotoGramApiService = {
 				!res.ok
 					? res.json().then(err => Promise.reject(err))
 					: res.json().then(data => {
-							while (data.images === undefined) {
-								console.log('image fetch re-ran');
-								return fetch(config.API_ENDPOINT + `/user/${user.id}`, {
-									method: 'GET',
-									headers: {
-										'content-type': 'application/json',
-										authorization: `bearer ${TokenService.getAuthToken()}`
-									}
-								});
-							}
 							return resolve(data);
 					  });
 			})

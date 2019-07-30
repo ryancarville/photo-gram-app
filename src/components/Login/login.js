@@ -63,7 +63,19 @@ class Login extends Component {
 			}
 		});
 	};
+	logInAsTester = e => {
+		this.setState({
+			user_name: 'TestUser',
+			password: '1!Aa2@Bb3#Cc'
+		});
+	};
 
+	resetForm = e => {
+		this.setState({
+			user_name: '',
+			password: ''
+		});
+	};
 	render() {
 		//redirect validation on succesful login
 		const redirectToHome = this.state.validLogin;
@@ -77,10 +89,9 @@ class Login extends Component {
 				<p>
 					Use the folowing details for a valid login or try anything else to
 					test validation: <br />
-					<br />
-					user name: TestUser
-					<br />
-					password: 1!Aa2@Bb3#Cc
+					<button onClick={this.logInAsTester}>
+						Use Test User Credientials
+					</button>
 				</p>
 				<div className='errMsg-login'>{this.state.error}</div>
 				<form className='login-form' onSubmit={this.handleSubmit}>
@@ -91,6 +102,7 @@ class Login extends Component {
 							className='loginFormInput'
 							name='user_name'
 							id='login-email'
+							value={this.state.user_name}
 							onChange={this.handleUserNameChange}
 							required
 						/>
@@ -102,12 +114,16 @@ class Login extends Component {
 							className='loginFormInput'
 							name='password'
 							id='login-password'
+							value={this.state.password}
 							onChange={this.handlePasswordChange}
 							required
 						/>
 					</label>
 					<button type='submit' id='loginFormBtn' onClick={this.handleSubmit}>
 						Let's Go!
+					</button>
+					<button type='button' onClick={this.resetForm}>
+						Reset
 					</button>
 				</form>
 			</div>
