@@ -4,7 +4,7 @@ A private photo storage and orgaizing web app
 
 ## Technologies
 
- <img src='https://png.pngtree.com/svg/20170719/react_1353128.png' width='15px'>
+ <img src='https://www.sumologic.com/wp-content/uploads/2015/12/react-1.png' width='15px'>
  React
  <br/>
  <img src='https://raw.githubusercontent.com/voodootikigod/logo.js/master/js.png' width='15px'>
@@ -36,7 +36,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 Desktop View
 <br/>
-<img src='http://beardystudios.com/Bloc_Capstone/photoGram/images/desktop-example.png' width='350px'>
+<img src='http://beardystudios.com/Bloc_Capstone/photoGram/images/desktop-example.png' width='550px'>
 <br/>
 Mobile View
 <br/>
