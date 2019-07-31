@@ -23,6 +23,7 @@ class Login extends Component {
 			error: null
 		};
 	}
+	//set context for component
 	static contextType = PhotoGramContext;
 	//set state on change for email
 	handleUserNameChange = e => {
@@ -60,13 +61,14 @@ class Login extends Component {
 			}
 		});
 	};
+	//test user login creds
 	logInAsTester = e => {
 		this.setState({
 			user_name: 'TestUser',
 			password: '1!Aa2@Bb3#Cc'
 		});
 	};
-
+	//set form handler
 	resetForm = e => {
 		this.setState({
 			user_name: '',

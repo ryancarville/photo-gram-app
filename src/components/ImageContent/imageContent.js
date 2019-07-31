@@ -2,21 +2,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 export default class ImageContent extends Component {
-	constructor(props) {
-		super(props);
-		this._isMounted = false;
-	}
-	componentDidMount() {
-		this._isMounted = true;
-	}
-	componentDidUpdate(prevProps, prevState) {
-		this._isMounted = false;
-	}
-
+	//image page image content component
 	render() {
 		const image = this.props.image;
 		const user = this.props.user;
-
 		return (
 			<>
 				<button type='button' id='imagePageBackBtn' onClick={this.props.goHome}>

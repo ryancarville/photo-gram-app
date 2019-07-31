@@ -16,12 +16,12 @@ class HomePage extends Component {
 			error: null
 		};
 	}
+	//set context for componet
 	static contextType = PhotoGramContext;
+	//on mount check if user has a valid JWT
 	componentDidMount() {
 		const user = { id: this.state.user_id };
-		console.log(user);
 		this.context.checkIfLoggedIn(user);
-		console.log('homePage check log in ran');
 	}
 	render() {
 		return (

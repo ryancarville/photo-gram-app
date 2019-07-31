@@ -24,7 +24,6 @@ export default class AlbumPage extends Component {
 					let images = this.context.images;
 					const album_id = this.state.album_id;
 					images = images.filter(img => img.album_id !== null);
-					console.log(images);
 					return images.filter(img => img.album_id.toString() === album_id);
 				})
 				.then(albumImgs => {
@@ -43,7 +42,6 @@ export default class AlbumPage extends Component {
 				});
 		};
 	}
-
 	static contextType = PhotoGramContext;
 	//on mount set state with all images assigned to current album
 	componentDidMount() {
@@ -54,7 +52,7 @@ export default class AlbumPage extends Component {
 		const user_id = this.state.user_id;
 		this.props.history.push(`/user/${user_id}`);
 	};
-	//delete request of Album sent to context event handler
+	//delete request of Album sent to API
 	deleteAlbumRequest = albumId => {
 		PhotoGramApiService.deleteAlbum(albumId)
 			.then(data => this.context.updateAlbumsOnDelete(albumId))
@@ -68,6 +66,7 @@ export default class AlbumPage extends Component {
 	};
 
 	render() {
+		//on successful delete redirect to home page
 		if (this.state.redirect) {
 			const user_id = this.state.user_id;
 			return <Redirect to={`/user/${user_id}`} />;

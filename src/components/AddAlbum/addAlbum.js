@@ -23,21 +23,18 @@ export default class AddAlbum extends Component {
 				},
 				(error, result) => {
 					if (!error && result && result.event === 'success') {
-						console.log('Done! Here is the image info: ', result.info);
 						this.setState({
 							cloudinaryPreview: result.info.public_id,
 							img_url:
 								'https://res.cloudinary.com/rcarville/image/upload/' +
 								result.info.public_id
 						});
-						console.log(this.state);
 					}
 				}
 			),
 			error: null
 		};
 	}
-
 	//set context for component
 	static contextType = PhotoGramContext;
 	//set state on folder name change
@@ -75,7 +72,7 @@ export default class AddAlbum extends Component {
 		//on sucsessful add of album redirect to home page
 		if (this.state.redirect) {
 			const user_id = this.state.user_id;
-			return <Redirect to={`/user/${this.state.user_id}`} />;
+			return <Redirect to={`/user/${user_id}`} />;
 		}
 		return (
 			<div className='add-album-container'>

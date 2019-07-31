@@ -25,18 +25,12 @@ class UpdateProfile extends Component {
 				},
 				(error, result) => {
 					if (!error && result && result.event === 'success') {
-						console.log('Done! Here is the image info: ', result.info);
-						this.setState(
-							{
-								uploadedImage: result.info.public_id,
-								profile_img_url:
-									'https://res.cloudinary.com/rcarville/image/upload/' +
-									result.info.public_id
-							},
-							() => {
-								console.log(this.state);
-							}
-						);
+						this.setState({
+							uploadedImage: result.info.public_id,
+							profile_img_url:
+								'https://res.cloudinary.com/rcarville/image/upload/' +
+								result.info.public_id
+						});
 					}
 				}
 			)
@@ -54,6 +48,7 @@ class UpdateProfile extends Component {
 			});
 		};
 	}
+	//set context for component
 	static contextType = PhotoGramContext;
 	//handle name input event change
 	handleNameChange = e => {

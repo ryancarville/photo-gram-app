@@ -5,8 +5,8 @@ import TokenService from '../../services/token-service';
 import './nav.css';
 
 class Nav extends Component {
+	//set context for component
 	static contextType = PhotoGramContext;
-
 	render() {
 		const loggedIn = TokenService.getAuthToken();
 		const userId = this.context.state.user.id;

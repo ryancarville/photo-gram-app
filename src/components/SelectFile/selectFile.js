@@ -15,7 +15,6 @@ export default class SelectFile extends Component {
 				},
 				(error, result) => {
 					if (!error && result && result.event === 'success') {
-						console.log('Done! Here is the image info: ', result.info);
 						this.setState({
 							uploadedImage: result.info.public_id,
 							imageUrl:
@@ -30,7 +29,6 @@ export default class SelectFile extends Component {
 	//simulate click on mount to open widget
 	componentDidMount() {
 		document.getElementById('fileToUpload').click();
-		console.log(this.state);
 	}
 	//handle image upload url
 	handleOnChange = e => {
@@ -42,8 +40,8 @@ export default class SelectFile extends Component {
 		this.state.widget.open();
 	};
 	render() {
+		//on successful upload go to image change handler
 		if (this.state.imageUrl) {
-			console.log(this.state);
 			this.handleOnChange();
 		}
 		return (

@@ -4,6 +4,7 @@ import PhotoGramContext from '../../PhotoGramContext';
 import './albums.css';
 
 class Albums extends Component {
+	//set contet for component
 	static contextType = PhotoGramContext;
 	//create all albums withing the context array
 	createAlbums = albums =>

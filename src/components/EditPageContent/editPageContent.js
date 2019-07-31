@@ -16,7 +16,7 @@ export default class EditPageContent extends Component {
 			error: null
 		};
 	}
-
+	//set context for component
 	static contextType = PhotoGramContext;
 	//set state on change for caption
 	handleCaptionChange = e => {
@@ -42,7 +42,6 @@ export default class EditPageContent extends Component {
 			date_created: e.target.value
 		});
 	};
-
 	//handle back event
 	goBack = e => {
 		this.props.history.goBack();
@@ -79,7 +78,6 @@ export default class EditPageContent extends Component {
 		if (this.state.redirect) {
 			return <Redirect to={`/user/${user.id}/images/${image.id}`} />;
 		}
-
 		return (
 			<PhotoGramContext.Consumer>
 				{context => (
@@ -111,7 +109,7 @@ export default class EditPageContent extends Component {
 									<select
 										value={this.state.album_id}
 										onChange={this.handleAlbumChange}>
-										<option value='0'>No Album</option>
+										<option value=''>No Album</option>
 										{this.getAlbumNames(context.albums)}
 									</select>
 								</label>

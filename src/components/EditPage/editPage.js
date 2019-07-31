@@ -12,36 +12,28 @@ export default class EditPage extends Component {
 			dataLoaded: false
 		};
 		this.getImage = () => {
-			console.log('get image ran');
 			this.context
 				.checkIfLoggedIn(this.state.user)
 				.then(() => {
 					return this.context.getImageData(this.state.image_id);
 				})
 				.then(selectedImage =>
-					this.setState(
-						{
-							image: selectedImage,
-							dataLoaded: true
-						},
-						() => {
-							console.log('image ready = ' + this.state.dataLoaded);
-						}
-					)
+					this.setState({
+						image: selectedImage,
+						dataLoaded: true
+					})
 				);
 		};
 	}
+	//set context for component
 	static contextType = PhotoGramContext;
-
 	//on mount set state to surrent image data values
 	componentDidMount() {
 		this.getImage();
-		console.log(this.props);
 	}
 
 	render() {
 		const { image } = this.state;
-
 		const dataLoaded =
 			this.state.dataLoaded === false ? (
 				<div className='imageLoading'>

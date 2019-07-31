@@ -26,7 +26,7 @@ class App extends Component {
 			error: null
 		};
 	}
-	//context type
+	//set context type
 	static contextType = PhotoGramContext;
 	//handle logout event
 	logout = () => {
@@ -88,29 +88,22 @@ class App extends Component {
 
 	//gets all data for logged in user
 	getUserData = user => {
-		console.log(user);
 		return new Promise(resolve => {
 			PhotoGramApiService.getUserData(user).then(data => {
-				console.log(data);
-				this.setState(
-					{
-						user: {
-							id: data.user[0].id,
-							name: data.user[0].full_name,
-							user_name: data.user[0].user_name,
-							photo:
-								data.user[0].profile_img_url ||
-								'https://res.cloudinary.com/rcarville/image/upload/v1564425749/photoGram_profileImage/ozgynn2ehowpitzn8axf.png',
-							date_created: data.user[0].date_created
-						},
-						images: data.images,
-						albums: data.albums,
-						loggedIn: true
+				this.setState({
+					user: {
+						id: data.user[0].id,
+						name: data.user[0].full_name,
+						user_name: data.user[0].user_name,
+						photo:
+							data.user[0].profile_img_url ||
+							'https://res.cloudinary.com/rcarville/image/upload/v1564425749/photoGram_profileImage/ozgynn2ehowpitzn8axf.png',
+						date_created: data.user[0].date_created
 					},
-					() => {
-						console.log(this.state);
-					}
-				);
+					images: data.images,
+					albums: data.albums,
+					loggedIn: true
+				});
 				return resolve();
 			});
 		}).catch(err => {
@@ -123,7 +116,6 @@ class App extends Component {
 
 	//checks if user sessionStorage has a jwt
 	checkIfLoggedIn = user => {
-		console.log(user);
 		return new Promise(res => {
 			if (TokenService.getAuthToken() !== null) {
 				return res(this.getUserData(user));

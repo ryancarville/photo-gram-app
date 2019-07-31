@@ -17,7 +17,7 @@ export default class FileSelected extends Component {
 			redirect: false
 		};
 	}
-
+	//set context for component
 	static contextType = PhotoGramContext;
 	//get all albums in context array
 	getAlbumNames = e => {
@@ -28,28 +28,31 @@ export default class FileSelected extends Component {
 		));
 		return albums;
 	};
-
+	//set state on caption change
 	handleCaptionChange = e => {
 		this.setState({
 			caption: e.target.value
 		});
 	};
+	//set state on tags change
 	handleTagChange = e => {
 		this.setState({
 			tags: e.target.value
 		});
 	};
+	//set state on album change
 	handleAlbumChange = e => {
 		this.setState({
 			album_id: e.target.value
 		});
 	};
+	//set state on date change
 	handleDateChange = e => {
 		this.setState({
 			date_taken: e.target.value
 		});
 	};
-
+	//event handler for upload
 	handleUpload = e => {
 		e.preventDefault();
 		const {
@@ -78,13 +81,14 @@ export default class FileSelected extends Component {
 				}, 1000)
 			);
 	};
+	//on mnount set state with user id
 	componentDidMount() {
 		this.setState({
 			user_id: this.context.user.id
 		});
 	}
-
 	render() {
+		//on successful upload redirect to home page
 		if (this.state.redirect === true) {
 			const user_id = this.state.user_id;
 			return <Redirect to={`/user/${user_id}`} />;

@@ -15,6 +15,7 @@ class SignUp extends Component {
 			error: null
 		};
 	}
+	//set context for component
 	static contextType = PhotoGramContext;
 	//set state on change for name
 	handleNameChange = e => {
@@ -63,6 +64,7 @@ class SignUp extends Component {
 		cd(newUser);
 	};
 	render() {
+		//if signup successful redirect to login
 		if (this.context.state.signUp) {
 			return <Redirect to='/login' />;
 		}

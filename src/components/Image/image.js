@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import './image.css';
 
 function Image(props) {
+	//create individual image
 	const image_id = props.id.toString();
 	const user_id = props.user_id;
-
 	return (
 		<div className='image-container'>
 			<Link to={`/user/${user_id}/images/${image_id}`}>
