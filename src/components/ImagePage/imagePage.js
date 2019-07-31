@@ -8,7 +8,7 @@ import ImageContent from '../ImageContent/imageContent';
 export default class ImagePage extends Component {
 	constructor(props) {
 		super(props);
-		this._isMounted = false;
+
 		this.state = {
 			user: { id: this.props.match.params.user_id },
 			image_id: this.props.match.params.image_id,
@@ -64,12 +64,7 @@ export default class ImagePage extends Component {
 	};
 	//set component state to select image data
 	componentDidMount() {
-		this._isMounted = true;
-		this._isMounted && this.getImage();
-	}
-
-	componentDidUpdate() {
-		this._isMounted = false;
+		this.getImage();
 	}
 
 	render() {
