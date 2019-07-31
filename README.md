@@ -1,68 +1,44 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# PhotoGram React App
 
-## Available Scripts
+A private photo storage and orgaizing web app
+
+## Technologies
+
+ <img src='https://png.pngtree.com/svg/20170719/react_1353128.png' width='15px'>
+ React
+ <br/>
+ <img src='https://raw.githubusercontent.com/voodootikigod/logo.js/master/js.png' width='15px'>
+ JavaScript
+ <br/>
+ <img src='https://cdn.iconscout.com/icon/free/png-512/nodejs-2-226035.png' width='15px'>
+ Node.js
+ <br/>
+
+ <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/HTML5_logo_resized.svg/425px-HTML5_logo_resized.svg.png' width='15px'>
+ HTML5
+ <br/>
+ <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/CSS3_logo_and_wordmark.svg/1200px-CSS3_logo_and_wordmark.svg.png' width='15px'>
+ CSS5
+
+### Dependeinces
+
+ <img src='https://res.cloudinary.com/demo/image/upload/cloudinary_icon.png' width='25px'>
+Cloudinary
+
+### Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
+`npm start`
 
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+Desktop View
+<br/>
+<img src='http://beardystudios.com/Bloc_Capstone/photoGram/images/desktop-example.png' width='350px'>
+<br/>
+Mobile View
+<br/>
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+<center><img src='http://beardystudios.com/Bloc_Capstone/photoGram/images/landingPage-example.png' width='200px'></center>
