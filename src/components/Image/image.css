@@ -11,8 +11,15 @@
 
 .image-container {
 	position: relative;
-	width: 125px;
-	height: 125px;
+	width: 120px;
+	height: 120px;
 	overflow: hidden;
 	border: 1px solid white;
+}
+
+@media only screen and (min-width: 700px) {
+	.image-container {
+		width: 200px;
+		height: 200px;
+	}
 }
