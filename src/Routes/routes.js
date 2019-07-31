@@ -15,6 +15,8 @@ import Upload from '../components/Upload/upload';
 import EditPage from '../components/EditPage/editPage';
 
 class Routes extends Component {
+	static contextType = PhotoGramContext;
+
 	render() {
 		return (
 			<>
@@ -37,7 +39,7 @@ class Routes extends Component {
 					<PrivateRoute
 						path='/user/:user_id/images/:image_id'
 						exact
-						component={ImagePage}
+						component={props => <ImagePage {...props} />}
 					/>
 					<PrivateRoute
 						path='/user/:user_id/update-profile'
