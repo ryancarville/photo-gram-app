@@ -16,8 +16,7 @@ CSS5
 
 ### Dependeinces
 
- <img src='https://res.cloudinary.com/demo/image/upload/cloudinary_icon.png' width='25px'>
-Cloudinary
+<img src='https://res.cloudinary.com/demo/image/upload/cloudinary_icon.png' width='25px'>Cloudinary
 
 ### Available Scripts
 
