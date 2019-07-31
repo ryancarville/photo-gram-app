@@ -12,7 +12,7 @@ export default class FileSelected extends Component {
 			img_url: this.props.state.imagePreview,
 			caption: '',
 			tags: '',
-			album_id: null,
+			album_id: '0',
 			date_taken: '',
 			redirect: false
 		};
@@ -128,7 +128,7 @@ export default class FileSelected extends Component {
 									<select
 										className='uploadFormInput'
 										onChange={this.handleAlbumChange}>
-										<option value=''>No Album</option>
+										<option value='0'>No Album</option>
 										{this.getAlbumNames(context.albums)}
 									</select>
 								</label>

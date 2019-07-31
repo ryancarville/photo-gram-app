@@ -10,7 +10,9 @@ export default class AddAlbum extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			albumData: {},
+			user_id: this.props.match.params.user_id,
+			album_name: '',
+			img_url: '',
 			cloudinaryPreview: '',
 			redirect: false,
 			widget: window.cloudinary.createUploadWidget(
@@ -24,13 +26,9 @@ export default class AddAlbum extends Component {
 						console.log('Done! Here is the image info: ', result.info);
 						this.setState({
 							cloudinaryPreview: result.info.public_id,
-							albumData: {
-								user_id: this.state.albumData.user_id,
-								album_name: this.state.albumData.album_name,
-								img_url:
-									'https://res.cloudinary.com/rcarville/image/upload/' +
-									result.info.public_id
-							}
+							img_url:
+								'https://res.cloudinary.com/rcarville/image/upload/' +
+								result.info.public_id
 						});
 						console.log(this.state);
 					}
@@ -39,40 +37,25 @@ export default class AddAlbum extends Component {
 			error: null
 		};
 	}
-	//set component state on mount with user id as integer
-	componentDidMount() {
-		let user_id = this.props.match.params.user_id;
-		user_id = parseInt(user_id, 10);
-		console.log(user_id);
-		this.setState({
-			albumData: {
-				user_id: user_id,
-				album_name: '',
-				img_url: ''
-			}
-		});
-	}
+
 	//set context for component
 	static contextType = PhotoGramContext;
 	//set state on folder name change
 	handleFolderName = e => {
 		this.setState({
-			albumData: {
-				user_id: this.state.albumData.user_id,
-				album_name: e.target.value,
-				img_url: this.state.albumData.img_url
-			}
+			album_name: e.target.value
 		});
 	};
 	//back button callback
 	goHome = e => {
-		const user_id = this.state.albumData.user_id;
+		const user_id = this.state.user_id;
 		this.props.history.push(`/user/${user_id}`);
 	};
 	//handle form submit event
 	handleSubmit = e => {
 		e.preventDefault();
-		const albumData = this.state.albumData;
+		const { user_id, album_name, img_url } = this.state;
+		const albumData = { user_id, album_name, img_url };
 		PhotoGramApiService.addAlbum(albumData)
 			.then(data => this.context.setAppStateAlbums(data))
 			.then(
@@ -91,9 +74,8 @@ export default class AddAlbum extends Component {
 	render() {
 		//on sucsessful add of album redirect to home page
 		if (this.state.redirect) {
-			const user_id = this.state.albumData.user_id;
-			PhotoGramApiService.refreshContent(user_id);
-			return <Redirect to={`/user/{user_id}`} />;
+			const user_id = this.state.user_id;
+			return <Redirect to={`/user/${this.state.user_id}`} />;
 		}
 		return (
 			<div className='add-album-container'>

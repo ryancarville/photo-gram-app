@@ -42,15 +42,16 @@ class App extends Component {
 		return new Promise(resolve => {
 			const images = this.state.images;
 			const image = images.filter(img => img.id.toString() === imageId);
-			console.log(image[0]);
 			return resolve(image[0]);
 		});
 	};
 	//get all images assinged to selected album
 	getAlbumData = album_id => {
-		const albums = this.state.albums;
-		const album = albums.filter(alb => alb.id.toString() === album_id);
-		return album[0];
+		return new Promise(resolve => {
+			const albums = this.state.albums;
+			const album = albums.filter(alb => alb.id.toString() === album_id);
+			return resolve(album[0]);
+		});
 	};
 	//push home path to url callback
 	goHome = e => {

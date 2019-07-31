@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import PhotoGramContext from '../../PhotoGramContext';
 import PhotoGramApiService from '../../services/photoGram-api-service';
 import Image from '../Image/image';
@@ -12,35 +11,43 @@ export default class AlbumPage extends Component {
 		this.state = {
 			user_id: this.props.match.params.user_id,
 			album_id: this.props.match.params.album_id,
-			images: [],
 			albumName: '',
 			albumImages: [],
 			redirect: false,
 			error: null
 		};
+		this.getAlbumImages = () => {
+			const user = { id: this.state.user_id };
+			this.context
+				.checkIfLoggedIn(user)
+				.then(() => {
+					let images = this.context.images;
+					const album_id = this.state.album_id;
+					images = images.filter(img => img.album_id !== null);
+					console.log(images);
+					return images.filter(img => img.album_id.toString() === album_id);
+				})
+				.then(albumImgs => {
+					this.setState({
+						albumImages: albumImgs
+					});
+				})
+				.then(() => {
+					const albumData = this.context.getAlbumData(this.state.album_id);
+					return albumData;
+				})
+				.then(albumData => {
+					this.setState({
+						albumName: albumData.album_name
+					});
+				});
+		};
 	}
-	static proptTypes = {
-		images: PropTypes.arrayOf(
-			PropTypes.shape({
-				id: PropTypes.string
-			})
-		)
-	};
-	static defaultProps = { images: [], albums: [] };
+
 	static contextType = PhotoGramContext;
 	//on mount set state with all images assigned to current album
 	componentDidMount() {
-		const images = this.context.images;
-		const album_id = this.state.album_id;
-		const albumImgs = images.filter(
-			img => img.album_id.toString() === album_id
-		);
-		const albumData = this.context.getAlbumData(this.state.album_id);
-		this.setState({
-			images: images,
-			albumName: albumData.album_name,
-			albumImages: albumImgs
-		});
+		this.getAlbumImages();
 	}
 	//handle back event
 	handleBack = e => {

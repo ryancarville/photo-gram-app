@@ -53,7 +53,7 @@ export default class ImagePage extends Component {
 					this.setState({
 						redirect: true
 					});
-				}, 1000)
+				}, 500)
 			);
 	};
 	//format date handler
@@ -70,7 +70,7 @@ export default class ImagePage extends Component {
 	render() {
 		//redirect to home page on succesful delete request
 		if (this.state.redirect) {
-			const user_id = this.state.user_id;
+			const user_id = this.state.user.id;
 			return <Redirect to={`/user/${user_id}`} />;
 		}
 

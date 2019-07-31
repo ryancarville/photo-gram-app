@@ -30,6 +30,7 @@ export default class SelectFile extends Component {
 	//simulate click on mount to open widget
 	componentDidMount() {
 		document.getElementById('fileToUpload').click();
+		console.log(this.state);
 	}
 	//handle image upload url
 	handleOnChange = e => {
@@ -42,6 +43,7 @@ export default class SelectFile extends Component {
 	};
 	render() {
 		if (this.state.imageUrl) {
+			console.log(this.state);
 			this.handleOnChange();
 		}
 		return (

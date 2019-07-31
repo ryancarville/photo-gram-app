@@ -1,12 +1,23 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import PhotoGramContext from '../../PhotoGramContext';
 import PhotoGramApiService from '../../services/photoGram-api-service';
 export default class EditPageContent extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = {
+			user: this.props.user,
+			id: this.props.image.id,
+			img_url: this.props.image.img_url,
+			caption: this.props.image.caption,
+			tags: this.props.image.tags,
+			album_id: this.props.image.album_id,
+			date_created: this.props.image.date_created,
+			error: null
+		};
 	}
 
+	static contextType = PhotoGramContext;
 	//set state on change for caption
 	handleCaptionChange = e => {
 		this.setState({
@@ -19,18 +30,19 @@ export default class EditPageContent extends Component {
 			album_id: e.target.value
 		});
 	};
-	//set state on change for date
-	handleDateChange = e => {
-		this.setState({
-			date_created: e.target.value
-		});
-	};
 	//set state on change for tags
 	handleTagsChange = e => {
 		this.setState({
 			tags: e.target.value
 		});
 	};
+	//set state on change for date
+	handleDateChange = e => {
+		this.setState({
+			date_created: e.target.value
+		});
+	};
+
 	//handle back event
 	goBack = e => {
 		this.props.history.goBack();
@@ -47,17 +59,8 @@ export default class EditPageContent extends Component {
 	//handle fomr submit event
 	handleSubmit = e => {
 		e.preventDefault();
-		const user_id = this.state.user_id;
 		const { id, img_url, caption, tags, album_id, date_created } = this.state;
-		const newImageInfo = {
-			user_id,
-			id,
-			img_url,
-			caption,
-			tags,
-			album_id,
-			date_created
-		};
+		const newImageInfo = { id, img_url, caption, tags, album_id, date_created };
 		PhotoGramApiService.updateImage(newImageInfo)
 			.then(data => this.context.updateImage(newImageInfo))
 			.then(
@@ -65,13 +68,18 @@ export default class EditPageContent extends Component {
 					this.setState({
 						redirect: true
 					});
-				}, 1000)
+				}, 500)
 			)
 			.catch(err => this.setState({ error: err }));
 	};
 	render() {
-		const { image } = this.props;
-		console.log(this.props.history);
+		const { user } = this.state;
+		const image = { id: this.state.id };
+		//on successful save of data redirect to image page
+		if (this.state.redirect) {
+			return <Redirect to={`/user/${user.id}/images/${image.id}`} />;
+		}
+
 		return (
 			<PhotoGramContext.Consumer>
 				{context => (
@@ -83,8 +91,8 @@ export default class EditPageContent extends Component {
 							<img
 								key={image.id}
 								className='imgPreview'
-								src={image.img_url}
-								alt={image.tags}
+								src={this.state.img_url}
+								alt={this.state.tags}
 							/>
 							<form onSubmit={this.handleSubmit} className='imageEditForm'>
 								<label htmlFor='caption'>
@@ -94,16 +102,16 @@ export default class EditPageContent extends Component {
 										name='caption'
 										id='captionTextarea'
 										autoFocus='autofoucs'
-										value={image.caption}
+										value={this.state.caption}
 										onChange={this.handleCaptionChange}
 									/>
 								</label>
 								<label htmlFor='album'>
 									Album{' '}
 									<select
-										value={image.album_id}
+										value={this.state.album_id}
 										onChange={this.handleAlbumChange}>
-										<option value=''>No Album</option>
+										<option value='0'>No Album</option>
 										{this.getAlbumNames(context.albums)}
 									</select>
 								</label>
@@ -112,7 +120,7 @@ export default class EditPageContent extends Component {
 									<input
 										type='text'
 										name='tags'
-										value={image.tags}
+										value={this.state.tags}
 										onChange={this.handleTagsChange}
 									/>
 								</label>
@@ -121,10 +129,11 @@ export default class EditPageContent extends Component {
 									<input
 										type='date'
 										name='date'
-										value={image.date_created}
+										value={this.state.date_created}
 										onChange={this.handleDateChange}
 									/>
 								</label>
+								<div className='editPageErr'>{this.state.error}</div>
 								<div className='imageEditFormBtnContainer'>
 									<button type='submit'>Save</button>
 									<button type='button' onClick={this.goBack}>

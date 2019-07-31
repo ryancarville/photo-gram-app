@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 import PhotoGramContext from '../../PhotoGramContext';
-import PhotoGramApiService from '../../services/photoGram-api-service';
 import EditPageContent from '../EditPageContent/editPageContent';
 import './editPage.css';
 
@@ -43,12 +41,6 @@ export default class EditPage extends Component {
 
 	render() {
 		const { image } = this.state;
-		console.log(image);
-		const user_id = this.state.user_id;
-		//on successful save of data redirect to image page
-		if (this.state.redirect) {
-			return <Redirect to={`/user/${user_id}/images/${image.id}`} />;
-		}
 
 		const dataLoaded =
 			this.state.dataLoaded === false ? (
@@ -57,7 +49,8 @@ export default class EditPage extends Component {
 				</div>
 			) : (
 				<EditPageContent
-					image={this.state.image}
+					user={this.state.user}
+					image={image}
 					history={this.props.history}
 				/>
 			);

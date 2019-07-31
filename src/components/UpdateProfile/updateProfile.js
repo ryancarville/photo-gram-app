@@ -41,6 +41,18 @@ class UpdateProfile extends Component {
 				}
 			)
 		};
+		this.getUserInfo = () => {
+			const user = { id: this.state.user_id };
+			this.context.checkIfLoggedIn(user).then(() => {
+				this.setState({
+					full_name: this.context.user.name,
+					user_name: this.context.user.user_name,
+					profile_img_url: this.context.user.photo,
+					uploadedImage: this.context.user.photo.substring(50),
+					context: this.context
+				});
+			});
+		};
 	}
 	static contextType = PhotoGramContext;
 	//handle name input event change
@@ -77,13 +89,7 @@ class UpdateProfile extends Component {
 	};
 	//on mount set the component state with current user data
 	componentWillMount() {
-		this.setState({
-			full_name: this.context.user.name,
-			user_name: this.context.user.user_name,
-			profile_img_url: this.context.user.photo,
-			uploadedImage: this.context.user.photo.substring(50),
-			context: this.context
-		});
+		this.getUserInfo();
 	}
 	render() {
 		//redirect to home page on successful save
