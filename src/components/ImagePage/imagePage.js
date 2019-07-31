@@ -1,25 +1,47 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import PhotoGramContext from '../../PhotoGramContext';
 import './imagePage.css';
 import PhotoGramApiService from '../../services/photoGram-api-service';
+import ImageContent from '../ImageContent/imageContent';
 
 export default class ImagePage extends Component {
 	constructor(props) {
 		super(props);
+		this._isMounted = false;
 		this.state = {
-			user_id: this.props.match.params.user_id,
+			user: { id: this.props.match.params.user_id },
 			image_id: this.props.match.params.image_id,
-			image: null,
+			image: {},
 			dataLoaded: false,
 			redirect: false
 		};
+		this.getImage = () => {
+			console.log('get image ran');
+			this.context
+				.checkIfLoggedIn(this.state.user)
+				.then(() => {
+					return this.context.getImageData(this.state.image_id);
+				})
+				.then(selectedImage =>
+					this.setState(
+						{
+							image: selectedImage,
+							dataLoaded: true
+						},
+						() => {
+							console.log('image ready = ' + this.state.dataLoaded);
+						}
+					)
+				);
+		};
 	}
-	//set context for component
+
 	static contextType = PhotoGramContext;
+
 	//handle back event
 	goHome = e => {
-		const user_id = this.state.user_id;
+		const user_id = this.state.user.id;
 		this.props.history.push(`/user/${user_id}`);
 	};
 	//delete request event handler
@@ -37,63 +59,19 @@ export default class ImagePage extends Component {
 	//format date handler
 	formatDate = imageDate => {
 		const date = new Date(imageDate);
-		console.log(date);
-		const formatted_date = new Intl.DateTimeFormat('en-GB').format(date);
+		const formatted_date = new Intl.DateTimeFormat('en-US').format(date);
 		return formatted_date;
 	};
 	//set component state to select image data
 	componentDidMount() {
-		const user = { id: this.state.user_id };
-		this.context.checkIfLoggedIn(user);
-		console.log('imagePage check log in ran');
-		const selectedImage = this.context.getImageData(this.state.image_id);
-		console.log(selectedImage);
-		this.setState(
-			{
-				image: selectedImage,
-				dataLoaded: true
-			},
-			() => {
-				console.log(this.state.image);
-			}
-		);
+		this._isMounted = true;
+		this._isMounted && this.getImage();
 	}
-	imageLoaded = () => {
-		const { user_id, image_id, image } = this.state;
-		return (
-			<>
-				<button type='button' id='imagePageBackBtn' onClick={this.goHome}>
-					&#171;{' '}
-				</button>
-				<div className='image-page-container'>
-					<img
-						key={image.id}
-						src={image.img_url}
-						alt={image.alt}
-						className='singleImg'
-					/>
-					<div className='image-info'>
-						<p>{image.caption}</p>
-						<span>Date: {this.formatDate(image.date_created)}</span>
 
-						<div className='imageButtons'>
-							<Link to={`/user/${user_id}/edit/${image_id}`}>
-								<button type='button'>Edit Post</button>
-							</Link>
-							<button
-								type='button'
-								onClick={() => this.deleteImageRequest(image_id)}>
-								Delete
-							</button>
-						</div>
-					</div>
-				</div>
-			</>
-		);
-	};
-	imageNotLoaded = () => {
-		return <p>loading image...</p>;
-	};
+	componentDidUpdate() {
+		this._isMounted = false;
+	}
+
 	render() {
 		//redirect to home page on succesful delete request
 		if (this.state.redirect) {
@@ -101,12 +79,21 @@ export default class ImagePage extends Component {
 			return <Redirect to={`/user/${user_id}`} />;
 		}
 
-		return (
-			<>
-				{this.state.dataLoaded === false
-					? this.imageNotLoaded
-					: this.imageLoaded}
-			</>
-		);
+		const dataLoaded =
+			this.state.dataLoaded === false ? (
+				<div className='imageLoading'>
+					<p>loading image...</p>
+				</div>
+			) : (
+				<ImageContent
+					image={this.state.image}
+					user={this.state.user}
+					formatDate={this.formatDate}
+					deleteImageRequest={this.deleteImageRequest}
+					goHome={this.goHome}
+				/>
+			);
+
+		return <>{dataLoaded}</>;
 	}
 }

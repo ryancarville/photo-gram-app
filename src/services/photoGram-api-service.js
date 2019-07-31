@@ -73,7 +73,6 @@ const PhotoGramApiService = {
 				!res.ok
 					? res.json().then(err => Promise.reject(err))
 					: res.json().then(data => {
-							console.log(data);
 							return resolve(data);
 					  });
 			})

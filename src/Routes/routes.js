@@ -16,7 +16,6 @@ import EditPage from '../components/EditPage/editPage';
 
 class Routes extends Component {
 	static contextType = PhotoGramContext;
-
 	render() {
 		return (
 			<>
@@ -39,7 +38,7 @@ class Routes extends Component {
 					<PrivateRoute
 						path='/user/:user_id/images/:image_id'
 						exact
-						component={props => <ImagePage {...props} />}
+						component={ImagePage}
 					/>
 					<PrivateRoute
 						path='/user/:user_id/update-profile'

@@ -7,7 +7,7 @@
 
 .singleImg {
 	width: 100%;
-	margin-top: 20px;
+	margin: 0;
 }
 
 #imagePageBackBtn {
@@ -33,6 +33,12 @@
 	background-color: transparent;
 	font-size: 30px;
 	margin-top: 35px;
+}
+
+.imageLoading p {
+	margin: 0;
+	padding-top: 200px;
+	text-align: center;
 }
 
 @media only screen and (min-width: 700px) {

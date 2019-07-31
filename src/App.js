@@ -21,7 +21,6 @@ class App extends Component {
 			},
 			images: [],
 			albums: [],
-			image_id: null,
 			singUp: false,
 			loggedIn: false,
 			error: null
@@ -40,9 +39,12 @@ class App extends Component {
 	};
 	//get all data for selected image
 	getImageData = imageId => {
-		const images = this.state.images;
-		const image = images.filter(img => img.id.toString() === imageId);
-		return image[0];
+		return new Promise(resolve => {
+			const images = this.state.images;
+			const image = images.filter(img => img.id.toString() === imageId);
+			console.log(image[0]);
+			return resolve(image[0]);
+		});
 	};
 	//get all images assinged to selected album
 	getAlbumData = album_id => {
@@ -85,8 +87,9 @@ class App extends Component {
 
 	//gets all data for logged in user
 	getUserData = user => {
-		PhotoGramApiService.getUserData(user)
-			.then(data => {
+		console.log(user);
+		return new Promise(resolve => {
+			PhotoGramApiService.getUserData(user).then(data => {
 				console.log(data);
 				this.setState(
 					{
@@ -107,22 +110,26 @@ class App extends Component {
 						console.log(this.state);
 					}
 				);
-			})
-			.catch(err => {
-				console.log(err);
-				this.setState({
-					error: err
-				});
+				return resolve();
 			});
+		}).catch(err => {
+			console.log(err);
+			this.setState({
+				error: err
+			});
+		});
 	};
 
 	//checks if user sessionStorage has a jwt
 	checkIfLoggedIn = user => {
-		if (TokenService.getAuthToken() !== null) {
-			this.getUserData(user);
-		} else {
-			return <Redirect to={'/login'} />;
-		}
+		console.log(user);
+		return new Promise(res => {
+			if (TokenService.getAuthToken() !== null) {
+				return res(this.getUserData(user));
+			} else {
+				return res(<Redirect to={'/login'} />);
+			}
+		});
 	};
 	//handles signup event
 	signUp = newUser => {
