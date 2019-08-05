@@ -35,7 +35,7 @@ class Albums extends Component {
 					<li>
 						<Link to={`/user/${user.id}/addAlbum`} id='addAlbum'>
 							<img
-								src='http://beardystudios.com/Bloc_Capstone/photoGram/images/addAlbumBtn.png'
+								src='https://beardystudios.com/Bloc_Capstone/photoGram/images/addAlbumBtn.png'
 								className='albumImg'
 								id='addAlbumButton'
 								alt='add album button'

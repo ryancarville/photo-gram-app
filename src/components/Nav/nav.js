@@ -39,7 +39,7 @@ class Nav extends Component {
 					<li>
 						<Link to={`/user/${userId}`}>
 							<img
-								src='http://beardystudios.com/Bloc_Capstone/photoGram/favicon/whiteNav.png'
+								src='https://beardystudios.com/Bloc_Capstone/photoGram/favicon/whiteNav.png'
 								alt='logo'
 							/>
 						</Link>

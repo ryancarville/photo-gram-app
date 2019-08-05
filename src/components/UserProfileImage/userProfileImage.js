@@ -7,7 +7,7 @@ export default function UserProfileImage(props) {
 		<Link to={`/user/${props.user_id}/update-profile`}>
 			<img src={props.image} alt='' id='userPhoto' />
 			<img
-				src='http://beardystudios.com/Bloc_Capstone/photoGram/images/profileChangeBtn.png'
+				src='https://beardystudios.com/Bloc_Capstone/photoGram/images/profileChangeBtn.png'
 				alt='change profile button'
 				id='changeProfileBtn'
 			/>

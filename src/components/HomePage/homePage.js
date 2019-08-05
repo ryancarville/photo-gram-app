@@ -18,7 +18,6 @@ class HomePage extends Component {
 		this.getData = () => {
 			const user = { id: this.state.user_id };
 			this.context.checkIfLoggedIn(user);
-			console.log(this.context.images);
 		};
 	}
 	//set context for componet
