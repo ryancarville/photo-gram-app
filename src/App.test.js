@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
+
 import ReactDOM from 'react-dom';
 import App from './App.js';
 import LandingPage from './components/LandingPage/landingPage';
@@ -21,28 +23,40 @@ describe('All views', () => {
 	});
 
 	it('renders singup page', () => {
-		const signUpForm = document.createElement('form');
+		const signUpForm = document.createElement('div');
 		ReactDOM.render(<SignUp />, signUpForm);
 		ReactDOM.unmountComponentAtNode(signUpForm);
 	});
 
 	it('renders logIn page', () => {
-		const logInForm = document.createElement('form');
+		const logInForm = document.createElement('div');
 		ReactDOM.render(<LogIn />, logInForm);
 		ReactDOM.unmountComponentAtNode(logInForm);
 	});
 
 	it('renders homePage', () => {
-		const component = <HomePage />;
 		const div = document.createElement('div');
-		const user_id = 1;
-		ReactDOM.render(component, div);
+		const match = { params: { user_id: '1' } };
+		const compoonent = (
+			<App>
+				{' '}
+				<HomePage match={match} />
+			</App>
+		);
+		ReactDOM.render(compoonent, div);
 		ReactDOM.unmountComponentAtNode(div);
 	});
 
 	it('renders imagePage', () => {
 		const div = document.createElement('div');
-		ReactDOM.render(<ImagePage />, div);
+		const match = { params: { user_id: '1' } };
+		const compoonent = (
+			<App>
+				{' '}
+				<ImagePage match={match} />
+			</App>
+		);
+		ReactDOM.render(compoonent, div);
 		ReactDOM.unmountComponentAtNode(div);
 	});
 });
