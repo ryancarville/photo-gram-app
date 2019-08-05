@@ -53,8 +53,7 @@ class Login extends Component {
 						id: data.user_id
 					}
 				});
-				const user = this.state.user;
-				this.context.getUserData(user);
+
 				this.setState({
 					validLogin: true
 				});

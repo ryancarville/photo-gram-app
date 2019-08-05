@@ -70,6 +70,7 @@ const PhotoGramApiService = {
 					authorization: `bearer ${TokenService.getAuthToken()}`
 				}
 			}).then(res => {
+				console.log(res);
 				!res.ok
 					? res.json().then(err => Promise.reject(err))
 					: res.json().then(data => {

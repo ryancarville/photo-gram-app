@@ -15,13 +15,17 @@ class HomePage extends Component {
 			user_id: this.props.match.params.user_id,
 			error: null
 		};
+		this.getData = () => {
+			const user = { id: this.state.user_id };
+			this.context.checkIfLoggedIn(user);
+			console.log(this.context.images);
+		};
 	}
 	//set context for componet
 	static contextType = PhotoGramContext;
 	//on mount check if user has a valid JWT
 	componentDidMount() {
-		const user = { id: this.state.user_id };
-		this.context.checkIfLoggedIn(user);
+		this.getData();
 	}
 	render() {
 		return (
