@@ -16,6 +16,7 @@ class HomePage extends Component {
 			error: null
 		};
 		this.getData = () => {
+			console.log(this.state.user_id + 'home get data');
 			const user = { id: this.state.user_id };
 			this.context.checkIfLoggedIn(user);
 		};

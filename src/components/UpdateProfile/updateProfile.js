@@ -42,8 +42,7 @@ class UpdateProfile extends Component {
 					full_name: this.context.user.name,
 					user_name: this.context.user.user_name,
 					profile_img_url: this.context.user.photo,
-					uploadedImage: this.context.user.photo.substring(50),
-					context: this.context
+					uploadedImage: this.context.user.photo.substring(50)
 				});
 			});
 		};
@@ -52,9 +51,14 @@ class UpdateProfile extends Component {
 	static contextType = PhotoGramContext;
 	//handle name input event change
 	handleNameChange = e => {
-		this.setState({
-			full_name: e.target.value
-		});
+		this.setState(
+			{
+				full_name: e.target.value
+			},
+			() => {
+				console.log(this.state.full_name);
+			}
+		);
 	};
 	//handle user name input event change
 	handleUserNameChange = e => {
@@ -65,14 +69,14 @@ class UpdateProfile extends Component {
 	//handle submit
 	handleSubmit = e => {
 		e.preventDefault();
+
 		const { full_name, user_name, profile_img_url } = this.state;
 		const newUserInfo = { full_name, user_name, profile_img_url };
+		console.log(newUserInfo);
 		const user_id = this.state.user_id;
-		PhotoGramApiService.updateUserInfo(user_id, newUserInfo)
-			.then(data => {
-				this.context.setAppStateUser(data);
-			})
-			.then(this.setState({ redirect: true }));
+		PhotoGramApiService.updateUserInfo(user_id, newUserInfo).then(() =>
+			this.setState({ redirect: true })
+		);
 	};
 	//handle open image upload widget
 	openWidget = () => {

@@ -24,7 +24,7 @@ const PhotoGramApiService = {
 	},
 	//POST for new user signup
 	signUp(newUser) {
-		return new Promise(resolve =>
+		return new Promise((resolve, reject) => {
 			fetch(config.API_ENDPOINT + '/signup', {
 				method: 'POST',
 				body: JSON.stringify(newUser),
@@ -32,14 +32,20 @@ const PhotoGramApiService = {
 					'content-type': 'application/json'
 				},
 				mode: 'cors'
-			}).then(res => {
-				!res.ok
-					? res.json().then(err => Promise.reject(err))
-					: res.json().then(data => {
-							return resolve(data);
-					  });
 			})
-		);
+				.then(res =>
+					!res.ok
+						? res.json().then(err => {
+								return resolve(err);
+						  })
+						: res.json().then(data => {
+								return resolve(data);
+						  })
+				)
+				.catch(err => {
+					return err;
+				});
+		});
 	},
 	//POST for login credentials
 	login(credintials) {
