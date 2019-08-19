@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import config from '../../config';
 import './selectFile.css';
+import PhotGramContext from '../../PhotoGramContext';
 
 export default class SelectFile extends Component {
 	constructor(props) {
 		super(props);
+
 		this.state = {
+			user_id: '',
 			imageUrl: '',
+			close: false,
 			widget: window.cloudinary.createUploadWidget(
 				{
 					cloudName: config.CLOUDINARY_NAME,
@@ -14,7 +19,9 @@ export default class SelectFile extends Component {
 					cropping: 'server'
 				},
 				(error, result) => {
-					if (!error && result && result.event === 'success') {
+					if (!error && result.event === 'close') {
+						this.setState({ close: true });
+					} else if (!error && result && result.event === 'success') {
 						this.setState({
 							uploadedImage: result.info.public_id,
 							imageUrl:
@@ -26,8 +33,10 @@ export default class SelectFile extends Component {
 			)
 		};
 	}
+	static contextType = PhotGramContext;
 	//simulate click on mount to open widget
 	componentDidMount() {
+		this.setState({ user_id: this.context.user.id });
 		document.getElementById('fileToUpload').click();
 	}
 	//handle image upload url
@@ -40,6 +49,9 @@ export default class SelectFile extends Component {
 		this.state.widget.open();
 	};
 	render() {
+		if (this.state.close) {
+			return <Redirect to={`/user/${this.state.user_id}`} />;
+		}
 		//on successful upload go to image change handler
 		if (this.state.imageUrl) {
 			this.handleOnChange();

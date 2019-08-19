@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import config from '../../config';
 import PhotoGramContext from '../../PhotoGramContext';
+import { Image, Transformation } from 'cloudinary-react';
 import './albums.css';
 
 class Albums extends Component {
@@ -19,7 +21,18 @@ class Albums extends Component {
 								album_name: album.album_name
 							}
 						}}>
-						<img src={album.img_url} className='albumImg' alt={album.alt} />
+						<Image
+							cloudName={config.CLOUDINARY_NAME}
+							publicId={album.img_url}
+							id='albumThumb'>
+							<Transformation
+								height='100'
+								crop='fill'
+								radius='max'
+								border='2px_solid_black'
+							/>
+						</Image>
+
 						<p>{album.album_name}</p>
 					</Link>
 				</li>
