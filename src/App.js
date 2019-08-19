@@ -104,6 +104,7 @@ class App extends Component {
 					albums: data.albums,
 					loggedIn: true
 				});
+
 				return resolve();
 			});
 		}).catch(err => {

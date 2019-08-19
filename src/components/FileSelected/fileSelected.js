@@ -72,14 +72,13 @@ export default class FileSelected extends Component {
 			album_id
 		};
 		PhotoGramApiService.uploadImage(newImage)
-			.then(data => this.context.setAppStateImages(data))
-			.then(
-				setTimeout(() => {
-					this.setState({
-						redirect: true
-					});
-				}, 1000)
-			);
+		.then(
+			setTimeout(() => {
+				this.setState({
+					redirect: true
+				});
+			}, 1000)
+		);
 	};
 	//on mnount set state with user id
 	componentDidMount() {

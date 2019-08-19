@@ -1,8 +1,13 @@
 .login-form-container {
 	position: relative;
 	width: 100%;
+	height: auto;
 	padding-top: 100px;
+	padding-bottom: 50px;
 	text-align: center;
+	background-color: white;
+	border: 1px solid black;
+	border-radius: 20px 20px 20px 20px;
 }
 
 .login-form-container button {
@@ -48,8 +53,11 @@
 
 @media only screen and (min-width: 700px) {
 	.login-form-container {
+		position: absolute;
+		padding: 20px;
+		margin-top: 150px;
 		width: 25%;
-		margin-left: auto;
-		margin-right: auto;
+		margin-left: 36.5%;
+		
 	}
 }

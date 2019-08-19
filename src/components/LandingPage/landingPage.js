@@ -52,7 +52,7 @@ class LandingPage extends Component {
 					<h2>Welcome to PhotoGram!</h2>
 					<h4>You're private photo platform</h4>
 					<p>
-						Uplaod, edit and archive your life photos without the worry of
+						Upload, edit and archive your life photos without the worry of
 						trolls or unauthorized usage. Easy to use and offers many options to
 						organize your photo sets.{' '}
 					</p>
