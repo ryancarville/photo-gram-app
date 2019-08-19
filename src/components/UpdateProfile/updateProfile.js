@@ -148,8 +148,10 @@ class UpdateProfile extends Component {
 													<Transformation
 														height='100'
 														width='100'
-														crop='scale'
-														radius='100'
+														crop='fill'
+														radius='max'
+														gravity='face:auto'
+														border='2px_solid_black'
 													/>
 												</Image>
 												<br />
