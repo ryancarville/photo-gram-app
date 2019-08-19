@@ -29,6 +29,9 @@ export default class EditPageContent extends Component {
 		this.setState({
 			album_id: e.target.value
 		});
+		if (e.target.value === '') {
+			this.setState({ album_id: null });
+		}
 	};
 	//set state on change for tags
 	handleTagsChange = e => {
@@ -58,10 +61,11 @@ export default class EditPageContent extends Component {
 	//handle fomr submit event
 	handleSubmit = e => {
 		e.preventDefault();
+
 		const { id, img_url, caption, tags, album_id, date_created } = this.state;
 		const newImageInfo = { id, img_url, caption, tags, album_id, date_created };
 		PhotoGramApiService.updateImage(newImageInfo)
-			.then(data => this.context.updateImage(newImageInfo))
+
 			.then(
 				setTimeout(() => {
 					this.setState({
