@@ -5,58 +5,42 @@ import PhotoGramContext from '../../PhotoGramContext';
 import { Image, Transformation } from 'cloudinary-react';
 import './albums.css';
 
+const createAlbums = (albums, user) =>
+	albums.map(album => {
+		const imageUrl = album.img_url;
+		const image = imageUrl.slice(50, imageUrl.length);
+		return (
+			<li key={album.id} id={album.id}>
+				<Link
+					to={`/user/${user.id}/albums/${album.id}`}
+					style={{ textDecoration: 'none', color: 'deepskyblue' }}>
+					<Image cloudName={config.CLOUDINARY_NAME} publicId={image}>
+						<Transformation
+							height='100'
+							width='100'
+							crop='fill'
+							radius='max'
+							border='3px_solid_black'
+						/>
+					</Image>
+					<p>{album.album_name}</p>
+				</Link>
+			</li>
+		);
+	});
+
 class Albums extends Component {
 	//set contet for component
 	static contextType = PhotoGramContext;
 	//create all albums withing the context array
-	createAlbums = albums =>
-		albums.map(album => {
-			const user = this.context.user;
-			return (
-				<li key={album.id} id={album.id}>
-					<Link
-						to={{
-							pathname: `/user/${user.id}/albums/${album.id}`,
-							state: {
-								album_name: album.album_name
-							}
-						}}>
-						<Image
-							cloudName={config.CLOUDINARY_NAME}
-							publicId={album.img_url}
-							id='albumThumb'>
-							<Transformation
-								height='100'
-								crop='fill'
-								radius='max'
-								border='2px_solid_black'
-							/>
-						</Image>
 
-						<p>{album.album_name}</p>
-					</Link>
-				</li>
-			);
-		});
 	render() {
 		const user = this.context.user;
 		const albums = this.context.albums;
+		console.log(albums);
 		return (
 			<div className='albums-bar' id='albums'>
-				<ul>
-					{this.createAlbums(albums)}
-					<li>
-						<Link to={`/user/${user.id}/addAlbum`} id='addAlbum'>
-							<img
-								src='https://beardystudios.com/Bloc_Capstone/photoGram/images/addAlbumBtn.png'
-								className='albumImg'
-								id='addAlbumButton'
-								alt='add album button'
-							/>
-							<p> add album</p>
-						</Link>
-					</li>
-				</ul>
+				<ul>{createAlbums(albums, user)}</ul>
 			</div>
 		);
 	}

@@ -22,17 +22,14 @@
 	padding-left: 5px;
 	padding-right: 5px;
 }
-
-#albumThumb {
-	width: 100px;
-	height: 100px;
-	border: 1px solid black;
-	border-radius: 50px 50px;
+.albums-bar ul li link {
+	text-decoration: none;
+	text-decoration-line: none;
 }
 
 .albumImg {
 	box-sizing: border-box;
-	border: 2px solid black;
+	border: 3px solid black;
 	width: 100px;
 	height: 100px;
 	border-radius: 50%;
@@ -40,22 +37,9 @@
 	padding: 5px;
 }
 
-#addAlbumButton {
-	box-sizing: border-box;
-	border: 2px solid black;
-	width: 100px;
-	height: 100px;
-	border-radius: 50%;
-	overflow: hidden;
-	color: white;
-	position: relative;
-}
-
 @media only screen and (min-width: 700px) {
 	.albums-bar {
 		margin-top: 5%;
-		width: 100%;
-		height: auto;
 	}
 	.albums-bar ul {
 		box-sizing: border-box;
@@ -65,5 +49,6 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
+		overflow: hidden;
 	}
 }

@@ -13,6 +13,7 @@ import ImagePage from '../components/ImagePage/imagePage.js';
 import UpdateProfile from '../components/UpdateProfile/updateProfile.js';
 import Upload from '../components/Upload/upload';
 import EditPage from '../components/EditPage/editPage';
+import EditAlbum from '../components/EditAlbum/editAlbum';
 
 class Routes extends Component {
 	static contextType = PhotoGramContext;
@@ -50,6 +51,11 @@ class Routes extends Component {
 						path='/user/:user_id/edit/:image_id'
 						exact
 						component={EditPage}
+					/>
+					<PrivateRoute
+						path='/user/:user_id/editAlbum/:album_id'
+						exact
+						component={EditAlbum}
 					/>
 					<Redirect from='*' to='/' />
 				</Switch>

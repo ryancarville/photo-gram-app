@@ -4,29 +4,43 @@
 	font-size: 30px;
 }
 
-.albumPage-container p {
-	font-size: 30px;
-	height: 5px;
-	width: 100%;
+#albumBtnDiv1 {
+	display: block;
+}
+#albumBtnDiv1 p {
+	padding: 10px;
+}
+
+#albumBtnDiv2 {
+	display: flex;
+	justify-content: space-around;
+	align-items: baseline;
 }
 
 .albumPageBtnContainer {
+	width: 100%;
+	padding-top: 0px;
 	display: flex;
 	justify-content: space-between;
-	align-items: flex-end;
+	align-items: baseline;
 }
 
-#removeAlbumBtn {
-	border: 1px solid black;
+img#removeAlbumBtn {
 	cursor: pointer;
-	font-size: 20px;
 	margin-right: 10px;
+	height: 50px;
+	width: 40px;
 	background-color: transparent;
+}
+img#uploadAlbumImg {
+	margin-right: 10px;
+	height: 60px;
+	width: 60px;
 }
 
 @media only screen and (min-width: 700px) {
 	.albumPageBtnContainer {
-		margin-bottom: 20px;
+		margin-bottom: 0px;
 	}
 	#removeAlbumBtn {
 		width: 200px;

@@ -88,35 +88,42 @@ class App extends Component {
 
 	//gets all data for logged in user
 	getUserData = user => {
-		return new Promise(resolve => {
+		console.log('getUserData App ran');
+		return new Promise((resolve, reject) => {
 			PhotoGramApiService.getUserData(user).then(data => {
-				this.setState({
-					user: {
-						id: data.user[0].id,
-						name: data.user[0].full_name,
-						user_name: data.user[0].user_name,
-						photo:
-							data.user[0].profile_img_url ||
-							'https://res.cloudinary.com/rcarville/image/upload/v1564425749/photoGram_profileImage/ozgynn2ehowpitzn8axf.png',
-						date_created: data.user[0].date_created
-					},
-					images: data.images,
-					albums: data.albums,
-					loggedIn: true
-				});
-
-				return resolve();
+				if (data.error) {
+					TokenService.clearAuthToken();
+					this.setState({
+						error: data.error + '.  Please login again.'
+					});
+					reject(<Redirect to={'/login'} />);
+					return;
+				} else {
+					this.setState({
+						user: {
+							id: data.user[0].id,
+							name: data.user[0].full_name,
+							user_name: data.user[0].user_name,
+							photo:
+								data.user[0].profile_img_url ||
+								'https://res.cloudinary.com/rcarville/image/upload/v1564425749/photoGram_profileImage/ozgynn2ehowpitzn8axf.png',
+							date_created: data.user[0].date_created
+						},
+						images: data.images,
+						albums: data.albums,
+						loggedIn: true
+					});
+					return resolve();
+				}
 			});
 		}).catch(err => {
 			console.log(err);
-			this.setState({
-				error: err
-			});
 		});
 	};
 
 	//checks if user sessionStorage has a jwt
 	checkIfLoggedIn = user => {
+		console.log('login check ran');
 		return new Promise(res => {
 			if (TokenService.getAuthToken() !== null) {
 				return res(this.getUserData(user));

@@ -81,6 +81,7 @@ class Login extends Component {
 			const userId = this.state.user.id;
 			return <Redirect to={`/user/${userId}`} />;
 		}
+
 		return (
 			<div className='login-form-container'>
 				<h3>Login</h3>
@@ -91,7 +92,9 @@ class Login extends Component {
 						Use Test User Credientials
 					</button>
 				</p>
+				<div className='errMsg-login'>{this.context.state.error}</div>
 				<div className='errMsg-login'>{this.state.error}</div>
+
 				<form className='login-form' onSubmit={this.handleSubmit}>
 					<label htmlFor='user_name'>
 						User Name

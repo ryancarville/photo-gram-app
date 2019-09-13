@@ -58,6 +58,14 @@ export default class EditPageContent extends Component {
 		));
 		return albums;
 	};
+
+	//handle album image change
+	handleAlbumImage = e => {
+		const { img_url, album_id } = this.state;
+		const id = album_id;
+		const newAlbumImage = { img_url, id };
+		PhotoGramApiService.updateAlbum(newAlbumImage);
+	};
 	//handle fomr submit event
 	handleSubmit = e => {
 		e.preventDefault();
@@ -76,6 +84,7 @@ export default class EditPageContent extends Component {
 			.catch(err => this.setState({ error: err }));
 	};
 	render() {
+		const date = this.props.image.date_created.slice(0, 10);
 		const { user } = this.state;
 		const image = { id: this.state.id };
 		//on successful save of data redirect to image page
@@ -117,6 +126,15 @@ export default class EditPageContent extends Component {
 										{this.getAlbumNames(context.albums)}
 									</select>
 								</label>
+								<label htmlFor='albumImage'>
+									Make Album Image
+									<input
+										type='checkbox'
+										name='makeAlbumImage'
+										id='makeAlbumImageRadio'
+										onChange={this.handleAlbumImage}
+									/>
+								</label>
 								<label htmlFor='tags'>
 									Tags{' '}
 									<input
@@ -131,7 +149,7 @@ export default class EditPageContent extends Component {
 									<input
 										type='date'
 										name='date'
-										value={this.state.date_created}
+										value={date}
 										onChange={this.handleDateChange}
 									/>
 								</label>

@@ -68,7 +68,7 @@ const PhotoGramApiService = {
 	},
 	//GET for user data
 	getUserData(user) {
-		return new Promise(resolve =>
+		return new Promise((resolve, reject) => {
 			fetch(config.API_ENDPOINT + `/user/${user.id}`, {
 				method: 'GET',
 				headers: {
@@ -77,12 +77,17 @@ const PhotoGramApiService = {
 				}
 			}).then(res => {
 				!res.ok
-					? res.json().then(err => Promise.reject(err))
+					? res.json().then(err => {
+							console.log('reject');
+							return reject(err);
+					  })
 					: res.json().then(data => {
 							return resolve(data);
 					  });
-			})
-		);
+			});
+		}).catch(err => {
+			return err;
+		});
 	},
 	//POST for image data upload
 	uploadImage(data) {
@@ -125,6 +130,27 @@ const PhotoGramApiService = {
 			})
 		);
 	},
+
+	//PATCH for album
+	updateAlbum(newAlbumInfo) {
+		return new Promise(resolve => {
+			fetch(config.API_ENDPOINT + `/albums/editAlbum/${newAlbumInfo.id}`, {
+				method: 'PATCH',
+				body: JSON.stringify(newAlbumInfo),
+				headers: {
+					'content-type': 'application/json',
+					authorization: `bearer ${TokenService.getAuthToken()}`
+				},
+				mode: 'cors'
+			}).then(res => {
+				!res.ok
+					? res.json().then(err => Promise.reject(err))
+					: res.json().then(data => {
+							return resolve(data);
+					  });
+			});
+		});
+	},
 	//PATCH for edit image data
 	updateImage(newImageInfo) {
 		return new Promise(resolve =>
@@ -165,9 +191,9 @@ const PhotoGramApiService = {
 		);
 	},
 	//DELETE for album
-	deleteAlbum(id) {
+	deleteAlbum(album_id) {
 		return new Promise(resolve =>
-			fetch(config.API_ENDPOINT + `/albums/${id}`, {
+			fetch(config.API_ENDPOINT + `/albums/${album_id}`, {
 				method: 'DELETE',
 				headers: {
 					'content-type': 'application/json',

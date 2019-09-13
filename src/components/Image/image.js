@@ -13,7 +13,6 @@ function Image(props) {
 					key={image_id}
 					src={props.img_url}
 					alt={props.alt}
-					loading='lazy'
 					className='gridImg'
 				/>
 			</Link>

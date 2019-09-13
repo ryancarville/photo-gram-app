@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import PhotoGramContext from '../../PhotoGramContext';
-import PhotoGramApiService from '../../services/photoGram-api-service';
 import Image from '../Image/image';
 import './albumPage.css';
 
@@ -52,18 +51,6 @@ export default class AlbumPage extends Component {
 		const user_id = this.state.user_id;
 		this.props.history.push(`/user/${user_id}`);
 	};
-	//delete request of Album sent to API
-	deleteAlbumRequest = albumId => {
-		PhotoGramApiService.deleteAlbum(albumId)
-			.then(data => this.context.updateAlbumsOnDelete(albumId))
-			.then(
-				setTimeout(() => {
-					this.setState({
-						redirect: true
-					});
-				}, 500)
-			);
-	};
 
 	render() {
 		//on successful delete redirect to home page
@@ -78,26 +65,38 @@ export default class AlbumPage extends Component {
 					<section>
 						<div className='albumPage-container'>
 							<div className='albumPageBtnContainer'>
-								<button
-									type='button'
-									id='imagePageBackBtn'
-									onClick={this.handleBack}>
-									&#171;{' '}
-								</button>
-								<p>{this.state.albumName}</p>
-								<button
-									id='removeAlbumBtn'
-									type='button'
-									onClick={() => this.deleteAlbumRequest(album_id)}>
-									Delete Album
-								</button>
+								<div id='albumBtnDiv1'>
+									<button
+										type='button'
+										id='imagePageBackBtn'
+										onClick={this.handleBack}>
+										&#171;{' '}
+									</button>
+									<p>{this.state.albumName}</p>
+								</div>
+								<div id='albumBtnDiv2'>
+									<Link
+										to={{
+											pathname: `/user/${context.user.id}/upload`,
+											albumId: album_id
+										}}>
+										<img
+											src='https://beardystudios.com/Bloc_Capstone/photoGram/images/upload-image.png'
+											alt='upload button'
+											id='uploadAlbumImg'
+										/>
+									</Link>
+									<Link to={`/user/${context.user.id}/editAlbum/${album_id}`}>
+										Edit Album
+									</Link>
+								</div>
 							</div>
 							<div className='grid-container'>
 								{albumImages.map(img => (
 									<Image
 										key={img.id.toString()}
 										{...img}
-										user_id={context.user.id}
+										history={this.props.history}
 									/>
 								))}
 							</div>

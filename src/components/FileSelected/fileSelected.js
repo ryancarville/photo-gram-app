@@ -12,8 +12,9 @@ export default class FileSelected extends Component {
 			img_url: this.props.state.imagePreview,
 			caption: '',
 			tags: '',
-			album_id: '0',
+			album_id: this.props.state.album_id,
 			date_taken: '',
+			makeAlbumImage: false,
 			redirect: false
 		};
 	}
@@ -52,6 +53,16 @@ export default class FileSelected extends Component {
 			date_taken: e.target.value
 		});
 	};
+	//set album image state
+	makeAlbumImage = e => {
+		this.state.makeAlbumImage
+			? this.setState({
+					makeAlbumImage: false
+			  })
+			: this.setState({
+					makeAlbumImage: true
+			  });
+	};
 	//event handler for upload
 	handleUpload = e => {
 		e.preventDefault();
@@ -71,15 +82,18 @@ export default class FileSelected extends Component {
 			date_created,
 			album_id
 		};
-		PhotoGramApiService.uploadImage(newImage)
-		.then(
-			setTimeout(() => {
-				this.setState({
-					redirect: true
-				});
-			}, 1000)
+		const id = album_id;
+		const newAlbumImage = { id, img_url };
+		if (this.state.makeAlbumImage) {
+			PhotoGramApiService.updateAlbum(newAlbumImage);
+		}
+		PhotoGramApiService.uploadImage(newImage).then(
+			this.setState({
+				redirect: true
+			})
 		);
 	};
+
 	//on mnount set state with user id
 	componentDidMount() {
 		this.setState({
@@ -92,6 +106,14 @@ export default class FileSelected extends Component {
 			const user_id = this.state.user_id;
 			return <Redirect to={`/user/${user_id}`} />;
 		}
+		var date = new Date();
+		var day = date.getDate();
+		var month = date.getMonth() + 1;
+		var year = date.getFullYear();
+		if (month < 10) month = '0' + month;
+		if (day < 10) day = '0' + day;
+		var today = year + '-' + month + '-' + day;
+
 		return (
 			<PhotoGramContext.Consumer>
 				{context => (
@@ -130,10 +152,15 @@ export default class FileSelected extends Component {
 									Album{' '}
 									<select
 										className='uploadFormInput'
+										value={this.state.album_id}
 										onChange={this.handleAlbumChange}>
 										<option value='0'>No Album</option>
 										{this.getAlbumNames(context.albums)}
 									</select>
+								</label>
+								<label htmlFor='makeAlbumImage'>
+									Make Album Image
+									<input type='checkbox' onChange={this.makeAlbumImage} />
 								</label>
 								<label htmlFor='date'>
 									Date Taken{' '}
@@ -142,6 +169,7 @@ export default class FileSelected extends Component {
 										type='date'
 										name='date'
 										id='dateForImage'
+										value={today}
 										onChange={this.handleDateChange}
 									/>
 								</label>

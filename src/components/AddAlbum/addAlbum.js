@@ -12,7 +12,8 @@ export default class AddAlbum extends Component {
 		this.state = {
 			user_id: this.props.match.params.user_id,
 			album_name: '',
-			img_url: '',
+			img_url: null,
+			defaultAlbum: 'photoGram_Images/dztb9fs9e3op4cikjqdp',
 			cloudinaryPreview: '',
 			redirect: false,
 			widget: window.cloudinary.createUploadWidget(
@@ -22,6 +23,7 @@ export default class AddAlbum extends Component {
 					cropping: 'server'
 				},
 				(error, result) => {
+					console.log(result.info.public_id);
 					if (!error && result && result.event === 'success') {
 						this.setState({
 							cloudinaryPreview: result.info.public_id,
@@ -51,14 +53,23 @@ export default class AddAlbum extends Component {
 	//handle form submit event
 	handleSubmit = e => {
 		e.preventDefault();
-		const { user_id, album_name, img_url } = this.state;
-		const albumData = { user_id, album_name, img_url };
-		PhotoGramApiService.addAlbum(albumData)
-		.then(() =>
-			this.setState({
-				redirect: true
-			})
-		);
+		if (this.state.img_url === null) {
+			this.setState(
+				{
+					img_url:
+						'https://res.cloudinary.com/rcarville/image/upload/v1568384975/photoGram_Images/dztb9fs9e3op4cikjqdp'
+				},
+				() => {
+					const { user_id, album_name, img_url } = this.state;
+					const albumData = { user_id, album_name, img_url };
+					PhotoGramApiService.addAlbum(albumData).then(() =>
+						this.setState({
+							redirect: true
+						})
+					);
+				}
+			);
+		}
 	};
 	//open image uploader widget
 	openWidget = e => {
@@ -71,6 +82,7 @@ export default class AddAlbum extends Component {
 			const user_id = this.state.user_id;
 			return <Redirect to={`/user/${user_id}`} />;
 		}
+		console.log(this.state.cloudinaryPreview);
 		return (
 			<div className='add-album-container'>
 				<div className='folderUploadErrorMsg'>{this.state.error}</div>
@@ -78,14 +90,43 @@ export default class AddAlbum extends Component {
 					className='addFolderForm'
 					onSubmit={this.handleSubmit}
 					encType='multipart/form-data'>
-					<label htmlFor='folderName'>Folder Name</label>
+					<label htmlFor='folderName'>Album Name</label>
 					<input
 						type='text'
 						name='folderName'
 						onChange={this.handleFolderName}
 						required
 					/>
-					<label htmlFor='folderImage'>Folder Image</label>
+					<label htmlFor='folderImage'>Album Image</label>
+					<p>Choose a image that you would like to be the album cover</p>
+					<div className='folderIconPreview'>
+						{this.state.cloudinaryPreview ? (
+							<Image
+								cloudName={config.CLOUDINARY_NAME}
+								publicId={this.state.cloudinaryPreview}>
+								<Transformation
+									height='100'
+									width='100'
+									crop='lfill'
+									radius='max'
+									border='3px_solid_black'
+								/>
+							</Image>
+						) : (
+							<Image
+								cloudName={config.CLOUDINARY_NAME}
+								publicId={this.state.defaultAlbum}>
+								<Transformation
+									height='100'
+									width='100'
+									crop='lfill'
+									radius='max'
+									border='3px_solid_black'
+								/>
+							</Image>
+						)}
+						<p>{this.state.album_name}</p>
+					</div>
 					<button
 						type='button'
 						name='folderImage'
@@ -93,21 +134,9 @@ export default class AddAlbum extends Component {
 						onClick={this.openWidget}>
 						Upload Image
 					</button>
-					<div className='folderIconPreview'>
-						<Image
-							cloudName={config.CLOUDINARY_NAME}
-							publicId={this.state.cloudinaryPreview}>
-							<Transformation
-								height='100'
-								width='100'
-								crop='scale'
-								radius='100'
-							/>
-						</Image>
-						<p>{this.state.album_name}</p>
-					</div>
+
 					<button type='submit' value='add folder'>
-						Add Folder{' '}
+						Add Album{' '}
 					</button>
 					<button type='button' value='cancel' onClick={this.goHome}>
 						Cancel

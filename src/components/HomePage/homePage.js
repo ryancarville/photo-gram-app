@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PhotoGramContext from '../../PhotoGramContext';
 import Loading from '../Loading/loading';
 import UserProfileImage from '../UserProfileImage/userProfileImage.js';
@@ -16,7 +17,6 @@ class HomePage extends Component {
 			error: null
 		};
 		this.getData = () => {
-			console.log(this.state.user_id + 'home get data');
 			const user = { id: this.state.user_id };
 			this.context.checkIfLoggedIn(user);
 		};
@@ -28,6 +28,7 @@ class HomePage extends Component {
 		this.getData();
 	}
 	render() {
+		console.log(this.context.user.photo);
 		return (
 			<PhotoGramContext.Consumer>
 				{context => (
@@ -38,6 +39,7 @@ class HomePage extends Component {
 									<UserProfileImage
 										image={context.user.photo}
 										user_id={context.user.id}
+										user_name={context.user.name}
 									/>
 									<p>{context.user.name}</p>
 								</div>
@@ -60,7 +62,18 @@ class HomePage extends Component {
 									</div>
 								</div>
 								<div className='albums-container'>
-									<h2>Albums</h2>
+									<div id='albumTag'>
+										<Link
+											to={`/user/${context.user.id}/addAlbum`}
+											id='addAlbum'>
+											<img
+												src='https://beardystudios.com/Bloc_Capstone/photoGram/images/profileChangeBtn.png'
+												alt='add album button'
+												id='addAlbumBtn'
+											/>
+										</Link>
+										<h2>Albums</h2>
+									</div>
 									{context.albums === undefined ? <Loading /> : <Albums />}
 								</div>
 							</div>
