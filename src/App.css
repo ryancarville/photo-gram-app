@@ -1,3 +1,7 @@
 .App {
 	width: 100%;
+	-webkit-animation-name: fade-in; /* Safari 4.0 - 8.0 */
+	-webkit-animation-duration: 10s; /* Safari 4.0 - 8.0 */
+	animation-name: fade-in;
+	animation-duration: 4s;
 }

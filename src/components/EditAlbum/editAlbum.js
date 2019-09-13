@@ -132,6 +132,7 @@ export default class EditAlbum extends Component {
 				<p>Edit Album</p>
 				<form onSubmit={this.handleSubmit}>
 					<Image
+						id='editAlbumImage'
 						cloudName={config.CLOUDINARY_NAME}
 						publicId={this.state.cloudinaryPreview}>
 						<Transformation
@@ -140,17 +141,19 @@ export default class EditAlbum extends Component {
 							crop='fill'
 							radius='max'
 							border='3px_solid_black'
+							background='aliceblue'
 						/>
 					</Image>
-					<button type='button' onClick={() => this.openWidget()}>
-						Upload New Image
-					</button>
 					<input
 						type='text'
 						value={this.state.album_name}
 						onChange={this.handleAblumNameChange}
 					/>
-					<button type='button' id='removeAlbumBtn' onClick={this.deletePopup}>
+					<button type='button' onClick={() => this.openWidget()}>
+						Upload New Image
+					</button>
+
+					<button type='button' onClick={this.deletePopup}>
 						Delete Album
 					</button>
 

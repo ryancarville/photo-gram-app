@@ -5,6 +5,7 @@ import PhotoGramContext from './PhotoGramContext';
 import PhotoGramApiService from './services/photoGram-api-service';
 import TokenService from './services/token-service';
 import './App.css';
+import './animations.css';
 
 class App extends Component {
 	//shared app state

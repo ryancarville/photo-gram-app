@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import './image.css';
 
 function Image(props) {
@@ -19,4 +19,4 @@ function Image(props) {
 		</div>
 	);
 }
-export default Image;
+export default withRouter(Image);

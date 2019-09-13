@@ -7,6 +7,8 @@
 
 .sideBar {
 	height: auto;
+	-webkit-animation: fade-in 2s linear;
+	animation: fade-in 2s linear;
 }
 
 .content-counter {

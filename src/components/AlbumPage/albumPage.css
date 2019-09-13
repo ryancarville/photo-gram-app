@@ -38,6 +38,12 @@ img#uploadAlbumImg {
 	width: 60px;
 }
 
+img#editAlbumImg {
+	margin-right: 10px;
+	height: 60px;
+	width: 60px;
+}
+
 @media only screen and (min-width: 700px) {
 	.albumPageBtnContainer {
 		margin-bottom: 0px;

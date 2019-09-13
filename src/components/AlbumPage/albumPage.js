@@ -87,7 +87,11 @@ export default class AlbumPage extends Component {
 										/>
 									</Link>
 									<Link to={`/user/${context.user.id}/editAlbum/${album_id}`}>
-										Edit Album
+										<img
+											src='https://beardystudios.com/Bloc_Capstone/photoGram/images/albumEdit.png'
+											alt='edit button'
+											id='editAlbumImg'
+										/>
 									</Link>
 								</div>
 							</div>

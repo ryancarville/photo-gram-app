@@ -37,7 +37,7 @@ export default class DeleteConfirm extends Component {
 		}
 
 		return this.state.image_id ? (
-			<div>
+			<div className='deleteConfirmImage'>
 				<p>Are you sure you want to delete this image?</p>
 				<button
 					type='button'
@@ -53,7 +53,7 @@ export default class DeleteConfirm extends Component {
 				</button>
 			</div>
 		) : (
-			<div>
+			<div className='deleteConfirmAlbum'>
 				<p>
 					Are you sure you want to delete the album{' '}
 					<b>{this.state.album_name}</b>?

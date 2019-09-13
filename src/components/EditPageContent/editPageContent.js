@@ -106,17 +106,16 @@ export default class EditPageContent extends Component {
 								alt={this.state.tags}
 							/>
 							<form onSubmit={this.handleSubmit} className='imageEditForm'>
-								<label htmlFor='caption'>
-									Caption
-									<textarea
-										type='text'
-										name='caption'
-										id='captionTextarea'
-										autoFocus='autofoucs'
-										value={this.state.caption}
-										onChange={this.handleCaptionChange}
-									/>
-								</label>
+								<label htmlFor='caption'>Caption</label>
+								<textarea
+									type='text'
+									name='caption'
+									id='captionTextarea'
+									autoFocus='autofoucs'
+									value={this.state.caption}
+									onChange={this.handleCaptionChange}
+								/>
+
 								<label htmlFor='album'>
 									Album{' '}
 									<select
@@ -126,15 +125,14 @@ export default class EditPageContent extends Component {
 										{this.getAlbumNames(context.albums)}
 									</select>
 								</label>
-								<label htmlFor='albumImage'>
-									Make Album Image
-									<input
-										type='checkbox'
-										name='makeAlbumImage'
-										id='makeAlbumImageRadio'
-										onChange={this.handleAlbumImage}
-									/>
-								</label>
+								<label htmlFor='albumImage'>Make Album Image</label>
+								<input
+									type='checkbox'
+									name='makeAlbumImage'
+									id='makeAlbumImageCheck'
+									onChange={this.handleAlbumImage}
+								/>
+
 								<label htmlFor='tags'>
 									Tags{' '}
 									<input

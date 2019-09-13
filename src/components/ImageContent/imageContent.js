@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import DeleteConfirm from '../DeleteConfirm/deleteConfirm';
 
-export default class ImageContent extends Component {
+class ImageContent extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -21,18 +21,11 @@ export default class ImageContent extends Component {
 		});
 	};
 	goBackToAlbum = () => {
-		this.setState({
-			goBack: true
-		});
+		this.props.history.goBack();
 	};
 
 	//image page image content component
 	render() {
-		if (this.state.goBack) {
-			console.log(this.props);
-			const { user_id, album_id } = this.props.image;
-			return <Redirect to={`/user/${user_id}/albums/${album_id.toString()}`} />;
-		}
 		const image = this.props.image;
 		const user = this.props.user;
 		return (
@@ -75,3 +68,4 @@ export default class ImageContent extends Component {
 		);
 	}
 }
+export default withRouter(ImageContent);
