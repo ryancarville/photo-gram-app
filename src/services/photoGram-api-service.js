@@ -4,24 +4,6 @@ import TokenService from './token-service';
 const PhotoGramApiService = {
 	//all API fetch request
 
-	//GET landing page image
-	landingPageImage() {
-		return new Promise(resolve =>
-			fetch(config.API_ENDPOINT, {
-				method: 'GET',
-				headers: {
-					'content-type': 'application/json'
-				},
-				mode: 'cors'
-			}).then(res => {
-				!res.ok
-					? res.json().then(err => Promise.reject(err))
-					: res.json().then(data => {
-							return resolve(data);
-					  });
-			})
-		);
-	},
 	//POST for new user signup
 	signUp(newUser) {
 		return new Promise((resolve, reject) => {

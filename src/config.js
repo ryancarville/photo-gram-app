@@ -1,5 +1,5 @@
 export default {
-	API_ENDPOINT: 'http://localhost:8000',
+	API_ENDPOINT: 'https://peaceful-reaches-62779.herokuapp.com',
 	TOKEN_KEY: 'photoGram-client-auth-token',
 	CLOUDINARY_NAME: 'rcarville',
 	CLOUDINARY_URL:
@@ -11,3 +11,4 @@ export default {
 	CLOUDINARY_UPLOAD_PRESET: 'photoGram_Images',
 	CLOUDINARY_ALBUM_IMAGES_PRESET: 'photoGram_Album_Images'
 };
+//https://peaceful-reaches-62779.herokuapp.com
