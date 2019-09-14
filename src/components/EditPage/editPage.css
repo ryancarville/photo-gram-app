@@ -4,6 +4,8 @@
 	padding-top: 50px;
 	margin-bottom: 25px;
 	text-align: center;
+	-webkit-animation: fade-in 1s linear;
+	animation: fade-in 1s linear;
 }
 
 .imgPreview {
@@ -59,11 +61,45 @@
 	padding: 10px;
 	box-sizing: border-box;
 }
-#makeAlbumImageCheck {
-	transform: scale(1);
-	margin-left: auto;
-	margin-right: auto;
-	margin-bottom:25px;
+
+.switch-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#switchText {
+	font-size: 20px;
+}
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 50px;
+	height: 25px;
+	background-color: rgb(165, 165, 165);
+	border-radius: 20px;
+	border: 1px solid black;
+}
+
+.switch::after {
+	content: '';
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background-color: rgb(255, 255, 255);
+	top: 2px;
+	left: 2px;
+	transition: all 0.3s;
+}
+
+.checkbox:checked + .switch::after {
+	left: 27px;
+}
+.checkbox:checked + .switch {
+	background-image: linear-gradient(to right, rgb(0, 255, 34), rgb(13, 0, 255));
+}
+.checkbox {
+	display: none;
 }
 
 @media only screen and (min-width: 700px) {

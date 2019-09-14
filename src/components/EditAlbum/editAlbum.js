@@ -122,7 +122,6 @@ export default class EditAlbum extends Component {
 	render() {
 		if (this.state.redirect) {
 			const user_id = this.state.user_id;
-			const album_id = this.state.id;
 			return <Redirect to={`/user/${user_id}`} />;
 		}
 		const { id, album_name } = this.state;

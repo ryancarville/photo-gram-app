@@ -37,7 +37,7 @@ class Albums extends Component {
 	render() {
 		const user = this.context.user;
 		const albums = this.context.albums;
-		console.log(albums);
+
 		return (
 			<div className='albums-bar' id='albums'>
 				<ul>{createAlbums(albums, user)}</ul>

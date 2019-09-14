@@ -28,7 +28,6 @@ class HomePage extends Component {
 		this.getData();
 	}
 	render() {
-		console.log(this.context.user.photo);
 		return (
 			<PhotoGramContext.Consumer>
 				{context => (

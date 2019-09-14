@@ -3,6 +3,8 @@
 	padding-top: 50px;
 	margin-bottom: 25px;
 	text-align: center;
+	-webkit-animation: fade-in 1s linear;
+	animation: fade-in 1s linear;
 }
 
 .singleImg {

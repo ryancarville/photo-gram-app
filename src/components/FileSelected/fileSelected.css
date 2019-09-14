@@ -4,6 +4,8 @@
 	justify-content: center;
 	width: 100%;
 	margin-bottom: 25px;
+	-webkit-animation: fade-in 1s linear;
+	animation: fade-in 1s linear;
 }
 
 .uploadFormInput {

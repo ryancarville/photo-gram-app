@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import PhotoGramApiService from '../../services/photoGram-api-service';
 import './deleteConfirm.css';
-import PhotGramContext from '../../PhotoGramContext';
 
 export default class DeleteConfirm extends Component {
 	constructor(props) {
@@ -15,8 +13,6 @@ export default class DeleteConfirm extends Component {
 			redirect: false
 		};
 	}
-
-	static contextType = PhotGramContext;
 
 	componentDidMount() {
 		if (this.props.image_id) {

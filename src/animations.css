@@ -74,3 +74,21 @@
 		transform: translateY(0px);
 	}
 }
+
+@-webkit-keyframes lock {
+	0% {
+		transform: translateY(0px);
+	}
+	100% {
+		transform: translateY(100px);
+	}
+}
+
+@keyframes lock {
+	0% {
+		transform: translateY(0px);
+	}
+	100% {
+		transform: translateY(60px);
+	}
+}

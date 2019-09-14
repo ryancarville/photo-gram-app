@@ -125,14 +125,21 @@ export default class EditPageContent extends Component {
 										{this.getAlbumNames(context.albums)}
 									</select>
 								</label>
-								<label htmlFor='albumImage'>Make Album Image</label>
-								<input
-									type='checkbox'
-									name='makeAlbumImage'
-									id='makeAlbumImageCheck'
-									onChange={this.handleAlbumImage}
-								/>
-
+								<div className='switch-container'>
+									<label htmlFor='makeALbumImage' id='switchText'>
+										Make Album Cover
+									</label>
+									<input
+										className='checkbox'
+										type='checkbox'
+										name='makeAlbumImage'
+										id='makeAlbumImageCheck'
+										onChange={this.handleAlbumImage}
+									/>
+									<label
+										htmlFor='makeAlbumImageCheck'
+										className='switch'></label>
+								</div>
 								<label htmlFor='tags'>
 									Tags{' '}
 									<input

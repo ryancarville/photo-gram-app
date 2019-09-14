@@ -2,6 +2,8 @@
 	width: 100%;
 	padding-top: 100px;
 	text-align: center;
+	-webkit-animation: fade-in 1s linear;
+	animation: fade-in 1s linear;
 }
 
 .addFolderForm {

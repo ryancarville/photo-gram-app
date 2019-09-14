@@ -8,6 +8,8 @@
 	padding-top: 80px;
 	padding-bottom: 15px;
 	text-align: center;
+	-webkit-animation: fade-in 1s linear;
+	animation: fade-in 1s linear;
 }
 
 .editAlbumPageContainer form {

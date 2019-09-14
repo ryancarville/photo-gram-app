@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import './landingPage.css';
-import PhotoGramApiService from '../../services/photoGram-api-service';
 
 class LandingPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			mobile_img: '',
-			desktop_img: '',
+			camera_img: '',
+			lock_img: '',
 			dataReady: false,
 			error: null
 		};
@@ -15,47 +14,38 @@ class LandingPage extends Component {
 	//set landing page image
 	setImage = e => {
 		this.setState({
-			desktop_img: e[0].desktop_img_url,
-			mobile_img: e[0].mobile_img_url,
+			lock_img:
+				'https://beardystudios.com/Bloc_Capstone/photoGram/images/lock.png',
+			camera_img:
+				'https://beardystudios.com/Bloc_Capstone/photoGram/images/camera.png',
 			dataReady: true
 		});
 	};
 	//get images from database
 	componentDidMount() {
-		PhotoGramApiService.landingPageImage()
-			.then(data => this.setImage(data))
-			.catch(err => {
-				console.log(err);
-				this.setState({ error: err.message });
-			});
+		this.setImage();
 	}
 	render() {
 		const image = (
-			<>
-				<img
-					src={this.state.mobile_img}
-					alt='account-example'
-					id='mobile-example'
-				/>
-				<img
-					src={this.state.desktop_img}
-					alt='account-example'
-					id='desktop-example'
-				/>
-			</>
+			<div className='cameraLockImage'>
+				<img src={this.state.camera_img} alt='account-example' id='camera' />
+				<img src={this.state.lock_img} alt='account-example' id='lock' />
+			</div>
 		);
 		const dataReady =
 			this.state.dataReady === true ? image : <p>Getting Image...</p>;
 		return (
 			<>
 				<div className='landing-content'>
-					<h2>Welcome to PhotoGram!</h2>
-					<h4>You're private photo platform</h4>
-					<p>
-						Upload, edit and archive your life photos without the worry of
-						trolls or unauthorized usage. Easy to use and offers many options to
-						organize your photo sets.{' '}
-					</p>
+					<div className='landingText'>
+						<h2>Welcome to PhotoGram!</h2>
+						<h4>You're private photo platform</h4>
+						<p>
+							Upload, edit and archive your life photos without the worry of
+							trolls or unauthorized usage. Easy to use and offers many options
+							to organize your photo sets.{' '}
+						</p>
+					</div>
 					<div className='landing-example'>{dataReady}</div>
 				</div>
 			</>

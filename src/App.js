@@ -89,7 +89,6 @@ class App extends Component {
 
 	//gets all data for logged in user
 	getUserData = user => {
-		console.log('getUserData App ran');
 		return new Promise((resolve, reject) => {
 			PhotoGramApiService.getUserData(user).then(data => {
 				if (data.error) {
@@ -124,7 +123,6 @@ class App extends Component {
 
 	//checks if user sessionStorage has a jwt
 	checkIfLoggedIn = user => {
-		console.log('login check ran');
 		return new Promise(res => {
 			if (TokenService.getAuthToken() !== null) {
 				return res(this.getUserData(user));
